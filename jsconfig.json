@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "containers/*": ["src/containers/*"],
+      "lib/*": ["src/lib/*"],
+      "reducers/*": ["src/reducers/*"],
+      "sources/*": ["src/sources/*"],
+      "utils/*": ["src/utils/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
