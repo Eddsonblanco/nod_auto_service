@@ -77,7 +77,8 @@ $color-text: #e2e2e2;
               }
               
             a:hover {
-                text-decoration: underline;
+                text-decoration: none;
+                cursor: pointer;
               }
               
             a:active {
