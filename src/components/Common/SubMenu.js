@@ -7,7 +7,6 @@ import {
 
 } from 'react-router-dom'
 // import { makeStyles } from '@material-ui/styles'
-import { CssBaseline  } from '@material-ui/core'
 
 // const useStyles = makeStyles({
 //   header: {
@@ -43,7 +42,6 @@ const SubMenu = () => {
 
   return (
     <subMenu className='subMenu'>
-      <CssBaseline />
       <div className='subMenuContainer'>
         <ul className='subMenuList'>
           <li className='subMenuItem'>

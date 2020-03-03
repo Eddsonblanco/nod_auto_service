@@ -1,11 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-
 const Companies = () => {
   const {
     items = []
-  } = useSelector(({companies}) => companies)
+  } = useSelector(({ companies }) => companies)
 
   return (
     <div>
@@ -13,7 +12,7 @@ const Companies = () => {
         {
           items.map(item => (
             <li key={item._id}>
-              <img src={item.image} alt={item.alt_text} />
+              <img alt={item.alt_text} src={item.image} />
             </li>
           ))
         }
