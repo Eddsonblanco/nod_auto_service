@@ -1,0 +1,89 @@
+$color-primary: #363237;
+$color-text: #e2e2e2;
+
+
+
+
+
+
+.header{
+    color: $color-text;
+    background-color: $color-primary;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    
+
+    .headerContainer{
+        display: flex;
+        width: 80%;
+        margin: 0 auto;
+        justify-content: space-between;
+
+        .headerLeft{
+            display: flex;
+            .headerLogoContainer{
+                margin-right: 50px;
+            }
+            ul{
+                display: flex;
+                li{
+                    color: $color-text;
+                    margin-right: 30px;
+                    padding: 5px;
+                    list-style: none;
+                    a{
+                        color: $color-text;
+                    }
+                    a:link {
+                        
+                        text-decoration: none;
+                      }
+                      
+                    a:visited {
+                        text-decoration: none;
+                      }
+                      
+                    a:hover {
+                        text-decoration: underline;
+                      }
+                      
+                    a:active {
+                        text-decoration: underline;
+                      }
+                }
+            }
+        }
+        .headerRight{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            a{
+                margin-left: 100px;
+                padding: 10px;
+                border: solid white 1px;
+                border-radius: 25px;
+            }
+            a{
+                color: $color-text;
+            }
+            a:link {
+                
+                text-decoration: none;
+              }
+              
+            a:visited {
+                text-decoration: none;
+              }
+              
+            a:hover {
+                text-decoration: none;
+                cursor: pointer;
+              }
+              
+            a:active {
+                text-decoration: underline;
+              }
+        }
+    }
+}
