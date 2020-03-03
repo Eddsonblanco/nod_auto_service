@@ -1,34 +1,34 @@
-import { WAIT_FOR_ACTION } from "redux-wait-for-action";
+// import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
 
-import base from "reducers/base";
+import base from 'reducers/base'
 
-import {  } from "./sagas";
+import {  } from './sagas'
 
 export default base({
   initialState: {
-    title: '',
-    direction: 'direction',
-    phone: '55-555-555',
+    copyright  : 'copyright',
+    direction  : 'direction',
+    email      : 'prueba@email.com',
+    logo       : '',
+    phone      : '55-555-555',
     phone_extra: '',
-    logo: '',
-    copyright: 'copyright',
-    email: 'prueba@email.com'
+    title      : ''
   },
-  namespace: "nod-services",
-  store: "settings"
+  namespace: 'nod-services',
+  store    : 'settings'
 }).extend({
-  creators: ({ types }) => ({
+  // creators: ({ types }) => ({
 
-  }),
-  sagas: duck => ({
-  }),
-  selectors: ({ store }) => ({
+  // }),
+  // sagas: duck => ({
+  // }),
+  // selectors: ({ store }) => ({
 
-  }),
-  takes: duck => [
+  // }),
+  // takes: duck => [
 
-  ],
-  types: [
+  // ],
+  // types: [
 
-  ]
-});
+  // ]
+})
