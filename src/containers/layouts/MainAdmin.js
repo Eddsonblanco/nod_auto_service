@@ -12,15 +12,15 @@ import {
   IconButton,
   Typography,
   MenuItem,
-  Drawer,
+  // Drawer,
   Divider,
-  List,
-  ListItem,
+  // List,
+  // ListItem,
   Menu,
   Link,
-  Button,
-  ListItemIcon,
-  ListItemText
+  Button
+  // ListItemIcon,
+  // ListItemText
   // Icon
 } from '@material-ui/core'
 // import capitalize from '../utils/capitalize'
@@ -298,7 +298,7 @@ function Dashboard(props) {
     userMenu = [],
     actions = {},
     logo = {},
-    menus = [],
+    // menus = [],
     menuTopLeft = [],
     menuTopRight = [],
     children
@@ -311,7 +311,7 @@ function Dashboard(props) {
   const history = useHistory()
 
   const {
-    location
+    // location
   } = history
 
   const classes = useStyles()
@@ -322,9 +322,9 @@ function Dashboard(props) {
   const _handleOpenMenu = ev => setAnchorEl(ev.currentTarget)
   const _handleCloseMenu = () => setAnchorEl(null)
 
-  const _handlePreventRoute = mUrl => (ev) => {
-    if(location.pathname === mUrl) ev.preventDefault()
-  }
+  // const _handlePreventRoute = mUrl => (ev) => {
+  //   if(location.pathname === mUrl) ev.preventDefault()
+  // }
 
   return (
     <div className={classes.root}>
@@ -506,77 +506,7 @@ function Dashboard(props) {
         </Toolbar>
       </AppBar>
       <main className={classes.main}>
-        <div className={classes.drawerContent}>
-          <Drawer
-            classes={{
-              paper: clsx(
-                classes.drawerPaper,
-                {
-                  [classes.drawerPaperClose]: !isOpenDrawer
-                }
-              )
-            }}
-            open={isOpenDrawer}
-            variant='permanent'>
-            <List disablePadding>
-              {/* <ListItem
-              button
-              className={classes.drawerContentIcon}
-              onClick={_handleClickToggleDrawer}>
-              {
-                isOpenDrawer ? <ChevronLeftIcon /> : <MenuIcon />
-              }
-            </ListItem>
-            <Divider /> */}
-              {
-                menus.map((item, index) => {
-                  const linkProps = isExternalURL(item.url) ?
-                    {
-                      href: item.url
-                    } :
-                    {
-                      component: RouterLink,
-                      to       : item.url
-                    }
 
-                  return (
-                    (
-                      <ListItem
-                        button
-                        className={clsx(
-                          classes.menuDashboardListItem,
-                          {
-                            [classes.menuDashboardListItemActive]: location.pathname === item.url
-                          }
-                        )}
-                        disableGutters
-                        key={index}>
-                        <Link
-                          className={classes.menuDashboardItem}
-                          color='inherit'
-                          onClick={_handlePreventRoute(item.url)}
-                          target={item.target}
-                          underline='none'
-                          {...linkProps}>
-                          {
-                            item.icon ?
-                              <ListItemIcon className={classes.drawerIcon}>
-                                {item.icon}
-                              </ListItemIcon> :
-                              null
-                          }
-                          <ListItemText
-                            className={classes.drawerLabel}
-                            primary={item.title} />
-                        </Link>
-                      </ListItem>
-                    )
-                  )
-                })
-              }
-            </List>
-          </Drawer>
-        </div>
         <div className={classes.wrapperContent}>
           {children}
         </div>
