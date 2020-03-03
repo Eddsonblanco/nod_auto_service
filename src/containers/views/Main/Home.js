@@ -3,7 +3,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 
 import Footer from 'components/Common/Footer'
-import Companies from "components/Companies"
+import Companies from 'components/Companies'
 import Header from 'components/Common/Header'
 
 const useStyles = makeStyles({
@@ -38,10 +38,7 @@ const useStyles = makeStyles({
 })
 
 export default function Home() {
-
-
   const classes = useStyles()
-
 
   return (
     <div>

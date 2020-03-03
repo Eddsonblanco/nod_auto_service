@@ -116,7 +116,7 @@ Solo es un registro
   Phone | String - telefon
   phone_extra | String
   logo | String - url de la imagen
-  copyright | String 
+  copyright | String - 
   email | String - Email de contacto
 
 ### Banners
