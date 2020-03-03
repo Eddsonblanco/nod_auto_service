@@ -1,6 +1,7 @@
 import React from 'react'
 import  './header.scss'
 import '../Common/colors.scss'
+
 import {
  
   Link,
@@ -62,6 +63,7 @@ const Header = () => {
         </div>
       </div>
     </header>
+    
   )
 }
 
