@@ -12,7 +12,8 @@ export default base({
   store    : 'products'
 }).extend({
   creators: ({ types }) => ({
-    getProducts: () => ({ [ WAIT_FOR_ACTION ]: types.FETCH_FULFILLED, type: types.FETCH })
+    getProducts: () => ({ [ WAIT_FOR_ACTION ]: types.FETCH_FULFILLED, type: types.FETCH }),
+
   }),
   sagas: duck => ({
     getProducts: getProducts(duck)
@@ -23,5 +24,6 @@ export default base({
   }),
   takes: (duck) => ([
     watchProductsServer(duck)
-  ])
+  ]),
+  
 })

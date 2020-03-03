@@ -18,9 +18,9 @@ export default history => {
 
   return (
     <ConnectedRouter history={history}>
-      <Dashboard history={history}>
+      {/* <Dashboard history={history}> */}
         <Route component={Home} exact path={pathUrl} />
-      </Dashboard>
+      {/* </Dashboard> */}
     </ConnectedRouter>
   )
 }
