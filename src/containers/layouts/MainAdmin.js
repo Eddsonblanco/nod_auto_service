@@ -12,75 +12,19 @@ import {
   IconButton,
   Typography,
   MenuItem,
-  // Drawer,
   Divider,
-  // List,
-  // ListItem,
   Menu,
   Link,
   Button
-  // ListItemIcon,
-  // ListItemText
-  // Icon
 } from '@material-ui/core'
 // import capitalize from '../utils/capitalize'
 
-const drawerWidth = 210
-const drawerWidthMin = 56
+import Nav from 'components/Admin/Nav'
 
 const useStyles = makeStyles(theme => {
   console.log('===> XAVI <===: theme', theme)
 
   return ({
-    drawerContent: {
-      width: drawerWidthMin
-    },
-    // drawerContentIcon: {
-    //   '&:hover': {
-    //     backgroundColor: theme.palette.primary[600]
-    //   },
-    //   backgroundColor: theme.palette.primary[600],
-    //   color          : theme.palette.common.white,
-    //   height         : 50,
-    //   justifyContent : 'flex-end'
-    // },
-    drawerIcon: {
-      color: 'inherit'
-    },
-    drawerLabel: {
-      '& > span': {
-        fontSize: '1rem'
-      },
-      transition: 'transform 300ms ease 0s, opacity 300ms ease 0s'
-    },
-    drawerPaper: {
-      '&:hover': {
-        '& $drawerLabel': {
-          opacity  : 1,
-          transform: 'translate3d(0px, 0, 0)'
-        },
-        boxShadow: '0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)',
-        width    : drawerWidth
-      },
-      background : theme.palette.primary.main,
-      borderRight: '0',
-      overflow   : 'hidden',
-      position   : 'absolute',
-      transition : theme.transitions.create('width', {
-        duration: theme.transitions.duration.standard,
-        easing  : theme.transitions.easing.easeInOut
-      }),
-      whiteSpace: 'nowrap',
-      width     : drawerWidth,
-      zIndex    : 10
-    },
-    drawerPaperClose: {
-      '& $drawerLabel': {
-        opacity  : 0,
-        transform: 'translate3d(-25px, 0, 0)'
-      },
-      width: drawerWidthMin
-    },
     hiddenUpMobile: {
       [theme.breakpoints.up('md')]: {
         display: 'none'
@@ -315,7 +259,6 @@ function Dashboard(props) {
   } = history
 
   const classes = useStyles()
-  const [ isOpenDrawer, setToggleDrawer ] = useState(false)
   const [ anchorEl, setAnchorEl ] = useState(null)
 
   const _handleClickToggleDrawer = () => setToggleDrawer(!isOpenDrawer)
@@ -506,7 +449,7 @@ function Dashboard(props) {
         </Toolbar>
       </AppBar>
       <main className={classes.main}>
-
+        <Nav />
         <div className={classes.wrapperContent}>
           {children}
         </div>
