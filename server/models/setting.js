@@ -2,15 +2,11 @@ import mongoose from 'mongoose'
 import { connectMongoSpa } from '../config/database/mongoose'
 
 const settingShema = new mongoose.Schema({
-  Direction: {
-    required: false,
-    type    : String
-  },
-  Phone: {
-    required: false,
-    type    : String
-  },
   copyright: {
+    required: false,
+    type    : String
+  },
+  direction: {
     required: false,
     type    : String
   },
@@ -19,6 +15,10 @@ const settingShema = new mongoose.Schema({
     type    : String
   },
   logo: {
+    required: false,
+    type    : String
+  },
+  phone: {
     required: false,
     type    : String
   },

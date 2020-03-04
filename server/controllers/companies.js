@@ -2,15 +2,13 @@
 import { companies } from '../models'
 // import { escapeRegex } from '../utils/regex'
 
-// const create = async (data) => {
-//   try {
-//     const newEstimate = await estimate.create(data)
-
-//     return newEstimate
-//   } catch (err) {
-//     return err
-//   }
-// }
+const create = async (data) => {
+  try {
+    return await companies.create(data)
+  } catch (err) {
+    return err
+  }
+}
 
 const all = async () => {
   try {
@@ -25,6 +23,6 @@ const all = async () => {
 }
 
 export {
-  // create,
+  create,
   all
 }

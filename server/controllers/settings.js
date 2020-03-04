@@ -3,7 +3,7 @@ import { settings } from '../models'
 
 const all = async () => {
   try {
-    return await settings.find({})
+    return await settings.find({}).limit(1)
   } catch (err) {
     return err
   }
