@@ -1,5 +1,6 @@
 import { Types } from 'mongoose'
 import { settings } from '../models'
+import { removeImage } from '../utils'
 
 const all = async () => {
   try {
@@ -15,10 +16,14 @@ const update = async (req) => {
       id,
       ...others
     } = req.body
+
     const setting = settings(others)
 
-    if(req.file)
+    if(req.file) {
+      const { logo } = await settings.findOne({ _id: Types.ObjectId(id) }).select('logo')
+      removeImage(logo)
       setting.setImgUrl(req.file.filename)
+    }
 
     delete setting._doc._id
 

@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { v5 as uuidv5 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import multer from 'multer'
 
 const storage = multer.diskStorage({
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, dir)
   },
   filename: function(req, file, cb) {
-    const uuid = uuidv5('http://example.com/hello', uuidv5.URL)
+    const uuid = uuidv4()
     const ext = path.extname(file.originalname)
     cb(null, `${uuid}${ext}`)
   }
