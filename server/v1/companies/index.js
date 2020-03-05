@@ -1,4 +1,5 @@
 import express from 'express'
+import { upload } from '../../middleware/multer'
 
 import {
   create,
@@ -7,10 +8,10 @@ import {
 
 const router = express.Router()
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   try {
     // req.headers // token
-    const data = await create(req.body)
+    const data = await create(req)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })

@@ -2,9 +2,18 @@
 import { companies } from '../models'
 // import { escapeRegex } from '../utils/regex'
 
-const create = async (data) => {
+const create = async (req) => {
   try {
-    return await companies.create(data)
+    const {
+      alt_text
+    } = req.body
+    const company = companies({
+      alt_text
+    })
+    if(req.file)
+      company.setImgUrl(req.file.filename)
+
+    return await company.save()
   } catch (err) {
     return err
   }
