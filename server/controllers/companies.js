@@ -1,5 +1,4 @@
 
-// import { uploadImageFolderName } from '../utils'
 import { companies } from '../models'
 // import { escapeRegex } from '../utils/regex'
 

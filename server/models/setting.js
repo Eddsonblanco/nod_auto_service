@@ -32,6 +32,10 @@ const settingShema = new mongoose.Schema({
   }
 })
 
+settingShema.methods.setImgUrl = function setImgUrl(filename) {
+  this.logo = `/api/public/${filename}`
+}
+
 const setting = connectMongoSpa.model('Setting', settingShema)
 
 export default setting
