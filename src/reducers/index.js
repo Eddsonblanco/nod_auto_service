@@ -8,10 +8,10 @@ import settings from './settings'
 import companies from './companies'
 
 export default history => combineReducers({
-  router          : connectRouter(history),
-  [theme.store]   : theme.reducer,
-  [products.store]: products.reducer,
-  [settings.store]: settings.reducer,
+  router           : connectRouter(history),
+  [theme.store]    : theme.reducer,
+  [products.store] : products.reducer,
+  [settings.store] : settings.reducer,
   [companies.store]: companies.reducer
 })
 

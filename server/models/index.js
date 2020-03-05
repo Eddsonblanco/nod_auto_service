@@ -1,19 +1,19 @@
 import user from './user'
-import setting from './setting'
+import settings from './setting'
 import companies from './company'
 import banner from './banner'
-import insurance from './insurance'
-import service from './service'
+import insurances from './insurance'
+import services from './service'
 import social from './social'
 import reservation from './reservation'
 
 export {
   user,
-  setting,
+  settings,
   companies,
   banner,
-  insurance,
-  service,
+  insurances,
+  services,
   social,
   reservation
 }

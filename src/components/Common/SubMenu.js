@@ -2,12 +2,11 @@ import React from 'react'
 import  './subMenu.scss'
 // import '../Common/colors.scss'
 import {
- 
-  Link,
-  
-} from "react-router-dom";
+
+  Link
+
+} from 'react-router-dom'
 // import { makeStyles } from '@material-ui/styles'
-import { CssBaseline, Typography,  } from '@material-ui/core'
 
 // const useStyles = makeStyles({
 //   header: {
@@ -43,19 +42,18 @@ const SubMenu = () => {
 
   return (
     <subMenu className='subMenu'>
-      <CssBaseline />
       <div className='subMenuContainer'>
         <ul className='subMenuList'>
-            <li className='subMenuItem'>
-                <Link to="#">All our services</Link>
-            </li>
-            <li className='subMenuItem' >
-                < Link to="#">submenu2</Link>
-            </li>
-            <li className='subMenuItem' >
-                < Link to="#">submenu3</Link>
-            </li>
-        
+          <li className='subMenuItem'>
+            <Link to='#'>All our services</Link>
+          </li>
+          <li className='subMenuItem' >
+            <Link to='#'>submenu2</Link>
+          </li>
+          <li className='subMenuItem' >
+            <Link to='#'>submenu3</Link>
+          </li>
+
         </ul>
       </div>
     </subMenu>

@@ -1,26 +1,24 @@
 import express from 'express'
-import { upload } from '../../middleware/multer'
 
 import {
-  create,
-  all
-} from '../../controllers/companies'
+  all,
+  create
+} from '../../controllers/insurance'
 
 const router = express.Router()
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    // req.headers // token
-    const data = await create(req)
+    const data = await all(req.body)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })
   }
 })
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const data = await all(req.query)
+    const data = await create(req.body)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })

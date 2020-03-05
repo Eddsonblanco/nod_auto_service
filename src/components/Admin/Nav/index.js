@@ -6,8 +6,7 @@ import {
   ListItem,
   Link,
   ListItemIcon,
-  ListItemText,
-  Icon
+  ListItemText
 } from '@material-ui/core'
 
 import {
@@ -325,7 +324,7 @@ const Nav = props => {
 
   const classes = useStyles()
 
-  const [ isOpenDrawer, setToggleDrawer ] = useState(false)
+  const [ isOpenDrawer ] = useState(false)
 
   return (
     <div className={classes.drawerContent}>

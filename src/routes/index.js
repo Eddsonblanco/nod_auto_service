@@ -15,9 +15,17 @@ const Main = loadable(() => import('../containers/layouts/Main'), {
   fallback: <Loading />
 })
 
+// admin
+
 const Dashboard = loadable(() => import('../containers/views/Admin/Dashboard'), {
   fallback: <Loading />
 })
+
+const Settings = loadable(() => import('../containers/views/Admin/Settings'), {
+  fallback: <Loading />
+})
+
+// main
 
 const Home = loadable(() => import('../containers/views/Main/Home'), {
   fallback: <Loading />
@@ -39,7 +47,7 @@ export default history => {
           <MainAdmin>
             <Switch>
               <Route component={Dashboard} exact path='/admin/dashboard' />
-              {/* <Route component={Setting} path='/admin/setting' /> */}
+              <Route component={Settings} path='/admin/settings' />
             </Switch>
           </MainAdmin>
         </Route>

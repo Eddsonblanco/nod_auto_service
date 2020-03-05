@@ -1,16 +1,25 @@
+
 // import { uploadImageFolderName } from '../utils'
 import { companies } from '../models'
 // import { escapeRegex } from '../utils/regex'
 
-// const create = async (data) => {
-//   try {
-//     const newEstimate = await estimate.create(data)
+const create = async (req) => {
+  try {
+    const {
+      alt_text
+    } = req.body
+    const company = companies({
+      alt_text
+    })
 
-//     return newEstimate
-//   } catch (err) {
-//     return err
-//   }
-// }
+    if(req.file)
+      company.setImgUrl(req.file.filename)
+
+    return await company.save()
+  } catch (err) {
+    return err
+  }
+}
 
 const all = async () => {
   try {
@@ -25,6 +34,6 @@ const all = async () => {
 }
 
 export {
-  // create,
+  create,
   all
 }

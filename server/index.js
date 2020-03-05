@@ -9,6 +9,7 @@ router.use((req, res, next) => {
   next()
 })
 
+router.use('/public', express.static(`${__dirname}/storage/imgs`))
 router.use('/v1', v1)
 
 export default router
