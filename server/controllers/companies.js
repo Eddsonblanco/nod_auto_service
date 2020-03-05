@@ -1,3 +1,4 @@
+
 // import { uploadImageFolderName } from '../utils'
 import { companies } from '../models'
 // import { escapeRegex } from '../utils/regex'
@@ -10,6 +11,7 @@ const create = async (req) => {
     const company = companies({
       alt_text
     })
+
     if(req.file)
       company.setImgUrl(req.file.filename)
 

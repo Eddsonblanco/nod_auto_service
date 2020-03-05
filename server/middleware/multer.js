@@ -1,17 +1,22 @@
 import fs from 'fs'
 import path from 'path'
+import { v5 as uuidv5 } from 'uuid'
 import multer from 'multer'
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    let dir = path.join(__dirname, '../', 'storage/imgs')
+    let dir = path.resolve(__dirname, '../../', 'storage/imgs')
     if(!fs.existsSync(dir))
-      fs.mkdirSync(dir)
+      fs.mkdirSync(dir, {
+        recursive: true
+      })
 
     cb(null, dir)
   },
   filename: function(req, file, cb) {
-    cb(null, file.originalname)
+    const uuid = uuidv5('http://example.com/hello', uuidv5.URL)
+    const ext = path.extname(file.originalname)
+    cb(null, `${uuid}${ext}`)
   }
 })
 

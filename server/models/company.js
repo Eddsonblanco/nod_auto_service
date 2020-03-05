@@ -13,8 +13,7 @@ const companySchema = new mongoose.Schema({
 })
 
 companySchema.methods.setImgUrl = function setImgUrl(filename) {
-  console.log('===> XAVI <===: setImgUrl -> filename', filename)
-  this.image = '/api/public/prueba.jpg'
+  this.image = `/api/public/${filename}`
 }
 
 const company = connectMongoSpa.model('Company', companySchema)
