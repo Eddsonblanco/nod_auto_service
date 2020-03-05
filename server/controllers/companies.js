@@ -1,5 +1,6 @@
 
 import { companies } from '../models'
+import { Types } from 'mongoose'
 // import { escapeRegex } from '../utils/regex'
 
 const create = async (req) => {
@@ -32,7 +33,16 @@ const all = async () => {
   }
 }
 
+const remove = async (id) => {
+  try {
+    return acompanies.deleteOne({ _id: Types.ObjectId(id) }).lean()
+  } catch (err) {
+    return err
+  }
+}
+
 export {
   create,
-  all
+  all,
+  remove
 }
