@@ -50,8 +50,33 @@ const remove = async (id) => {
   }
 }
 
+const edit = async (req) => {
+  try {
+    const {
+      id,
+      ...others
+    } = req.body
+
+    const company = companies(others)
+
+    if(req.file) {
+      const { image } = await companies.findOne({ _id: Types.ObjectId(id) }).select('image')
+      removeImage(image)
+      company.setImgUrl(req.file.filename)
+    }
+
+    delete company._doc._id
+
+    return await companies.findOneAndUpdate({ _id: Types.ObjectId(id) },
+      { $set: company },
+      { 'new': true, upsert: true })
+  } catch (err) {
+    return err
+  }
+}
 export {
   create,
   all,
-  remove
+  remove,
+  edit
 }
