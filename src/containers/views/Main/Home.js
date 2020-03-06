@@ -1,10 +1,8 @@
 import React from 'react'
 
 // import { makeStyles } from '@material-ui/styles'
-import SubMenu from 'components/Common/SubMenu'
-import Footer from 'components/Common/Footer'
+
 import Companies from 'components/Companies'
-import Header from 'components/Common/Header'
 import Banner from 'components/Banner/Banner'
 
 // const useStyles = makeStyles({
@@ -43,11 +41,8 @@ export default function Home() {
 
   return (
     <div>
-      <Header />
-      <SubMenu />
       <Banner />
       <Companies />
-      <Footer />
     </div>
   )
 }

@@ -3,7 +3,9 @@ import { upload } from '../../middleware/multer'
 
 import {
   create,
-  all
+  all,
+  remove,
+  edit
 } from '../../controllers/companies'
 
 const router = express.Router()
@@ -24,6 +26,29 @@ router.get('/', async (req, res) => {
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })
+  }
+})
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const data = await remove(id)
+
+    res.status(200).json({ data, success: true })
+  } catch (err) {
+    res.status(500).send({ error: err.message, success: false })
+  }
+})
+
+router.put('/', upload.single('image'), async (req, res) => {
+  try {
+    // const { id } = req.params
+
+    const data = await edit(req)
+    res.status(200).json({ data, success: true })
+  } catch (err) {
+    res.status(500).json({ error: err.message, success: false })
   }
 })
 

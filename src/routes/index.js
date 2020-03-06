@@ -31,6 +31,19 @@ const Home = loadable(() => import('../containers/views/Main/Home'), {
   fallback: <Loading />
 })
 
+const Contact = loadable(() => import('../containers/views/Main/Contact'), {
+  fallback: <Loading />
+})
+
+const Services = loadable(() => import('../containers/views/Main/Services'), {
+  fallback: <Loading />
+})
+const Faq = loadable(() => import('../containers/views/Main/Faq'), {
+  fallback: <Loading />
+})
+const AboutUs = loadable(() => import('../containers/views/Main/AboutUs'), {
+  fallback: <Loading />
+})
 export default history => {
   // const pathUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/'
 
@@ -56,6 +69,10 @@ export default history => {
           <Main>
             <Switch>
               <Route component={Home} exact path='/' />
+              <Route component={Contact} exact path='/contact' />
+              <Route component={Services} exact path='/services' />
+              <Route component={Faq} exact path='/faq' />
+              <Route component={AboutUs} exact path='/aboutUs' />
             </Switch>
           </Main>
         </Route>

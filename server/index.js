@@ -1,5 +1,8 @@
 import express from 'express'
+import path from 'path'
 import v1 from './v1'
+
+const dir = path.resolve(__dirname, '../', 'storage/imgs')
 
 const router = express.Router()
 
@@ -9,7 +12,7 @@ router.use((req, res, next) => {
   next()
 })
 
-router.use('/public', express.static(`${__dirname}/storage/imgs`))
+router.use('/public', express.static(dir))
 router.use('/v1', v1)
 
 export default router
