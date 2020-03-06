@@ -1,17 +1,81 @@
-$color-primary: #363237;
-$color-text: #e2e2e2;
+$color-grey: #353535;
+$color-text: #fff;
+$color-HL: #f64e4e;
 
 
+
+@mixin flag-usa() {
+  @include ratio(10 / 19);
+  $unit: $width / 24700;
+  $red: #ba0c2f;
+  $blue: #012169;
+  $white: #FFF;
+  $stripe-size: percentage(1/13);
+  $star-size: 800 * $unit;
+  $star-margin-left: 1646 * $unit;
+  $star-margin-top: 700 * $unit;
+  $star-even-offset-left: 823 * $unit;
+  $star-even-offset-top: 700 * $unit;
+  $star-odd-offset-left: 1646 * $unit;
+  $star-odd-offset-top: 1400 * $unit;
+  $canton-width: 9876 * $unit;
+  $canton-height: 7000 * $unit; 
+
+
+  @include lines($red, $stripe-size,
+                 $white, $stripe-size,
+                 $red, $stripe-size,
+                 $white, $stripe-size,
+                 $red, $stripe-size,
+                 $white, $stripe-size,
+                 $red, $stripe-size,
+                 $white, $stripe-size,
+                 $red, $stripe-size,
+                 $white, $stripe-size,
+                 $red, $stripe-size,
+                 $white, $stripe-size,
+                 $red, $stripe-size);
+  &:before {
+    @include rectangle($blue, $canton-width, $canton-height);
+  }
+  &:after {
+    @include symbol($UTF8_BLACK_STAR, transparent, $star-size);
+    $shadows: ();
+    @for $y from 0 to 9 {
+      @for $x from 0 to 6 {
+        $is_odd: ($y % 2 == 1);
+        $is_last: ($x == 5);
+
+        $offset-left: $star-even-offset-left;
+        $offset-top: $star-even-offset-top;
+        // Slightly move even rows on the right
+        @if ($is_odd) {
+          $offset-left: $star-odd-offset-left;
+        }
+
+        // Do not display the 6th star of odd lines
+        @if (not ($is_odd and $is_last)) {
+          $left: ($offset-left + ($x * $star-margin-left));
+          $top: ($offset-top + ($y * $star-margin-top));
+          $shadows: append($shadows, $left $top 0px $white, comma);
+        }
+      }
+    }
+    text-shadow: $shadows;
+  }
+};
 
 
 
 
 .header{
+    font-family: 'Poppins', sans-serif;
     color: $color-text;
-    background-color: $color-primary;
-    height: 100px;
+    background-color: $color-grey;
+    height: 60px;
     display: flex;
     align-items: center;
+    font-size: 16px;
     
 
     .headerContainer{
@@ -23,17 +87,35 @@ $color-text: #e2e2e2;
         .headerLeft{
             display: flex;
             .headerLogoContainer{
-                margin-right: 50px;
+                margin-right: 30px;
             }
             ul{
                 display: flex;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                
                 li{
                     color: $color-text;
                     margin-right: 30px;
                     padding: 5px;
                     list-style: none;
+                    display: flex;
+                    align-items: stretch;
+                    
+                    height: 100%;
+                    
+                li:hover {
+                  color: $color-text;
+                  background-color: $color-HL;
+                  
+                }
+                    
                     a{
-                        color: $color-text;
+                      display: flex;
+                      align-items: center;
+                      color: $color-text;
+                      padding: 0 20px;
                     }
                     a:link {
                         
@@ -45,7 +127,8 @@ $color-text: #e2e2e2;
                       }
                       
                     a:hover {
-                        text-decoration: underline;
+                        background-color: $color-HL ;
+                        
                       }
                       
                     a:active {
@@ -58,11 +141,13 @@ $color-text: #e2e2e2;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            font-size: 16px;
             a{
-                margin-left: 100px;
-                padding: 10px;
-                border: solid white 1px;
-                border-radius: 25px;
+
+                margin-left: 50px;
+                padding: 5px 10PX;
+                border-radius: 30px;
+                border: solid 1px $color-text;  
             }
             a{
                 color: $color-text;
@@ -71,19 +156,43 @@ $color-text: #e2e2e2;
                 
                 text-decoration: none;
               }
-              
             a:visited {
                 text-decoration: none;
-              }
-              
+              } 
             a:hover {
                 text-decoration: none;
                 cursor: pointer;
-              }
-              
+                background-color: $color-HL;
+              } 
             a:active {
                 text-decoration: underline;
               }
         }
     }
+    .container-language{
+      display: flex;
+      align-items: center;
+
+      .vertical-line{
+        
+        background-color: $color-HL;
+        border-left: solid 1px $color-text;
+        height: 20px;
+        margin-right: 10px
+      }
+      .language{
+        margin-right: 10px;
+      }
+      .language-circle{
+        width: 17px;
+        height: 17px;
+        border: solid 1px $color-text; 
+        border-radius: 50%;
+        margin-right: 10px
+      }
+
+
+    }
+
 }
+

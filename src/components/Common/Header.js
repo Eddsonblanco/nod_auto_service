@@ -1,6 +1,7 @@
 import React from 'react'
 import  './header.scss'
 import '../Common/colors.scss'
+import flag  from './icons/united-states-of-america.svg'
 
 import {
 
@@ -68,12 +69,20 @@ const Header = () => {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/services'>Services</Link></li>
             <li><Link to='/contact'>Contact</Link></li>
-            <li><Link to='/admin'>admin</Link></li>
+            <li><Link to='/aboutus'>About us</Link></li>
+            <li><Link to='/faq'>FAQ</Link></li>
+            <li><Link to='/admin'>Admin</Link></li>
           </ul>
         </div>
         <div className='headerRight'>
-          <Typography>+1 510 555 55 55</Typography>
+          <Typography>(415) 988-7557 </Typography>
           <a className='btnAppointment' to='/appoiment'>GET AN APPOINTMENT</a>
+        </div>
+        <div className='container-language '>
+          <div className='vertical-line'></div>
+          <p className='language'>EN</p>
+          <img className='language-circle' src='flag'></img>
+          <img src='./icons/down-arrow.svg' ></img>
         </div>
       </div>
     </header>
