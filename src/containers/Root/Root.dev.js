@@ -18,7 +18,9 @@ const theme = createMuiTheme({
         color: '#fff'
       },
       root: {
-        borderRadius: 30
+        borderRadius: 30,
+        fontSize    : '0.8125rem',
+        padding     : '13px 40px'// '16px 40px'
       }
     }
   },
