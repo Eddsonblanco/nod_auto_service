@@ -10,10 +10,19 @@ import {
 // import Companies from 'components/Companies'
 import Banner from 'components/Banner/Banner'
 import CardService from 'components/CardService'
+import Testimony from 'components/Testimony'
 
 const useStyles = makeStyles({
   servicesTitle: {
     marginBottom: 40
+  },
+  testimonials: {
+    paddingTop: 60
+  },
+  testimonialsTitle: {
+    color       : '#353535',
+    fontWeight  : 600,
+    marginBottom: 60
   }
 })
 
@@ -44,6 +53,18 @@ export default function Home() {
           }
         </Grid>
       </Container>
+
+      <Container className={classes.testimonials} maxWidth='lg'>
+        <Typography
+          align='center'
+          className={classes.testimonialsTitle}
+          variant='h5'>
+          What people say about us
+        </Typography>
+
+        <Testimony />
+      </Container>
+
     </div>
   )
 }

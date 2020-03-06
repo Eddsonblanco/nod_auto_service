@@ -30,15 +30,15 @@ const useStyles = makeStyles({
       '& $title': {
         color: '#fff'
       },
-      background  : 'rgba(246, 78, 78, 0.57)',
-      borderColor : 'rgba(246, 78, 78, 0.57)',
-      borderRadius: 12,
-      boxShadow   : '0 3px 20px 0 rgba(0, 0, 0, 0.16)',
-      cursor      : 'pointer'
+      background : 'rgba(246, 78, 78, 0.57)',
+      borderColor: 'rgba(246, 78, 78, 0.57)',
+      boxShadow  : '0 3px 20px 0 rgba(0, 0, 0, 0.16)',
+      cursor     : 'pointer'
       // transform   : 'scale(1.1)'
     },
-    borderColor: '#d5d5d5',
-    minWidth   : 275
+    borderColor : '#d5d5d5',
+    borderRadius: 12,
+    minWidth    : 275
   },
   title: {
     color        : '#353535',
