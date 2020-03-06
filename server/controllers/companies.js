@@ -1,6 +1,8 @@
 
 import { companies } from '../models'
 import { Types } from 'mongoose'
+import { removeImage } from '../utils'
+
 // import { escapeRegex } from '../utils/regex'
 
 const create = async (req) => {
@@ -35,7 +37,14 @@ const all = async () => {
 
 const remove = async (id) => {
   try {
-    return acompanies.deleteOne({ _id: Types.ObjectId(id) }).lean()
+    const { image } = await companies.findOne({ _id: Types.ObjectId(id) }).select('image')
+
+    if(image)
+      removeImage(image)
+
+    const { deletedCount } = await companies.deleteOne({ _id: Types.ObjectId(id) }).lean()
+
+    return deletedCount
   } catch (err) {
     return err
   }
