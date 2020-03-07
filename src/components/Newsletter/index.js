@@ -82,7 +82,7 @@ const Newsletter = () => {
             <Button color='secondary' variant='contained'>
                 READ FAQ
             </Button>
-            <Button color='primary' variant='contained'>
+            <Button variant='outlined'>
                 GET An appoinment
             </Button>
           </div>
