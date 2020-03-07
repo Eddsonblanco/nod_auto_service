@@ -44,7 +44,6 @@ const styles = makeStyles(theme => {
         color                       : '#353535',
         fontSize                    : '1rem',
         fontWeight                  : 500,
-        marginBottom                : 10,
         marginBottom                : 20,
         marginRight                 : 15,
         [theme.breakpoints.up('md')]: {
@@ -53,7 +52,8 @@ const styles = makeStyles(theme => {
         },
         [theme.breakpoints.up('lg')]: {
           fontSize    : '1rem',
-          marginBottom: 0
+          marginBottom: 0,
+          marginRight : 30
         }
       },
       logoContainer: {
