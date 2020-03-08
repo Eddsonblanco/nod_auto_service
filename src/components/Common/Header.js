@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.common.white
   },
   callToAction: {
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main
+    },
     color                         : theme.palette.common.white,
     fontWeight                    : 300,
     paddingBottom                 : 6,
