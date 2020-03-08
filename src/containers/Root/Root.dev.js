@@ -17,20 +17,28 @@ const theme = createMuiTheme({
         },
         color: '#fff'
       },
+      outlined: {
+        border     : 'solid 1.5px #d5d5d5',
+        borderColor: '#d5d5d5',
+        color      : '#353535',
+        fontWeight : 600,
+        padding    : '14px 40px'
+      },
       root: {
         borderRadius: 30,
         fontSize    : '0.8125rem',
-        padding     : '13px 40px'// '16px 40px'
+        fontWeight  : 600,
+        padding     : '14px 40px'// '16px 40px'
       }
     }
   },
   palette: {
     primary: {
       main: '#f64e4e'
-    },
-    secondary: {
-      main: '#fff'
     }
+    // secondary: {
+    //   main: '#fff'
+    // }
   },
   typography: {
     fontFamily: [

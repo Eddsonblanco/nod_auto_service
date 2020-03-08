@@ -1,13 +1,22 @@
 import React from 'react'
+
+import { makeStyles } from '@material-ui/core/styles'
+
 import Footer from 'components/Common/Footer'
 import Header from 'components/Common/Header'
 import Newsletter from 'components/Newsletter'
 
+const styles = makeStyles({
+  body: {
+    background: '#fff'
+  }
+})
+
 export default ({ children }) => {
-  console.log('render Main')
+  const classes = styles()
 
   return (
-    <div>
+    <div className={classes.body}>
       <Header />
 
       {children}
