@@ -5,13 +5,13 @@ import Carousel from 'components/Common/Carousel'
 import { makeStyles } from '@material-ui/styles'
 import {
   Container,
-  Typography
-  // Grid
+  Typography,
+  Grid
 } from '@material-ui/core'
 
 // import Companies from 'components/Companies'
 import Banner from 'components/Banner/Banner'
-// import CardService from 'components/CardService'
+import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
 const useStyles = makeStyles({
@@ -35,7 +35,7 @@ export default function Home() {
     <div>
       <Banner />
       {/* <Companies /> */}
-      {/* <Container maxWidth='lg'>
+      <Container maxWidth='lg'>
         <Typography
           align='center'
           className={classes.servicesTitle}
@@ -54,9 +54,9 @@ export default function Home() {
             ))
           }
         </Grid>
-      </Container> */}
+      </Container>
 
-      <Container className={classes.testimonials} maxWidth='lg'>
+      <Container className={classes.testimonials} maxWidth={false}>
         <Typography
           align='center'
           className={classes.testimonialsTitle}
@@ -100,8 +100,11 @@ export default function Home() {
               }
             ]
           } : {
-            infinite  : true,
-            responsive: [
+            centerMode   : true,
+            centerPadding: '-250px',
+            infinite     : true,
+            marginInitial: '-250px',
+            responsive   : [
               {
                 breakpoint: 5000,
                 settings  : {

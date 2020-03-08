@@ -28,6 +28,7 @@ const ArrowSlider = ({ type, styles, className, onClick }) => (
   </Tooltip>
 )
 
+let marginInitialCarousel = '-250px'
 class Carousel extends PureComponent {
   state = {
     isClient: false
@@ -43,9 +44,11 @@ class Carousel extends PureComponent {
       children,
       settings: {
         responsive,
+        marginInitial,
         ...settings
       }
     } = this.props
+    marginInitialCarousel = marginInitial
 
     const { isClient } = this.state
 
@@ -183,10 +186,11 @@ const styles = ({
         content: "''",
         display: 'table'
       },
-      display : 'block',
-      left    : 0,
-      position: 'relative',
-      top     : 0
+      display   : 'block',
+      left      : 0,
+      marginLeft: marginInitialCarousel,
+      position  : 'relative',
+      top       : 0
     },
     '& .slick-vertical': {
       '& .slick-slide': {
