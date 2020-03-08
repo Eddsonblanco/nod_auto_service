@@ -33,7 +33,7 @@ export default function Home() {
     <div>
       <Banner />
       {/* <Companies /> */}
-      <Container maxWidth='lg'>
+      {/* <Container maxWidth='lg'>
         <Typography
           align='center'
           className={classes.servicesTitle}
@@ -52,7 +52,7 @@ export default function Home() {
             ))
           }
         </Grid>
-      </Container>
+      </Container> */}
 
       <Container className={classes.testimonials} maxWidth='lg'>
         <Typography

@@ -17,28 +17,42 @@ import SendIcon from '@material-ui/icons/Send'
 const useStyles = makeStyles(theme => ({
   actions: {
     '& > button:first-child': {
-      marginRight: 10
+      marginBottom: 10
     },
-    display       : 'flex',
-    justifyContent: 'center',
-    marginTop     : theme.spacing(2)
+    display                     : 'flex',
+    flexDirection               : 'column',
+    justifyContent              : 'center',
+    marginTop                   : theme.spacing(3),
+    [theme.breakpoints.up('sm')]: {
+      '& > button:first-child': {
+        marginBottom: 0,
+        marginRight : theme.spacing(4)
+      },
+      flexDirection: 'row'
+    }
   },
   container: {
     paddingBottom: '140px',
     paddingTop   : '140px'
   },
   form: {
-    marginTop: theme.spacing(4),
-    maxWidth : 490,
-    width    : '100%'
+    borderRadius: 12,
+    marginTop   : theme.spacing(4),
+    maxWidth    : 490,
+    width       : '100%'
+  },
+  inputRoot: {
+    borderRadius: 12
   },
   subtitle: {
-    fontWeight: '300'
+    fontWeight: '300',
+    textAlign : 'center'
   },
   title: {
     color       : '#353535',
     fontWeight  : '600',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    textAlign   : 'center'
   }
   // root: {
   //   '& > *': {
@@ -56,18 +70,20 @@ const Newsletter = () => {
         alignItems='center'
         container
         direction='column'
-        justify='flex-start'
-        spacing={3}>
+        justify='flex-start'>
         <Typography
           className={classes.title}
           variant='h5'>Subscribe to our newspaper</Typography>
-        <Typography className={classes.subtitle} variant='subtitle1'>Our service team is available 7 days a week:</Typography>
+        <Typography className={classes.subtitle} variant='subtitle2'>Our service team is available 7 days a week:</Typography>
         <Typography className={classes.subtitle} variant='subtitle1'>
             Monday - Friday 6 AM to 5 PM PSTSaturday - Sunday 7 AM - 4 PM PST
         </Typography>
 
         <FormControl className={classes.form} variant='outlined'>
           <OutlinedInput
+            classes={
+              { notchedOutline: classes.inputRoot }
+            }
             endAdornment={
               <InputAdornment position='end'>
                 <SendIcon />

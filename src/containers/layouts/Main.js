@@ -17,7 +17,7 @@ export default ({ children }) => {
 
   return (
     <div className={classes.body}>
-      <Header />
+      {/* <Header /> */}
 
       {children}
       <Newsletter />
