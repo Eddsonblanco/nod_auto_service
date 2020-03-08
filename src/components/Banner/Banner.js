@@ -1,13 +1,15 @@
 import React from 'react'
-import sample from '../Common/videoBanner/videoBanner.mp4'
+// import sample from '../Common/videoBanner/videoBanner.mp4'
+import './banner.scss'
 
 const Banner = () => {
   return (
-    <video
-      autoPlay className='videoTag' loop
-      muted width='100%'>
-      <source src={sample} type='video/mp4' />
-    </video>
+    <div className='banner-container'>
+      <div className='banner-bg'>
+
+      </div>
+
+    </div>
   )
 }
 
