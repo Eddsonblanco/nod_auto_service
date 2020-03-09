@@ -330,29 +330,35 @@ const Nav = props => {
       {
         _id  : 6,
         icon : <HomeIcon />,
+        title: 'Companies',
+        url  : '/admin/companies'
+      },
+      {
+        _id  : 7,
+        icon : <HomeIcon />,
         title: 'Insurances',
         url  : '/admin/insurances'
       },
       {
-        _id  : 7,
+        _id  : 8,
         icon : <HomeIcon />,
         title: 'Services',
         url  : '/admin/services'
       },
       {
-        _id  : 8,
+        _id  : 9,
         icon : <HomeIcon />,
         title: 'Reservations',
         url  : '/admin/reservations'
       },
       {
-        _id  : 9,
+        _id  : 10,
         icon : <HomeIcon />,
         title: 'Users',
         url  : '/admin/users'
       },
       {
-        _id  : 2,
+        _id  : 11,
         icon : <SettingsIcon />,
         title: 'Settings',
         url  : '/admin/settings'

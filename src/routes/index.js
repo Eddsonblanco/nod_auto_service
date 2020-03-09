@@ -53,6 +53,10 @@ const Users = loadable(() => import('../containers/views/Admin/Users'), {
   fallback: <Loading />
 })
 
+const Companies = loadable(() => import('../containers/views/Admin/Companies'), {
+  fallback: <Loading />
+})
+
 // main
 
 const Home = loadable(() => import('../containers/views/Main/Home'), {
@@ -92,6 +96,7 @@ export default history => {
               <Route component={HomeAdmin} path='/admin/home' />
               <Route component={About} path='/admin/about' />
               <Route component={ContactAdmin} path='/admin/contact' />
+              <Route component={Companies} path='/admin/companies' />
               <Route component={Insurances} path='/admin/insurances' />
               <Route component={Reservations} path='/admin/reservations' />
               <Route component={ServicesAdmin} path='/admin/services' />

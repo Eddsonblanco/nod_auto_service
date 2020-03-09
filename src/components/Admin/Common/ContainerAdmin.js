@@ -25,7 +25,7 @@ const ContainerAdmin = ({ children, title }) => {
 
   return (
     <Container
-      maxWidth='auto'
+      maxWidth={false}
       style={{
         backgroundColor: '#fff'
       }}>
