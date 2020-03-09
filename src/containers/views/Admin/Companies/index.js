@@ -16,6 +16,10 @@ import {
   Checkbox
 } from '@material-ui/core'
 
+import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+
 import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
 
 const styles = makeStyles(theme => ({
@@ -176,7 +180,14 @@ const Settings = (props) => {
     sortTable = {},
     withOrder = false,
     withCheckbox = false,
-    withMenuColumns = false
+    withMenuColumns = false,
+    withEdit = true,
+    withRemove = true,
+    withView = true,
+    withActions = true,
+    omView = () => {},
+    onEdit = () => { },
+    onRemove = () => { }
   } = props
   const classes = styles()
 
@@ -227,6 +238,10 @@ const Settings = (props) => {
                       )}
                     </TableCell>
                   ))}
+
+                  {
+                    withActions && <TableCell>Actions</TableCell>
+                  }
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -235,8 +250,7 @@ const Settings = (props) => {
 
                   return (
                     <TableRow
-                      hover key={index}
-                      onClick={() => _handleClickTableRow(_id)}>
+                      hover key={index}>
                       {withCheckbox ? (
                         <TableCell padding='checkbox'>
                           <Checkbox
@@ -267,7 +281,18 @@ const Settings = (props) => {
                             )
                         }
                       })}
-                      {withMenuColumns ? (<TableCell />) : null}
+                      <TableCell align='left'>
+                        {
+                          withView && <RemoveRedEyeIcon onClick={() => omView(_id)} />
+                        }
+                        {
+                          withEdit && <EditIcon onClick={() => onEdit(_id)} />
+                        }
+                        {
+                          withRemove && <DeleteIcon onClick={() => onRemove(_id)} />
+                        }
+                        {withMenuColumns ? (<TableCell />) : null}
+                      </TableCell>
                     </TableRow>
                   )
                 }) : (
