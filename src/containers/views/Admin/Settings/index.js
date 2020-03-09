@@ -1,14 +1,46 @@
 import React from 'react'
 
-import { Grid, TextField, Button } from '@material-ui/core'
+import {
+  Grid,
+  TextField
+} from '@material-ui/core'
 
-const Settings = (props) => {
-  console.log('===> XAVI <===: Settings -> props', props)
+import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
+import TabsAdmin from 'components/Admin/Common/TabsAdmin'
+
+const Settings = () => {
+  const info = (<>
+    <TextField
+      fullWidth
+      helperText='Full width!'
+      id='standard-full-width'
+      InputLabelProps={{
+        shrink: true
+      }}
+      label='Title'
+      margin='normal'
+      placeholder='Placeholder'
+      style={{ margin: 8 }} />
+  </>)
 
   return (
-    <Grid container>
-      <Grid item>
-        <TextField
+    <ContainerAdmin title='Settings'>
+      <Grid container>
+        <Grid item xs>
+          <TabsAdmin
+            tabContent={[
+              info
+            ]}
+            tabHeader={[
+              'Info',
+              'Social',
+              'Identity',
+              'Seo',
+              'Form'
+            ]}
+            tabName='settings' />
+
+          {/* <TextField
           fullWidth
           helperText='Full width!'
           id='standard-full-width'
@@ -92,9 +124,11 @@ const Settings = (props) => {
           placeholder='Placeholder'
           style={{ margin: 8 }} />
 
-        <Button color='primary' variant='contained'>Save</Button>
+        <Button color='primary' variant='contained'>Save</Button> */}
+        </Grid>
       </Grid>
-    </Grid>
+    </ContainerAdmin>
+
   )
 }
 
