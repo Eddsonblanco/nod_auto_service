@@ -33,6 +33,7 @@ const ContainerAdmin = ({ children, title }) => {
         <Typography className={classes.title} variant='h5'>{title}</Typography>
         {children}
       </Grid>
+
     </Container>
   )
 }
