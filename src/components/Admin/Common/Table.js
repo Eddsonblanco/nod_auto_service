@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -11,12 +11,21 @@ import {
   TableRow,
   Typography,
   TableSortLabel,
-  Checkbox
+  Checkbox,
+  Dialog,
+  DialogTitle,
+  Slide,
+  DialogActions,
+  Button
 } from '@material-ui/core'
 
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 const styles = makeStyles(theme => ({
   actionIcon: {
@@ -170,95 +179,108 @@ export default (props) => {
   } = props
   const classes = styles()
 
+  const [ openAlert, setOpenAlert ] = useState(false)
+  const [ currentId, setCurrentId ] = useState(null)
+
   const visibleColumns = columns.filter(({ visible = true }) => visible)
   const { orderBy = '', sort = 'asc' } = sortTable
 
   const onHandleSelectAll = () => { }
 
+  const _handleClickRemove = id => {
+    if(!openAlert)
+      setCurrentId(id)
+    else
+      setCurrentId(null)
+
+    setOpenAlert(!openAlert)
+  }
+
   return (
-    <TableContainer>
-      <Table aria-label='simple table' className={classes.table}>
-        <TableHead>
-          <TableRow>
+    <>
+      <TableContainer>
+        <Table aria-label='simple table' className={classes.table}>
+          <TableHead>
+            <TableRow>
 
-            {withCheckbox ? (
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  color='primary'
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                  onChange={(e) => onHandleSelectAll(e.target.checked)} />
-              </TableCell>
-            ) : null}
+              {withCheckbox ? (
+                <TableCell padding='checkbox'>
+                  <Checkbox
+                    color='primary'
+                    inputProps={{ 'aria-label': 'select all desserts' }}
+                    onChange={(e) => onHandleSelectAll(e.target.checked)} />
+                </TableCell>
+              ) : null}
 
-            {visibleColumns.map(({ key, align, minWidth, label, ordering }) => (
-              <TableCell
-                align={align}
-                classes={{
-                  stickyHeader: classes.stickyHeader
-                }}
-                key={key}
-                sortDirection={orderBy === key ? sort : false}
-                style={{ minWidth }}>
-                {withOrder && ordering ? (
-                  <TableSortLabel
-                    active={orderBy === key}
-                    direction={orderBy === key ? sort : 'asc'}
-                    onClick={() => _handleSortTable(key, sortTable)}>
+              {visibleColumns.map(({ key, align, minWidth, label, ordering }) => (
+                <TableCell
+                  align={align}
+                  classes={{
+                    stickyHeader: classes.stickyHeader
+                  }}
+                  key={key}
+                  sortDirection={orderBy === key ? sort : false}
+                  style={{ minWidth }}>
+                  {withOrder && ordering ? (
+                    <TableSortLabel
+                      active={orderBy === key}
+                      direction={orderBy === key ? sort : 'asc'}
+                      onClick={() => _handleSortTable(key, sortTable)}>
+                      <Typography className={classes.headerTable} variant='body1'>{label}</Typography>
+                    </TableSortLabel>
+                  ) : (
                     <Typography className={classes.headerTable} variant='body1'>{label}</Typography>
-                  </TableSortLabel>
-                ) : (
-                  <Typography className={classes.headerTable} variant='body1'>{label}</Typography>
-                )}
-              </TableCell>
-            ))}
+                  )}
+                </TableCell>
+              ))}
 
-            {
-              withActions && <TableCell>Actions</TableCell>
-            }
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.length ? rows.map((row, index) => {
-            const { _id, selected = false, disabled = false } = row
+              {
+                withActions && <TableCell>Actions</TableCell>
+              }
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.length ? rows.map((row, index) => {
+              const { _id, selected = false, disabled = false } = row
 
-            return (
-              <TableRow
-                hover key={index}>
+              return (
+                <TableRow
+                  hover key={index}>
 
-                {withCheckbox ? (
-                  <TableCell padding='checkbox'>
-                    <Checkbox
-                      checked={selected}
-                      color='primary'
-                      disabled={disabled}
-                      onClick={(e) => _handleClickSelectItem(e, _id)} />
-                  </TableCell>
-                ) : null}
+                  {withCheckbox ? (
+                    <TableCell padding='checkbox'>
+                      <Checkbox
+                        checked={selected}
+                        color='primary'
+                        disabled={disabled}
+                        onClick={(e) => _handleClickSelectItem(e, _id)} />
+                    </TableCell>
+                  ) : null}
 
-                {visibleColumns.map(({ key, align, type }) => {
-                  switch (type) {
-                    case 'image':
-                      return (
-                        <TableCell align={align || 'left'} key={key}>
-                          <div className={classes.imageContent}>
-                            <img src={row[key]} />
-                          </div>
-                        </TableCell>
-                      )
+                  {visibleColumns.map(({ key, align, type }) => {
+                    switch (type) {
+                      case 'image':
+                        return (
+                          <TableCell align={align || 'left'} key={key}>
+                            <div className={classes.imageContent}>
+                              <img src={row[key]} />
+                            </div>
+                          </TableCell>
+                        )
 
-                    default:
-                      return (
-                        <TableCell align={align || 'left'} key={key}>
-                          <Typography className={classes.bodyTable} variant='body1'>
-                            {Array.isArray(row[key]) ? (row[key].join(', ')) : row[key]}
-                          </Typography>
-                        </TableCell>
-                      )
-                  }
-                })}
+                      default:
+                        return (
+                          <TableCell align={align || 'left'} key={key}>
+                            <Typography className={classes.bodyTable} variant='body1'>
+                              {Array.isArray(row[key]) ? (row[key].join(', ')) : row[key]}
+                            </Typography>
+                          </TableCell>
+                        )
+                    }
+                  })}
 
-                {
-                  withActions &&
+                  {
+                    withActions &&
                   <TableCell align='left'>
                     {
                       withView && <RemoveRedEyeIcon className={classes.actionIcon} onClick={() => omView(_id)} />
@@ -267,22 +289,46 @@ export default (props) => {
                       withEdit && <EditIcon className={classes.actionIcon} onClick={() => onEdit(_id)} />
                     }
                     {
-                      withRemove && <DeleteIcon className={classes.actionIcon} onClick={() => onRemove(_id)} />
+                      withRemove && <DeleteIcon className={classes.actionIcon} onClick={() => _handleClickRemove(_id)} />
                     }
                     {withMenuColumns ? (<TableCell />) : null}
                   </TableCell>
-                }
+                  }
+                </TableRow>
+              )
+            }) : (
+              <TableRow>
+                <TableCell colSpan={visibleColumns.length} >
+                  <Typography align='center'>No hay registros para mostrar</Typography>
+                </TableCell>
               </TableRow>
-            )
-          }) : (
-            <TableRow>
-              <TableCell colSpan={visibleColumns.length} >
-                <Typography align='center'>No hay registros para mostrar</Typography>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Dialog
+        keepMounted
+        onClose={_handleClickRemove}
+        open={openAlert}
+        TransitionComponent={Transition}>
+        <DialogTitle id='alert-dialog-slide-title'>
+          Are you sure?
+        </DialogTitle>
+
+        <DialogActions>
+          <Button color='primary' onClick={_handleClickRemove} variant='text'>
+            Cancel
+          </Button>
+          <Button
+            color='primary' onClick={() => {
+              onRemove(currentId)
+              _handleClickRemove()
+            }} variant='contained'>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
