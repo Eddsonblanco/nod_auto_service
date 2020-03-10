@@ -23,6 +23,15 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
 
 const styles = makeStyles(theme => ({
+  actionIcon: {
+    '&:hover': {
+      color : theme.palette.grey[600],
+      cursor: 'pointer'
+    },
+    color      : theme.palette.grey[400],
+    fontSize   : '1.125rem',
+    marginRight: theme.spacing(1)
+  },
   buttonFooter: {
     fontSize: 12,
     width   : '100px'
@@ -136,7 +145,7 @@ const styles = makeStyles(theme => ({
   }
 }))
 
-const Settings = (props) => {
+const Companies = (props) => {
   const {
     rows = [
       {
@@ -201,7 +210,7 @@ const Settings = (props) => {
       actionSave={
         <Button color='secondary' variant='contained'>Save</Button>
       }
-      title='Settings'>
+      title='Companies List'>
       <Grid container>
         <Grid item xs>
           <TableContainer>
@@ -283,13 +292,13 @@ const Settings = (props) => {
                       })}
                       <TableCell align='left'>
                         {
-                          withView && <RemoveRedEyeIcon onClick={() => omView(_id)} />
+                          withView && <RemoveRedEyeIcon className={classes.actionIcon} onClick={() => omView(_id)} />
                         }
                         {
-                          withEdit && <EditIcon onClick={() => onEdit(_id)} />
+                          withEdit && <EditIcon className={classes.actionIcon} onClick={() => onEdit(_id)} />
                         }
                         {
-                          withRemove && <DeleteIcon onClick={() => onRemove(_id)} />
+                          withRemove && <DeleteIcon className={classes.actionIcon} onClick={() => onRemove(_id)} />
                         }
                         {withMenuColumns ? (<TableCell />) : null}
                       </TableCell>
@@ -312,4 +321,4 @@ const Settings = (props) => {
   )
 }
 
-export default Settings
+export default Companies
