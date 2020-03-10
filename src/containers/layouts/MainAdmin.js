@@ -22,6 +22,10 @@ import {
 import Nav from 'components/Admin/Nav'
 
 const useStyles = makeStyles(theme => ({
+  drawerContent: {
+    height  : '100%',
+    overflow: 'auto'
+  },
   hiddenUpMobile: {
     [theme.breakpoints.up('md')]: {
       display: 'none'

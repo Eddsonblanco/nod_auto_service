@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
   drawerContent: {
     width: drawerWidthMin
   },
+  drawerIcon: {
+    color: 'inherit'
+  },
   // drawerContentIcon: {
   //   '&:hover': {
   //     backgroundColor: theme.palette.primary[600]
@@ -40,9 +43,6 @@ const useStyles = makeStyles(theme => ({
   //   height         : 50,
   //   justifyContent : 'flex-end'
   // },
-  drawerIcon: {
-    color: 'inherit'
-  },
   drawerLabel: {
     '& > span': {
       fontSize: '1rem'
@@ -60,8 +60,9 @@ const useStyles = makeStyles(theme => ({
     },
     background : theme.palette.primary.main,
     borderRight: '0',
+    height     : '100%',
     overflow   : 'hidden',
-    position   : 'absolute',
+    position   : 'relative',
     transition : theme.transitions.create('width', {
       duration: theme.transitions.duration.standard,
       easing  : theme.transitions.easing.easeInOut
@@ -76,6 +77,9 @@ const useStyles = makeStyles(theme => ({
       transform: 'translate3d(-25px, 0, 0)'
     },
     width: drawerWidthMin
+  },
+  drawerRoot: {
+    height: '100%'
   },
   hiddenUpMobile: {
     [theme.breakpoints.up('md')]: {
@@ -365,7 +369,7 @@ const Nav = props => {
       }
 
     ],
-    isOpenDrawer = false
+    isOpenDrawer = true
   } = props
 
   const history = useHistory()
@@ -385,7 +389,8 @@ const Nav = props => {
           {
             [classes.drawerPaperClose]: !isOpenDrawer
           }
-        )
+        ),
+        root: classes.drawerRoot
       }}
       open={isOpenDrawer}
       variant='permanent'>
