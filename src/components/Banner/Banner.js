@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme =>({
     position  : 'relative'
   },
   wrapperTextBanner: {
-    alignContent  : 'center',
+    alignItems    : 'start',
     color         : theme.palette.common.white,
     display       : 'flex',
     flexDirection : 'column',
