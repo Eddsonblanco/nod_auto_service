@@ -100,11 +100,11 @@ export default function Home() {
               }
             ]
           } : {
-            centerMode   : true,
-            centerPadding: '-250px',
-            infinite     : true,
-            marginInitial: '-250px',
-            responsive   : [
+            centerMode: true,
+            // centerPadding: '-250px',
+            infinite  : true,
+            // marginInitial: '-250px',
+            responsive: [
               {
                 breakpoint: 5000,
                 settings  : {

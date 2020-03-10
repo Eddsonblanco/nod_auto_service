@@ -2,9 +2,13 @@ import axios from 'axios'
 
 require('axios-debug-log')
 
-const { REACT_APP_REST_API_LOCATION = 'http://localhost:5000', REACT_APP_API_VERSION = 'v1' } = process.env
+const {
+  REACT_APP_REST_API_LOCATION = 'http://localhost:',
+  REACT_APP_PORT_SERVER,
+  REACT_APP_API_VERSION = 'v1'
+} = process.env
 
-export const baseURL =  `${REACT_APP_REST_API_LOCATION}/api/${REACT_APP_API_VERSION}/`
+export const baseURL = `${REACT_APP_REST_API_LOCATION}${REACT_APP_PORT_SERVER || '5000'}/api/${REACT_APP_API_VERSION}/`
 
 function serialize(obj) {
   var str = []
@@ -15,7 +19,7 @@ function serialize(obj) {
 
 let _source, beforeRoute
 
-export const http = function() {
+export const http = function () {
   _source = axios.CancelToken.source()
 
   let instance = axios.create({
@@ -27,12 +31,13 @@ export const http = function() {
   return instance
 }
 
-export function Get(route) {
+export function Get(route, headers = {}, verify = true) {
   return new Promise((resolve, reject) => {
-    verifyRequestCancel(route)
-
+    if(verify) verifyRequestCancel(route)
     http()
-      .get(route)
+      .get(route, {
+        headers
+      })
       .then(res => {
         resolve(res.data)
       })
@@ -42,11 +47,11 @@ export function Get(route) {
   })
 }
 
-export function Post(route, json = {}) {
+export function Post(route, json = {}, headers = {}, verify = true) {
   return new Promise((resolve, reject) => {
-    verifyRequestCancel(route)
+    if(verify) verifyRequestCancel(route)
     http()
-      .post(route, json)
+      .post(route, json, { headers })
       .then(res => resolve(res.data))
       .catch(e => {
         reject({ type: axios.isCancel(e) ? 'cancel' : 'err', ...e })
@@ -54,11 +59,11 @@ export function Post(route, json = {}) {
   })
 }
 
-export function Put(route, json = {}) {
+export function Put(route, json = {}, headers = {}, verify = true) {
   return new Promise((resolve, reject) => {
-    verifyRequestCancel(route)
+    if(verify) verifyRequestCancel(route)
     http()
-      .put(route, json)
+      .put(route, json, { headers })
       .then(res => resolve(res.data))
       .catch(e => {
         reject({ type: axios.isCancel(e) ? 'cancel' : 'err', ...e })
@@ -66,11 +71,11 @@ export function Put(route, json = {}) {
   })
 }
 
-export function Delete(route, json = {}) {
+export function Delete(route, json = {}, headers = {}, verify = true) {
   return new Promise((resolve, reject) => {
-    verifyRequestCancel(route)
+    if(verify) verifyRequestCancel(route)
     http()
-      .delete(route, { data: json })
+      .delete(route, { data: json, headers })
       .then(res => resolve(res.data))
       .catch(e => {
         reject({ type: axios.isCancel(e) ? 'cancel' : 'err', ...e })
@@ -90,8 +95,8 @@ export function Patch(route, json = {}) {
   })
 }
 
-export function GetList(product, query) {
-  return Get(product + '/?' + serialize(query))
+export function GetList(product, query, headers = {}) {
+  return Get(product + '/?' + serialize(query), headers)
 }
 
 function verifyRequestCancel(route) {

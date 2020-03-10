@@ -25,6 +25,38 @@ const Settings = loadable(() => import('../containers/views/Admin/Settings'), {
   fallback: <Loading />
 })
 
+const HomeAdmin = loadable(() => import('../containers/views/Admin/Home'), {
+  fallback: <Loading />
+})
+
+const About = loadable(() => import('../containers/views/Admin/About'), {
+  fallback: <Loading />
+})
+
+const ContactAdmin = loadable(() => import('../containers/views/Admin/Contact'), {
+  fallback: <Loading />
+})
+
+const Insurances = loadable(() => import('../containers/views/Admin/Insurances'), {
+  fallback: <Loading />
+})
+
+const Reservations = loadable(() => import('../containers/views/Admin/Reservations'), {
+  fallback: <Loading />
+})
+
+const ServicesAdmin = loadable(() => import('../containers/views/Admin/Services'), {
+  fallback: <Loading />
+})
+
+const Users = loadable(() => import('../containers/views/Admin/Users'), {
+  fallback: <Loading />
+})
+
+const Companies = loadable(() => import('../containers/views/Admin/Companies'), {
+  fallback: <Loading />
+})
+
 // main
 
 const Home = loadable(() => import('../containers/views/Main/Home'), {
@@ -61,6 +93,14 @@ export default history => {
             <Switch>
               <Route component={Dashboard} exact path='/admin/dashboard' />
               <Route component={Settings} path='/admin/settings' />
+              <Route component={HomeAdmin} path='/admin/home' />
+              <Route component={About} path='/admin/about' />
+              <Route component={ContactAdmin} path='/admin/contact' />
+              <Route component={Companies} path='/admin/companies' />
+              <Route component={Insurances} path='/admin/insurances' />
+              <Route component={Reservations} path='/admin/reservations' />
+              <Route component={ServicesAdmin} path='/admin/services' />
+              <Route component={Users} path='/admin/users' />
             </Switch>
           </MainAdmin>
         </Route>

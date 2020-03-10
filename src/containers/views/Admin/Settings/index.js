@@ -1,100 +1,113 @@
 import React from 'react'
 
-import { Grid, TextField, Button } from '@material-ui/core'
+import {
+  Grid,
+  TextField,
+  Button
+} from '@material-ui/core'
 
-const Settings = (props) => {
-  console.log('===> XAVI <===: Settings -> props', props)
+import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
+import TabsAdmin from 'components/Admin/Common/TabsAdmin'
+
+const Settings = () => {
+  const info = (<>
+    <TextField
+      fullWidth
+      helperText='Full width!'
+      id='standard-full-width'
+      InputLabelProps={{
+        shrink: true
+      }}
+      label='Title'
+      margin='normal'
+      placeholder='Placeholder'
+      style={{ margin: 8 }} />
+  </>)
+
+  const social = (<>
+    <TextField
+      fullWidth
+      helperText='Full width!'
+      id='standard-full-width'
+      InputLabelProps={{
+        shrink: true
+      }}
+      label='Title'
+      margin='normal'
+      placeholder='Placeholder'
+      style={{ margin: 8 }} />
+  </>)
+
+  const identity = (<>
+    <TextField
+      fullWidth
+      helperText='Full width!'
+      id='standard-full-width'
+      InputLabelProps={{
+        shrink: true
+      }}
+      label='Title'
+      margin='normal'
+      placeholder='Placeholder'
+      style={{ margin: 8 }} />
+  </>)
+
+  const seo = (<>
+    <TextField
+      fullWidth
+      helperText='Full width!'
+      id='standard-full-width'
+      InputLabelProps={{
+        shrink: true
+      }}
+      label='Title'
+      margin='normal'
+      placeholder='Placeholder'
+      style={{ margin: 8 }} />
+  </>)
+
+  const form = (<>
+    <TextField
+      fullWidth
+      helperText='Full width!'
+      id='standard-full-width'
+      InputLabelProps={{
+        shrink: true
+      }}
+      label='Title'
+      margin='normal'
+      placeholder='Placeholder'
+      style={{ margin: 8 }} />
+  </>)
 
   return (
-    <Grid container>
-      <Grid item>
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Title'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Direction'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Phone'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Phone Extra'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Logo'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='copyright'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <TextField
-          fullWidth
-          helperText='Full width!'
-          id='standard-full-width'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Email contact'
-          margin='normal'
-          placeholder='Placeholder'
-          style={{ margin: 8 }} />
-
-        <Button color='primary' variant='contained'>Save</Button>
+    <ContainerAdmin
+      actionSave={
+        <Button color='secondary' variant='contained'>Save</Button>
+      }
+      title='Settings'>
+      <Grid container>
+        <Grid item xs>
+          <TabsAdmin
+            tabContent={[
+              info,
+              social,
+              identity,
+              seo,
+              form
+            ]}
+            tabHeader={[
+              'Info',
+              'Social',
+              'Identity',
+              'Seo',
+              'Form'
+            ]}
+            tabName='settings' />
+        </Grid>
       </Grid>
-    </Grid>
+    </ContainerAdmin>
+
   )
 }
 

@@ -158,7 +158,7 @@ export default function ButtonAppBar() {
 
   return (
     <div>
-      <AppBar className={classes.toolbarRoot} position='static'>
+      <AppBar className={classes.toolbarRoot} position='relative'>
         <Toolbar>
           <IconButton
             aria-label='menu'
