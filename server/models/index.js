@@ -1,16 +1,18 @@
 import user from './user'
 import settings from './setting'
-import companies from './company'
+import Companies from './company'
 import banner from './banner'
 import insurances from './insurance'
 import services from './service'
 import social from './social'
 import reservation from './reservation'
+import Datatables from './dataTable'
 
 export {
   user,
+  Datatables,
   settings,
-  companies,
+  Companies,
   banner,
   insurances,
   services,
