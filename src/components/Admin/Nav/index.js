@@ -12,8 +12,13 @@ import {
 
 import {
   Home as HomeIcon,
-  Settings as SettingsIcon
-  // Business as BusinessIcon,
+  Settings as SettingsIcon,
+  Pages as PagesIcon,
+  Business as BusinessIcon,
+  Security as SecurityIcon,
+  AssignmentTurnedIn as AssignmentTurnedInIcon,
+  Receipt as ReceiptIco,
+  Group as GroupIcon
   // Share as ShareIcon
 } from '@material-ui/icons'
 
@@ -309,55 +314,55 @@ const Nav = props => {
       },
       {
         _id  : 2,
-        icon : <HomeIcon />,
+        icon : <PagesIcon />,
         title: 'page home',
         url  : '/admin/home'
       },
       {
         _id  : 3,
-        icon : <HomeIcon />,
+        icon : <PagesIcon />,
         title: 'Page about',
         url  : '/admin/about'
       },
       {
         _id  : 4,
-        icon : <HomeIcon />,
+        icon : <PagesIcon />,
         title: 'page contact',
         url  : '/admin/conact'
       },
       {
         _id  : 5,
-        icon : <HomeIcon />,
+        icon : <PagesIcon />,
         title: 'Page service',
         url  : '/admin/service'
       },
       {
         _id  : 6,
-        icon : <HomeIcon />,
+        icon : <BusinessIcon />,
         title: 'Companies',
         url  : '/admin/companies'
       },
       {
         _id  : 7,
-        icon : <HomeIcon />,
+        icon : <SecurityIcon />,
         title: 'Insurances',
         url  : '/admin/insurances'
       },
       {
         _id  : 8,
-        icon : <HomeIcon />,
+        icon : <AssignmentTurnedInIcon />,
         title: 'Services',
         url  : '/admin/services'
       },
       {
         _id  : 9,
-        icon : <HomeIcon />,
+        icon : <ReceiptIco />,
         title: 'Reservations',
         url  : '/admin/reservations'
       },
       {
         _id  : 10,
-        icon : <HomeIcon />,
+        icon : <GroupIcon />,
         title: 'Users',
         url  : '/admin/users'
       },
