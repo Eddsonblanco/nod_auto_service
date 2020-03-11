@@ -77,6 +77,7 @@ const styles = makeStyles(theme => ({
 
 const InputImage = (props) => {
   const {
+    name = '',
     onImage = () => {}
   } = props
   const classes = styles()
@@ -86,13 +87,13 @@ const InputImage = (props) => {
   const _handleChangeImage = ev => {
     if(ev.target.files.length) {
       setCurentImage(URL.createObjectURL(ev.target.files[0]))
-      onImage(ev.target.files[0])
+      onImage({ file: ev.target.files[0], name })
     }
   }
 
   const _handleClickclear = () => {
     setCurentImage(null)
-    onImage(null)
+    onImage({ file: null, name })
   }
 
   return (

@@ -155,6 +155,10 @@ const Companies = () => {
     dispatch(removeCompany(id))
   }
 
+  const _handleClickConfirm = ev => {
+    console.log('===> XAVI <===: Companies -> ev', ev)
+  }
+
   return (
     <CrudTable
       btnAdd='New Company'
@@ -163,17 +167,18 @@ const Companies = () => {
         confirm: 'Confirm',
         form   : [
           {
-            key  : 'image',
             label: 'Image',
+            name : 'image',
             type : 'image'
           },
           {
-            key  : 'alt_text',
             label: 'Alt text',
+            name : 'alt_text',
             type : 'text'
           }
         ],
-        title: 'New Company'
+        onConfirm: _handleClickConfirm,
+        title    : 'New Company'
       }}
       table={{
         columns,

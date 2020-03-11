@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -12,6 +12,7 @@ import {
   DialogActions,
   TextField
 } from '@material-ui/core'
+import { useForm, Controller } from 'react-hook-form'
 
 import Table from 'components/Admin/Common/Table'
 import InputImage from './InputImage'
@@ -51,10 +52,30 @@ const CrudTable = props => {
       cancel: modalAddCancel = 'Cancel',
       confirm: modalAddConfirm = 'Confirm',
       form: modalAddForm = [],
-      title: titleModalAdd = 'New'
+      title: titleModalAdd = 'New',
+      onConfirm: onConfirmModalAdd = () => {}
     }
   } = props
   const classes = styles()
+  const methods = useForm()
+  const { handleSubmit, control } = methods
+
+  const [ inputs, setInputs ] = useState({})
+  // const { register, handleSubmit, watch, errors } = useForm()
+
+  const onSubmit = data => {
+    onConfirmModalAdd({
+      ...inputs,
+      ...data
+    })
+  }
+
+  const _handleChangeImage = ({ name, file }) => {
+    setInputs({
+      ...inputs,
+      [name]: file
+    })
+  }
 
   return (
     <Container
@@ -96,42 +117,46 @@ const CrudTable = props => {
         // onClose={handleClose}
         open={true}>
         <DialogTitle>{titleModalAdd}</DialogTitle>
-        <DialogContent>
-          {
-            modalAddForm.map((input, index) => {
-              switch (input.type) {
-                case 'image':
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            {
+              modalAddForm.map((input, index) => {
+                switch (input.type) {
+                  case 'image':
 
-                  return (
-                    <InputImage
-                      key={`${input.key}-${index}`} />
-                  )
-                case 'text':
+                    return (
+                      <InputImage
+                        key={`${input.name}-${index}`}
+                        name={input.name}
+                        onImage={_handleChangeImage} />
+                    )
+                  case 'text':
 
-                  return (
-                    <TextField
-                      autoFocus
-                      fullWidth
-                      id='name'
-                      key={`${input.key}-${index}`}
-                      label={input.label}
-                      margin='dense'
-                      type='email' />
-                  )
-                default:
-                  return
-              }
-            })
-          }
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus color='primary'>
-            {modalAddCancel}
-          </Button>
-          <Button autoFocus color='primary'>
-            {modalAddConfirm}
-          </Button>
-        </DialogActions>
+                    return (
+                      <Controller
+                        as={<TextField fullWidth label={input.label} margin='dense' />}
+                        control={control}
+                        defaultValue=''
+                        key={`${input.name}-${index}`}
+                        name={input.name} />
+                    )
+                  default:
+                    return
+                }
+              })
+            }
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus color='primary'>
+              {modalAddCancel}
+            </Button>
+
+            <Button autoFocus color='primary' type='submit'>
+              {modalAddConfirm}
+            </Button>
+
+          </DialogActions>
+        </form>
       </Dialog>
     </Container>
   )
