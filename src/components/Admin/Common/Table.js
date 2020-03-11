@@ -153,18 +153,7 @@ const styles = makeStyles(theme => ({
 export default (props) => {
   const {
     rows = [],
-    columns = [
-      // {
-      //   _id     : 1,
-      //   align   : 'left',
-      //   key     : 'image',
-      //   label   : 'Image',
-      //   minWidth: '200px',
-      //   ordering: 1,
-      //   type    : 'image',
-      //   visible : true
-      // },
-    ],
+    columns = [],
     sortTable = {},
     withOrder = false,
     withCheckbox = false,
@@ -175,7 +164,12 @@ export default (props) => {
     withActions = false,
     omView = () => { },
     onEdit = () => { },
-    onRemove = () => { }
+    onRemove = () => { },
+    modalRemoveMessage = {
+      cancel : 'Cancel',
+      confirm: 'Confirm',
+      title  : 'Are you sure?'
+    }
   } = props
   const classes = styles()
 
@@ -235,7 +229,7 @@ export default (props) => {
               ))}
 
               {
-                withActions && <TableCell>Actions</TableCell>
+                (withActions && rows.length) ? <TableCell>Actions</TableCell> : null
               }
             </TableRow>
           </TableHead>
@@ -313,19 +307,19 @@ export default (props) => {
         open={openAlert}
         TransitionComponent={Transition}>
         <DialogTitle id='alert-dialog-slide-title'>
-          Are you sure?
+          {modalRemoveMessage.title}
         </DialogTitle>
 
         <DialogActions>
           <Button color='primary' onClick={_handleClickRemove} variant='text'>
-            Cancel
+            {modalRemoveMessage.cancel}
           </Button>
           <Button
             color='primary' onClick={() => {
               onRemove(currentId)
               _handleClickRemove()
             }} variant='contained'>
-            Agree
+            {modalRemoveMessage.confirm}
           </Button>
         </DialogActions>
       </Dialog>

@@ -2,15 +2,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  Grid,
-  Button
-} from '@material-ui/core'
-
-import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
-import Table from 'components/Admin/Common/Table'
 
 import companiesDucks from 'reducers/companies'
+import CrudTable from 'components/Admin/Common/CrudTable'
 
 const {
   getCompanies,
@@ -157,35 +151,42 @@ const Companies = () => {
       dispatch(getCompanies())
   }, [])
 
-  // useEffect(() => {
-  //   if (status === 'DELETE_FULFILLED')
-  //     set
-  // }, [])
-
   const _handleClickRemove = id => {
     dispatch(removeCompany(id))
   }
 
   return (
-    <ContainerAdmin
-      actionSave={
-        <Button color='secondary' variant='contained'>Save</Button>
-      }
-      title='Companies List'>
-      <Grid container>
-        <Grid item xs>
-          <Table
-            columns={columns}
-            onRemove={_handleClickRemove}
-            pagination={pagination}
-            rows={rows}
-            withActions
-            withPagination
-            withRemove />
-        </Grid>
-      </Grid>
-    </ContainerAdmin>
-
+    <CrudTable
+      btnAdd='New Company'
+      modalAdd={{
+        cancel : 'Cancel',
+        confirm: 'Confirm',
+        form   : [
+          {
+            key  : 'image',
+            label: 'Image',
+            type : 'image'
+          },
+          {
+            key  : 'alt_text',
+            label: 'Alt text',
+            type : 'text'
+          }
+        ],
+        title: 'New Company'
+      }}
+      table={{
+        columns,
+        modalRemoveMessage: {
+          cancel : 'Cancel',
+          confirm: 'Confirm',
+          title  : 'Are you sure?'
+        },
+        onRemove: _handleClickRemove,
+        pagination,
+        rows
+      }}
+      title='Companies List' />
   )
 }
 
