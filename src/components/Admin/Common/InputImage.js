@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+
 const styles = makeStyles(theme => ({
   btn: {
     '&:hover': {
@@ -25,7 +27,18 @@ const styles = makeStyles(theme => ({
       height: 'auto',
       width : '100%'
     },
-    padding: 50
+    '&:hover': {
+      '& $overlay': {
+        opacity: '.5'
+      },
+      '& $removeIcon': {
+        opacity: 1
+      }
+    },
+    border   : `solid 1px ${theme.palette.grey[400]}`,
+    borderTop: 0,
+    padding  : 50,
+    position : 'relative'
   },
   input: {
     cursor  : 'pointer',
@@ -39,16 +52,47 @@ const styles = makeStyles(theme => ({
   },
   label: {
     padding: '10px 20px'
+  },
+  overlay: {
+    backgroundColor: '#000',
+    height         : '100%',
+    left           : 0,
+    opacity        : 0,
+    position       : 'absolute',
+    top            : 0,
+    transition     : 'opacity .3s ease-in',
+    width          : '100%'
+  },
+  removeIcon: {
+    color     : theme.palette.common.white,
+    cursor    : 'pointer',
+    opacity   : 0,
+    position  : 'absolute',
+    right     : 20,
+    top       : 20,
+    transition: 'opacity .3s ease-in',
+    zIndex    : 2
   }
 }))
 
-const InputImage = () => {
+const InputImage = (props) => {
+  const {
+    onImage = () => {}
+  } = props
   const classes = styles()
 
   const [ currentImage, setCurentImage ] = useState(null)
 
   const _handleChangeImage = ev => {
-    setCurentImage(URL.createObjectURL(ev.target.files[0]))
+    if(ev.target.files.length) {
+      setCurentImage(URL.createObjectURL(ev.target.files[0]))
+      onImage(ev.target.files[0])
+    }
+  }
+
+  const _handleClickclear = () => {
+    setCurentImage(null)
+    onImage(null)
   }
 
   return (
@@ -60,6 +104,8 @@ const InputImage = () => {
       </div>
       {currentImage &&
       <div className={classes.containerPreview}>
+        <div className={classes.overlay} />
+        <HighlightOffIcon className={classes.removeIcon} onClick={_handleClickclear} />
         <img src={currentImage} />
       </div>
       }
