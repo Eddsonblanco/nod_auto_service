@@ -85,11 +85,12 @@ const InputImage = (props) => {
     name = '',
     error = true,
     helperText = '',
+    data = null,
     onImage = () => {}
   } = props
   const classes = styles()
 
-  const [ currentImage, setCurentImage ] = useState(null)
+  const [ currentImage, setCurentImage ] = useState(data)
 
   const _handleChangeImage = ev => {
     if(ev.target.files.length) {

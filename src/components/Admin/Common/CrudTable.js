@@ -242,6 +242,7 @@ const CrudTable = props => {
                       <div
                         key={`${input.name}-${index}`}>
                         <InputImage
+                          data={dataModalEdit[input.name]}
                           error={Boolean(errors[input.name])}
                           helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
                           key={`${input.name}-${index}`}
