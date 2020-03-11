@@ -1,4 +1,4 @@
-import { GetList, Delete, Post } from 'lib/Request'
+import { GetList, Delete, Post, Get } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
 
 export const getCompanies = ({ types, selectors }) => function* () {
@@ -81,6 +81,33 @@ export const createCompany = ({ types }) => function* ({ payload }) {
         success
       },
       type: types.POST_COMPANY_FULFILLED
+    })
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.FETCH_CANCEL })
+        break
+      default:
+        yield put({
+          error: messageResponse || message,
+          type : types.FETCH_FAILURE
+        })
+        break
+    }
+  }
+}
+
+export const getCompany = ({ types }) => function* ({ id }) {
+  try {
+    yield put({ type: types.FETCH_PENDING })
+    const { data: company, success } = yield call(Get, `/companies/${id}`)
+    yield put({
+      payload: {
+        company,
+        success
+      },
+      type: types.FETCH_FULFILLED
     })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e

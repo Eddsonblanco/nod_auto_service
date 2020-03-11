@@ -1,7 +1,7 @@
 import React, { useEffect  } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
 
 import companiesDucks from 'reducers/companies'
 import CrudTable from 'components/Admin/Common/CrudTable'
@@ -162,7 +162,7 @@ const Companies = () => {
     dispatch(createCompany(data))
   }
 
-  const _handleClickEdit = data => {
+  const _handleClickEdit = id => {
     dispatch(getCompany(id))
   }
 

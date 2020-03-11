@@ -106,7 +106,7 @@ const edit = async (req) => {
 
 const one = async (id) => {
   try {
-    return await Companies.find({ _id: Types.ObjectId(id) }).lean()
+    return await Companies.findOne({ _id: Types.ObjectId(id) })
   } catch (err) {
     return err
   }

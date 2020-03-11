@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -63,8 +63,8 @@ const CrudTable = props => {
       confirm: modalEditConfirm = 'Confirm',
       data: dataModalEdit = {},
       form: modalEditForm = [],
-      title: titleModalEdit = 'New',
-      onConfirm: onConfirmModalEdit = () => { }
+      title: titleModalEdit = 'New'
+      // onConfirm: onConfirmModalEdit = () => { }
     }
   } = props
 
@@ -73,6 +73,19 @@ const CrudTable = props => {
 
   const [ openModalNew, setOpenModalNew ] = useState(false)
   const [ openModalEdit, setOpenModalEdit ] = useState(false)
+  const [ dataEdit, setDataEdit ] = useState(null)
+
+  useEffect(() => {
+    if(Object.keys(dataModalEdit).length)
+      if(!dataEdit) {
+        setDataEdit(dataModalEdit)
+      }
+  }, [ dataModalEdit ])
+
+  useEffect(() => {
+    if(dataEdit)
+      setOpenModalEdit(true)
+  }, [ dataEdit ])
 
   const onSubmit = data => {
     onConfirmModalAdd(data)
@@ -89,7 +102,8 @@ const CrudTable = props => {
   }
 
   const _handleClickToggleModalEdit = () => {
-    setOpenModalEdit(!openModalEdit)
+    if(openModalEdit)
+      setOpenModalEdit(!openModalEdit)
   }
 
   const _handleClickEdit = id => {
@@ -219,6 +233,7 @@ const CrudTable = props => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             {
+              dataEdit &&
               modalEditForm.map((input, index) => {
                 switch (input.type) {
                   case 'image':

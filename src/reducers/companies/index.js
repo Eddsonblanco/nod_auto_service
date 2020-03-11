@@ -6,12 +6,14 @@ import base from 'reducers/base'
 import {
   getCompanies,
   removeCompany,
-  createCompany
+  createCompany,
+  getCompany
 } from './sagas'
 
 export default base({
   initialState: {
     columns   : [],
+    company   : {},
     pagination: {
       page   : 1,
       perPage: 10,
@@ -25,6 +27,7 @@ export default base({
   creators: ({ types }) => ({
     createCompany: payload => ({ payload, type: types.CREATE_COMPANY }),
     getCompanies : () => ({ type: types.FETCH }),
+    getCompany   : id => ({ id, type: types.FETCH_COMPANY }),
     removeCompany: id => ({ id, type: types.REMOVE_COMPANY })
   }),
   reducer: (state, action, { types }) =>
@@ -55,6 +58,7 @@ export default base({
   sagas: duck => ({
     createCompany: createCompany(duck),
     getCompanies : getCompanies(duck),
+    getCompany   : getCompany(duck),
     removeCompany: removeCompany(duck)
   }),
   selectors: ({ store }) => ({
@@ -63,12 +67,14 @@ export default base({
   takes: ({ types, sagas }) => [
     takeEvery(types.FETCH, sagas.getCompanies),
     takeEvery(types.REMOVE_COMPANY, sagas.removeCompany),
-    takeEvery(types.CREATE_COMPANY, sagas.createCompany)
+    takeEvery(types.CREATE_COMPANY, sagas.createCompany),
+    takeEvery(types.FETCH_COMPANY, sagas.getCompany)
   ],
   types: [
     'REMOVE_COMPANY',
     'DELETE_COMPANY_FULFILLED',
     'CREATE_COMPANY',
-    'POST_COMPANY_FULFILLED'
+    'POST_COMPANY_FULFILLED',
+    'FETCH_COMPANY'
   ]
 })
