@@ -57,6 +57,14 @@ const CrudTable = props => {
       form: modalAddForm = [],
       title: titleModalAdd = 'New',
       onConfirm: onConfirmModalAdd = () => {}
+    },
+    modalEdit: {
+      cancel: modalEditCancel = 'Cancel',
+      confirm: modalEditConfirm = 'Confirm',
+      data: dataModalEdit = {},
+      form: modalEditForm = [],
+      title: titleModalEdit = 'New',
+      onConfirm: onConfirmModalEdit = () => { }
     }
   } = props
 
@@ -64,6 +72,7 @@ const CrudTable = props => {
   const { handleSubmit, control, errors, setValue, clearError } = useForm()
 
   const [ openModalNew, setOpenModalNew ] = useState(false)
+  const [ openModalEdit, setOpenModalEdit ] = useState(false)
 
   const onSubmit = data => {
     onConfirmModalAdd(data)
@@ -77,6 +86,15 @@ const CrudTable = props => {
 
   const _handleClickToggleModalNew = () => {
     setOpenModalNew(!openModalNew)
+  }
+
+  const _handleClickToggleModalEdit = () => {
+    setOpenModalEdit(!openModalEdit)
+  }
+
+  const _handleClickEdit = id => {
+    onEdit(id)
+    setOpenModalEdit(!openModalEdit)
   }
 
   return (
@@ -105,7 +123,7 @@ const CrudTable = props => {
             <Table
               columns={columns}
               modalRemoveMessage={modalRemoveMessage}
-              onEdit={onEdit}
+              onEdit={_handleClickEdit}
               onRemove={onRemove}
               pagination={pagination}
               rows={rows}
@@ -118,6 +136,7 @@ const CrudTable = props => {
       </Grid>
 
       {/* modals */}
+      {/* new */}
       <Dialog
         // fullScreen={true}
         onClose={_handleClickToggleModalNew}
@@ -186,6 +205,78 @@ const CrudTable = props => {
 
             <Button autoFocus color='primary' type='submit'>
               {modalAddConfirm}
+            </Button>
+
+          </DialogActions>
+        </form>
+      </Dialog>
+      {/* edit */}
+      <Dialog
+        // fullScreen={true}
+        onClose={_handleClickToggleModalEdit}
+        open={openModalEdit}>
+        <DialogTitle>{titleModalEdit}</DialogTitle>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            {
+              modalEditForm.map((input, index) => {
+                switch (input.type) {
+                  case 'image':
+
+                    return (
+                      <div
+                        key={`${input.name}-${index}`}>
+                        <InputImage
+                          error={Boolean(errors[input.name])}
+                          helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                          key={`${input.name}-${index}`}
+                          name={input.name}
+                          onImage={_handleChangeImage} />
+                        <Controller
+                          as={
+                            <TextField
+                              fullWidth
+                              label={input.label}
+                              margin='dense'
+                              style={{
+                                display: 'none'
+                              }}
+                              type='hidden' />}
+                          control={control}
+                          name={input.name}
+                          rules={{ required: input.required }} />
+                      </div>
+                    )
+                  case 'text':
+
+                    return (
+                      <Controller
+                        as={
+                          <TextField
+                            error={Boolean(errors[input.name])}
+                            fullWidth
+                            helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                            label={input.label}
+                            margin='dense' />}
+                        control={control}
+                        defaultValue={dataModalEdit[input.name]}
+                        key={`${input.name}-${index}`}
+                        name={input.name}
+                        rules={{ required: input.required }} />
+                    )
+                  default:
+                    return
+                }
+              })
+            }
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus color='primary' onClick={_handleClickToggleModalEdit}>
+              {modalEditCancel}
+            </Button>
+
+            <Button autoFocus color='primary' type='submit'>
+              {modalEditConfirm}
             </Button>
 
           </DialogActions>

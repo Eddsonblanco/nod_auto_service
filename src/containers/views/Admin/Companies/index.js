@@ -9,7 +9,8 @@ import CrudTable from 'components/Admin/Common/CrudTable'
 const {
   getCompanies,
   removeCompany,
-  createCompany
+  createCompany,
+  getCompany
 } = companiesDucks.creators
 
 // const styles = makeStyles(theme => ({
@@ -142,7 +143,8 @@ const Companies = () => {
     status,
     columns,
     rows,
-    pagination
+    pagination,
+    company
   } = useSelector(state => state.companies)
 
   // const classes = styles()
@@ -161,7 +163,7 @@ const Companies = () => {
   }
 
   const _handleClickEdit = data => {
-    console.log('===> XAVI <===: Companies -> data', data)
+    dispatch(getCompany(id))
   }
 
   return (
@@ -188,7 +190,9 @@ const Companies = () => {
         title    : 'New Company'
       }}
       modalEdit={{
-        form: [
+        confirm: 'Update',
+        data   : company,
+        form   : [
           {
             label   : 'Image',
             name    : 'image',

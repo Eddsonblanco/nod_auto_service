@@ -103,9 +103,18 @@ const edit = async (req) => {
     return err
   }
 }
+
+const one = async (id) => {
+  try {
+    return await Companies.find({ _id: Types.ObjectId(id) }).lean()
+  } catch (err) {
+    return err
+  }
+}
 export {
   create,
   all,
   remove,
-  edit
+  edit,
+  one
 }

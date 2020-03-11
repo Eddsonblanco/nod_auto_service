@@ -5,7 +5,8 @@ import {
   create,
   all,
   remove,
-  edit
+  edit,
+  one
 } from '../../controllers/companies'
 
 const router = express.Router()
@@ -23,6 +24,16 @@ router.post('/', upload.single('image'), async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const data = await all(req.query)
+    res.status(200).send({ data, success: true })
+  } catch (err) {
+    res.status(500).send({ error: err.message, success: false })
+  }
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const data = await one(id)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })
