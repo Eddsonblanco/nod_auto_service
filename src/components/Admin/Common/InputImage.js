@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
+import { FormHelperText } from '@material-ui/core'
 
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 
@@ -14,6 +16,9 @@ const styles = makeStyles(theme => ({
     cursor         : 'pointer',
     padding        : '10px 20px',
     transition     : 'opacity .2s ease-in'
+  },
+  containerError: {
+    borderColor: `${theme.palette.error.main} !important`
   },
   containerInput: {
     alignItems    : 'center',
@@ -78,6 +83,8 @@ const styles = makeStyles(theme => ({
 const InputImage = (props) => {
   const {
     name = '',
+    error = true,
+    helperText = '',
     onImage = () => {}
   } = props
   const classes = styles()
@@ -106,11 +113,17 @@ const InputImage = (props) => {
 
   return (
     <div>
-      <div className={classes.containerInput}>
+      <div className={clsx(
+        classes.containerInput,
+        {
+          [classes.containerError]: error
+        }
+      )}>
         <label className={classes.label}>Choose File..</label>
         <div className={classes.btn}>Browse</div>
         <input className={classes.input} onChange={_handleChangeImage} type='file' />
       </div>
+      <FormHelperText error={error}>{helperText}</FormHelperText>
       {currentImage &&
       <div className={classes.containerPreview}>
         <div className={classes.overlay} />

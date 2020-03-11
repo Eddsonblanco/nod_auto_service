@@ -58,25 +58,18 @@ const CrudTable = props => {
   } = props
 
   const classes = styles()
-  const { handleSubmit, control, errors } = useForm()
+  const { handleSubmit, control, errors, setValue, clearError } = useForm()
 
-  const [ inputs, setInputs ] = useState({})
   const [ openModalNew, setOpenModalNew ] = useState(false)
 
   const onSubmit = data => {
-    onConfirmModalAdd({
-      ...inputs,
-      ...data
-    })
+    onConfirmModalAdd(data)
     _handleClickToggleModalNew()
-    setInputs({})
   }
 
   const _handleChangeImage = ({ name, file }) => {
-    setInputs({
-      ...inputs,
-      [name]: file
-    })
+    clearError([ name ])
+    setValue(name, file)
   }
 
   const _handleClickToggleModalNew = () => {
@@ -133,10 +126,30 @@ const CrudTable = props => {
                   case 'image':
 
                     return (
-                      <InputImage
-                        key={`${input.name}-${index}`}
-                        name={input.name}
-                        onImage={_handleChangeImage} />
+                      <div
+                        key={`${input.name}-${index}`}>
+                        <InputImage
+                          error={Boolean(errors[input.name])}
+                          helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                          key={`${input.name}-${index}`}
+                          name={input.name}
+                          onImage={_handleChangeImage} />
+                        <Controller
+
+                          as={
+                            <TextField
+                              fullWidth
+                              label={input.label}
+                              margin='dense'
+                              style={{
+                                display: 'none'
+                              }}
+                              type='hidden' />}
+                          control={control}
+                          defaultValue=''
+                          name={input.name}
+                          rules={{ required: input.required }} />
+                      </div>
                     )
                   case 'text':
 
