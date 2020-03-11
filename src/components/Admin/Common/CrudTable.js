@@ -46,7 +46,10 @@ const CrudTable = props => {
       columns,
       pagination,
       onRemove,
-      modalRemoveMessage
+      onEdit,
+      modalRemoveMessage,
+      withRemove = false,
+      withEdit = false
     },
     modalAdd: {
       cancel: modalAddCancel = 'Cancel',
@@ -102,12 +105,14 @@ const CrudTable = props => {
             <Table
               columns={columns}
               modalRemoveMessage={modalRemoveMessage}
+              onEdit={onEdit}
               onRemove={onRemove}
               pagination={pagination}
               rows={rows}
               withActions
+              withEdit={withEdit}
               withPagination
-              withRemove />
+              withRemove={withRemove} />
           </Grid>
         </Grid>
       </Grid>

@@ -160,6 +160,10 @@ const Companies = () => {
     dispatch(createCompany(data))
   }
 
+  const _handleClickEdit = data => {
+    console.log('===> XAVI <===: Companies -> data', data)
+  }
+
   return (
     <CrudTable
       btnAdd='New Company'
@@ -183,6 +187,24 @@ const Companies = () => {
         onConfirm: _handleClickCreate,
         title    : 'New Company'
       }}
+      modalEdit={{
+        form: [
+          {
+            label   : 'Image',
+            name    : 'image',
+            required: true,
+            type    : 'image'
+          },
+          {
+            label   : 'Alt text',
+            name    : 'alt_text',
+            required: true,
+            type    : 'text'
+          }
+        ],
+        onConfirm: _handleClickCreate,
+        title    : 'Edit Company'
+      }}
       table={{
         columns,
         modalRemoveMessage: {
@@ -190,9 +212,12 @@ const Companies = () => {
           confirm: 'Confirm',
           title  : 'Are you sure?'
         },
-        onRemove: _handleClickRemove,
+        onEdit    : _handleClickEdit,
+        onRemove  : _handleClickRemove,
         pagination,
-        rows
+        rows,
+        withEdit  : true,
+        withRemove: true
       }}
       title='Companies List' />
   )
