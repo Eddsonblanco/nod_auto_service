@@ -168,14 +168,16 @@ const Companies = () => {
         confirm: 'Confirm',
         form   : [
           {
-            label: 'Image',
-            name : 'image',
-            type : 'image'
+            label   : 'Image',
+            name    : 'image',
+            required: true,
+            type    : 'image'
           },
           {
-            label: 'Alt text',
-            name : 'alt_text',
-            type : 'text'
+            label   : 'Alt text',
+            name    : 'alt_text',
+            required: true,
+            type    : 'text'
           }
         ],
         onConfirm: _handleClickCreate,

@@ -59,7 +59,6 @@ const CrudTable = props => {
 
   const classes = styles()
   const { handleSubmit, control, errors } = useForm()
-  console.log('===> XAVI <===: errors', errors)
 
   const [ inputs, setInputs ] = useState({})
   const [ openModalNew, setOpenModalNew ] = useState(false)
@@ -109,6 +108,7 @@ const CrudTable = props => {
           <Grid item xs>
             <Table
               columns={columns}
+              modalRemoveMessage={modalRemoveMessage}
               onRemove={onRemove}
               pagination={pagination}
               rows={rows}
@@ -153,7 +153,7 @@ const CrudTable = props => {
                         defaultValue=''
                         key={`${input.name}-${index}`}
                         name={input.name}
-                        rules={{ required: true }} />
+                        rules={{ required: input.required }} />
                     )
                   default:
                     return
