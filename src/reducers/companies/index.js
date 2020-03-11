@@ -5,7 +5,8 @@ import base from 'reducers/base'
 
 import {
   getCompanies,
-  removeCompany
+  removeCompany,
+  createCompany
 } from './sagas'
 
 export default base({
@@ -22,6 +23,7 @@ export default base({
   store    : 'companies'
 }).extend({
   creators: ({ types }) => ({
+    createCompany: payload => ({ payload, type: types.CREATE_COMPANY }),
     getCompanies : () => ({ type: types.FETCH }),
     removeCompany: id => ({ id, type: types.REMOVE_COMPANY })
   }),
@@ -36,11 +38,22 @@ export default base({
 
           return
 
+        case types.POST_COMPANY_FULFILLED:
+          draft.rows = [
+            action.payload.data,
+            ...state.rows
+          ]
+
+          draft.status = 'COMPANY_CREATED'
+
+          return
+
         default:
           return
       }
     }),
   sagas: duck => ({
+    createCompany: createCompany(duck),
     getCompanies : getCompanies(duck),
     removeCompany: removeCompany(duck)
   }),
@@ -49,10 +62,13 @@ export default base({
   }),
   takes: ({ types, sagas }) => [
     takeEvery(types.FETCH, sagas.getCompanies),
-    takeEvery(types.REMOVE_COMPANY, sagas.removeCompany)
+    takeEvery(types.REMOVE_COMPANY, sagas.removeCompany),
+    takeEvery(types.CREATE_COMPANY, sagas.createCompany)
   ],
   types: [
     'REMOVE_COMPANY',
-    'DELETE_COMPANY_FULFILLED'
+    'DELETE_COMPANY_FULFILLED',
+    'CREATE_COMPANY',
+    'POST_COMPANY_FULFILLED'
   ]
 })

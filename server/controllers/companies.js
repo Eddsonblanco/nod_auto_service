@@ -3,8 +3,6 @@ import { Companies, Datatables } from '../models'
 import { Types } from 'mongoose'
 import { removeImage } from '../utils'
 
-// import { escapeRegex } from '../utils/regex'
-
 const create = async (req) => {
   try {
     const {

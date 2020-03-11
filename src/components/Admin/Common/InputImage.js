@@ -86,8 +86,16 @@ const InputImage = (props) => {
 
   const _handleChangeImage = ev => {
     if(ev.target.files.length) {
-      setCurentImage(URL.createObjectURL(ev.target.files[0]))
-      onImage({ file: ev.target.files[0], name })
+      ev.preventDefault()
+      const reader = new FileReader()
+      const file = ev.target.files[0]
+
+      reader.onloadend = () => {
+        setCurentImage(reader.result)
+        onImage({ file, name })
+      }
+
+      reader.readAsDataURL(file)
     }
   }
 

@@ -56,18 +56,21 @@ const CrudTable = props => {
       onConfirm: onConfirmModalAdd = () => {}
     }
   } = props
+
   const classes = styles()
-  const methods = useForm()
-  const { handleSubmit, control } = methods
+  const { handleSubmit, control, errors } = useForm()
+  console.log('===> XAVI <===: errors', errors)
 
   const [ inputs, setInputs ] = useState({})
-  // const { register, handleSubmit, watch, errors } = useForm()
+  const [ openModalNew, setOpenModalNew ] = useState(false)
 
   const onSubmit = data => {
     onConfirmModalAdd({
       ...inputs,
       ...data
     })
+    _handleClickToggleModalNew()
+    setInputs({})
   }
 
   const _handleChangeImage = ({ name, file }) => {
@@ -75,6 +78,10 @@ const CrudTable = props => {
       ...inputs,
       [name]: file
     })
+  }
+
+  const _handleClickToggleModalNew = () => {
+    setOpenModalNew(!openModalNew)
   }
 
   return (
@@ -93,6 +100,7 @@ const CrudTable = props => {
               <Button
                 className={classes.btnAdd}
                 color='primary'
+                onClick={_handleClickToggleModalNew}
                 size='small'
                 variant='outlined'>{btnAdd}</Button> : null
           }
@@ -114,8 +122,8 @@ const CrudTable = props => {
       {/* modals */}
       <Dialog
         // fullScreen={true}
-        // onClose={handleClose}
-        open={true}>
+        onClose={_handleClickToggleModalNew}
+        open={openModalNew}>
         <DialogTitle>{titleModalAdd}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
@@ -134,11 +142,18 @@ const CrudTable = props => {
 
                     return (
                       <Controller
-                        as={<TextField fullWidth label={input.label} margin='dense' />}
+                        as={
+                          <TextField
+                            error={Boolean(errors[input.name])}
+                            fullWidth
+                            helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                            label={input.label}
+                            margin='dense' />}
                         control={control}
                         defaultValue=''
                         key={`${input.name}-${index}`}
-                        name={input.name} />
+                        name={input.name}
+                        rules={{ required: true }} />
                     )
                   default:
                     return
@@ -147,7 +162,7 @@ const CrudTable = props => {
             }
           </DialogContent>
           <DialogActions>
-            <Button autoFocus color='primary'>
+            <Button autoFocus color='primary' onClick={_handleClickToggleModalNew}>
               {modalAddCancel}
             </Button>
 

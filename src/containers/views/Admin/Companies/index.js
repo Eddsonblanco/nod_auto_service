@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect  } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,7 +8,8 @@ import CrudTable from 'components/Admin/Common/CrudTable'
 
 const {
   getCompanies,
-  removeCompany
+  removeCompany,
+  createCompany
 } = companiesDucks.creators
 
 // const styles = makeStyles(theme => ({
@@ -155,8 +156,8 @@ const Companies = () => {
     dispatch(removeCompany(id))
   }
 
-  const _handleClickConfirm = ev => {
-    console.log('===> XAVI <===: Companies -> ev', ev)
+  const _handleClickCreate = data => {
+    dispatch(createCompany(data))
   }
 
   return (
@@ -177,7 +178,7 @@ const Companies = () => {
             type : 'text'
           }
         ],
-        onConfirm: _handleClickConfirm,
+        onConfirm: _handleClickCreate,
         title    : 'New Company'
       }}
       table={{
