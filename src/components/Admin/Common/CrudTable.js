@@ -86,6 +86,10 @@ const CrudTable = props => {
   useEffect(() => {
     if(dataEdit && Object.keys(dataEdit).length)
       setOpenModalEdit(true)
+      // modalEditForm.map(({ name, type }) => {
+      //   if(type === 'image')
+      //     setValue(name, dataModalEdit[name])
+      // })
   }, [ dataEdit ])
 
   const onSubmit = data => {
@@ -268,6 +272,7 @@ const CrudTable = props => {
                               }}
                               type='hidden' />}
                           control={control}
+                          defaultValue={dataModalEdit[input.name]}
                           name={input.name}
                           rules={{ required: input.required }} />
                       </div>
