@@ -7,7 +7,8 @@ import {
   getCompanies,
   removeCompany,
   createCompany,
-  getCompany
+  getCompany,
+  updateCompany
 } from './sagas'
 
 export default base({
@@ -29,7 +30,8 @@ export default base({
     getCompanies : () => ({ type: types.FETCH }),
     getCompany   : id => ({ id, type: types.FETCH_COMPANY }),
     removeCompany: id => ({ id, type: types.REMOVE_COMPANY }),
-    resetCompany : () => ({ type: types.RESET_COMPANY })
+    resetCompany : () => ({ type: types.RESET_COMPANY }),
+    updateCompany: payload => ({ payload, type: types.UPDATE_COMPANY })
   }),
   reducer: (state, action, { types }) =>
     produce(state, draft => {
@@ -67,7 +69,8 @@ export default base({
     createCompany: createCompany(duck),
     getCompanies : getCompanies(duck),
     getCompany   : getCompany(duck),
-    removeCompany: removeCompany(duck)
+    removeCompany: removeCompany(duck),
+    updateCompany: updateCompany(duck)
   }),
   selectors: ({ store }) => ({
     pagination: state => state[store].pagination
@@ -76,7 +79,8 @@ export default base({
     takeEvery(types.FETCH, sagas.getCompanies),
     takeEvery(types.REMOVE_COMPANY, sagas.removeCompany),
     takeEvery(types.CREATE_COMPANY, sagas.createCompany),
-    takeEvery(types.FETCH_COMPANY, sagas.getCompany)
+    takeEvery(types.FETCH_COMPANY, sagas.getCompany),
+    takeEvery(types.UPDATE_COMPANY, sagas.updateCompany)
   ],
   types: [
     'REMOVE_COMPANY',
@@ -84,6 +88,7 @@ export default base({
     'CREATE_COMPANY',
     'POST_COMPANY_FULFILLED',
     'FETCH_COMPANY',
-    'RESET_COMPANY'
+    'RESET_COMPANY',
+    'UPDATE_COMPANY'
   ]
 })

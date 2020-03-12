@@ -1,4 +1,4 @@
-import { GetList, Delete, Post, Get } from 'lib/Request'
+import { GetList, Delete, Post, Get, Put } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
 
 export const getCompanies = ({ types, selectors }) => function* () {
@@ -109,6 +109,43 @@ export const getCompany = ({ types }) => function* ({ id }) {
       },
       type: types.FETCH_FULFILLED
     })
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.FETCH_CANCEL })
+        break
+      default:
+        yield put({
+          error: messageResponse || message,
+          type : types.FETCH_FAILURE
+        })
+        break
+    }
+  }
+}
+
+export const updateCompany = ({ types }) => function* ({ payload }) {
+  try {
+    yield put({ type: types.PUT_PENDING })
+    const formData = new FormData()
+    const payloadData = Object.keys(payload)
+    payloadData.map(item => {
+      formData.append(item, payload[item])
+    })
+    // const { data, success } = yield call(Post, '/companies', formData, {
+    //   'content-type': 'multipart/form-data'
+    // })
+
+    const data = yield call(Put, '/companies', formData)
+    console.log('===> XAVI <===: updateCompany -> data', data)
+    // yield put({
+    //   payload: {
+    //     company,
+    //     success
+    //   },
+    //   type: types.FETCH_FULFILLED
+    // })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {

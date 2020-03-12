@@ -64,8 +64,8 @@ const CrudTable = props => {
       data: dataModalEdit = {},
       form: modalEditForm = [],
       title: titleModalEdit = 'New',
-      onReset: onResetEdit = () => {}
-      // onConfirm: onConfirmModalEdit = () => { }
+      onReset: onResetEdit = () => {},
+      onConfirm: onConfirmModalEdit = () => { }
     }
   } = props
 
@@ -91,6 +91,11 @@ const CrudTable = props => {
   const onSubmit = data => {
     onConfirmModalAdd(data)
     _handleClickToggleModalNew()
+  }
+
+  const onSubmitUpdate = data => {
+    onConfirmModalEdit({ ...data, id: dataModalEdit._id })
+    _handleClickToggleModalEdit()
   }
 
   const _handleChangeImage = ({ name, file }) => {
@@ -234,7 +239,7 @@ const CrudTable = props => {
         onClose={_handleClickToggleModalEdit}
         open={openModalEdit}>
         <DialogTitle>{titleModalEdit}</DialogTitle>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmitUpdate)}>
           <DialogContent>
             {
               dataEdit &&

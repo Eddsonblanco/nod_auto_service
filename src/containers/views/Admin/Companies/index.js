@@ -11,7 +11,8 @@ const {
   removeCompany,
   createCompany,
   getCompany,
-  resetCompany
+  resetCompany,
+  updateCompany
 } = companiesDucks.creators
 
 // const styles = makeStyles(theme => ({
@@ -163,6 +164,10 @@ const Companies = () => {
     dispatch(createCompany(data))
   }
 
+  const _handleClickUpdate = data => {
+    dispatch(updateCompany(data))
+  }
+
   const _handleClickEdit = id => {
     dispatch(getCompany(id))
   }
@@ -211,7 +216,7 @@ const Companies = () => {
             type    : 'text'
           }
         ],
-        onConfirm: _handleClickCreate,
+        onConfirm: _handleClickUpdate,
         onReset  : _handleCloseModalEdit,
         title    : 'Edit Company'
       }}
