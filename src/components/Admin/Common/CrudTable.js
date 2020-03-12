@@ -78,9 +78,7 @@ const CrudTable = props => {
 
   useEffect(() => {
     if(Object.keys(dataModalEdit).length)
-      if(!dataEdit) {
-        setDataEdit(dataModalEdit)
-      }
+      setDataEdit(dataModalEdit)
   }, [ dataModalEdit ])
 
   useEffect(() => {
@@ -117,6 +115,7 @@ const CrudTable = props => {
   }
 
   const _onExitedModalEdit = () => {
+    console.log('===> XAVI <===: _onExitedModalEdit -> openModalEdit', openModalEdit)
     if(openModalEdit) {
       setDataEdit(null)
       onResetEdit(true)
