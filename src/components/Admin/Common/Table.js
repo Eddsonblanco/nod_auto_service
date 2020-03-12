@@ -19,6 +19,8 @@ import {
   Button
 } from '@material-ui/core'
 
+import Pagination from 'components/Admin/Common/Pagination'
+
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -119,6 +121,15 @@ const styles = makeStyles(theme => ({
   optionSelect: {
     fontSize: 14
   },
+  paginationContainer: {
+    bottom        : 0,
+    display       : 'flex',
+    justifyContent: 'flex-end',
+    padding       : 24,
+    position      : 'absolute',
+    right         : 0,
+    width         : '100%'
+  },
   searchIcon: {
     cursor: 'pointer'
   },
@@ -162,6 +173,7 @@ export default (props) => {
     withRemove = false,
     withView = false,
     withActions = false,
+    pagination = {},
     omView = () => { },
     onEdit = () => { },
     onRemove = () => { },
@@ -191,7 +203,7 @@ export default (props) => {
   }
 
   return (
-    <>
+    <div>
       <TableContainer>
         <Table aria-label='simple table' className={classes.table}>
           <TableHead>
@@ -301,6 +313,10 @@ export default (props) => {
         </Table>
       </TableContainer>
 
+      <div className={classes.paginationContainer}>
+        <Pagination pagination={pagination} />
+      </div>
+
       <Dialog
         keepMounted
         onClose={_handleClickRemove}
@@ -323,6 +339,6 @@ export default (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   )
 }
