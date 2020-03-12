@@ -63,7 +63,8 @@ const CrudTable = props => {
       confirm: modalEditConfirm = 'Confirm',
       data: dataModalEdit = {},
       form: modalEditForm = [],
-      title: titleModalEdit = 'New'
+      title: titleModalEdit = 'New',
+      onReset: onResetEdit = () => {}
       // onConfirm: onConfirmModalEdit = () => { }
     }
   } = props
@@ -83,7 +84,7 @@ const CrudTable = props => {
   }, [ dataModalEdit ])
 
   useEffect(() => {
-    if(dataEdit)
+    if(dataEdit && Object.keys(dataEdit).length)
       setOpenModalEdit(true)
   }, [ dataEdit ])
 
@@ -102,13 +103,16 @@ const CrudTable = props => {
   }
 
   const _handleClickToggleModalEdit = () => {
-    if(openModalEdit)
-      setOpenModalEdit(!openModalEdit)
+    if(openModalEdit) {
+      onResetEdit(true)
+      setOpenModalEdit(false)
+      setDataEdit(null)
+    }
   }
 
   const _handleClickEdit = id => {
     onEdit(id)
-    setOpenModalEdit(!openModalEdit)
+    // setOpenModalEdit(!openModalEdit)
   }
 
   return (

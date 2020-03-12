@@ -28,7 +28,8 @@ export default base({
     createCompany: payload => ({ payload, type: types.CREATE_COMPANY }),
     getCompanies : () => ({ type: types.FETCH }),
     getCompany   : id => ({ id, type: types.FETCH_COMPANY }),
-    removeCompany: id => ({ id, type: types.REMOVE_COMPANY })
+    removeCompany: id => ({ id, type: types.REMOVE_COMPANY }),
+    resetCompany : () => ({ type: types.RESET_COMPANY })
   }),
   reducer: (state, action, { types }) =>
     produce(state, draft => {
@@ -48,6 +49,13 @@ export default base({
           ]
 
           draft.status = 'COMPANY_CREATED'
+
+          return
+
+        case types.RESET_COMPANY:
+          draft.company = {}
+
+          draft.status = 'RESET_COMPANY_FULLFILED'
 
           return
 
@@ -75,6 +83,7 @@ export default base({
     'DELETE_COMPANY_FULFILLED',
     'CREATE_COMPANY',
     'POST_COMPANY_FULFILLED',
-    'FETCH_COMPANY'
+    'FETCH_COMPANY',
+    'RESET_COMPANY'
   ]
 })

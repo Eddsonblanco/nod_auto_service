@@ -10,7 +10,8 @@ const {
   getCompanies,
   removeCompany,
   createCompany,
-  getCompany
+  getCompany,
+  resetCompany
 } = companiesDucks.creators
 
 // const styles = makeStyles(theme => ({
@@ -166,6 +167,10 @@ const Companies = () => {
     dispatch(getCompany(id))
   }
 
+  const _handleCloseModalEdit = bol => {
+    if(bol) dispatch(resetCompany())
+  }
+
   return (
     <CrudTable
       btnAdd='New Company'
@@ -207,6 +212,7 @@ const Companies = () => {
           }
         ],
         onConfirm: _handleClickCreate,
+        onReset  : _handleCloseModalEdit,
         title    : 'Edit Company'
       }}
       table={{
