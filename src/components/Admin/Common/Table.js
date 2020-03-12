@@ -122,13 +122,13 @@ const styles = makeStyles(theme => ({
     fontSize: 14
   },
   paginationContainer: {
-    bottom        : 0,
+    // bottom        : 0,
     display       : 'flex',
     justifyContent: 'flex-end',
-    padding       : 24,
-    position      : 'absolute',
-    right         : 0,
-    width         : '100%'
+    padding       : 24
+    // position      : 'absolute',
+    // right         : 0,
+    // width         : '100%'
   },
   searchIcon: {
     cursor: 'pointer'

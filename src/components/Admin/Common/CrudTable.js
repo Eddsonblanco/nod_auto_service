@@ -112,10 +112,14 @@ const CrudTable = props => {
   }
 
   const _handleClickToggleModalEdit = () => {
-    if(openModalEdit) {
-      onResetEdit(true)
+    if(openModalEdit)
       setOpenModalEdit(false)
+  }
+
+  const _onExitedModalEdit = () => {
+    if(openModalEdit) {
       setDataEdit(null)
+      onResetEdit(true)
     }
   }
 
@@ -241,6 +245,7 @@ const CrudTable = props => {
       <Dialog
         // fullScreen={true}
         onClose={_handleClickToggleModalEdit}
+        onExited={_onExitedModalEdit}
         open={openModalEdit}>
         <DialogTitle>{titleModalEdit}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmitUpdate)}>
