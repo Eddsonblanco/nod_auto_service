@@ -14,7 +14,7 @@ import Banner from 'components/Banner/Banner'
 import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   btnAllServices: {
     display       : 'flex',
     justifyContent: 'center',
@@ -31,6 +31,35 @@ const useStyles = makeStyles({
     marginBottom: 40,
     marginTop   : 30
   },
+  sliderServiceCenter: {
+    '& img': {
+      marginTop: 40
+    },
+    background  : theme.palette.primary.main,
+    borderRadius: 12,
+    height      : 360,
+    margin      : '0 50px',
+    maxWidth    : 640,
+    width       : '100%'
+  },
+  sliderServiceContainer: {
+    alignItems    : 'center',
+    display       : 'flex',
+    justifyContent: 'center',
+    margin        : '100px 0 200px 0'
+  },
+  sliderServiceImg: {
+    display       : 'flex',
+    justifyContent: 'center'
+  },
+  sliderServiceLeft: {
+    maxWidth: 290,
+    width   : '100%'
+  },
+  sliderServiceRight: {
+    maxWidth: 410,
+    width   : '100%'
+  },
   testimonials: {
     paddingTop: 60
   },
@@ -39,7 +68,7 @@ const useStyles = makeStyles({
     fontWeight  : 600,
     marginBottom: 60
   }
-})
+}))
 
 export default function Home() {
   const classes = useStyles()
@@ -54,10 +83,17 @@ export default function Home() {
           <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
         </div>
         <div className={classes.sliderServiceCenter}>
-
+          <div className={classes.sliderServiceImg}>
+            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/4d57eb34-10bd-4d25-8947-83c40d90a6d7.png' />
+          </div>
         </div>
         <div className={classes.sliderServiceRight}>
-
+          <Typography>Oil change at home</Typography>
+          <Typography>
+            Enjoy convenient car repair and maintenance at your home or office.
+            It's as easy as 1-2-3.
+          </Typography>
+          <Button color='primary' variant='contained'>Ver mas info</Button>
         </div>
       </div>
 
