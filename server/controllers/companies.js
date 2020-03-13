@@ -3,8 +3,6 @@ import { Companies, Datatables } from '../models'
 import { Types } from 'mongoose'
 import { removeImage } from '../utils'
 
-// import { escapeRegex } from '../utils/regex'
-
 const create = async (req) => {
   try {
     const {
@@ -105,9 +103,18 @@ const edit = async (req) => {
     return err
   }
 }
+
+const one = async (id) => {
+  try {
+    return await Companies.findOne({ _id: Types.ObjectId(id) })
+  } catch (err) {
+    return err
+  }
+}
 export {
   create,
   all,
   remove,
-  edit
+  edit,
+  one
 }

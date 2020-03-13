@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/styles'
 import {
   Container,
   Typography,
-  Grid
+  Button
 } from '@material-ui/core'
 
 // import Companies from 'components/Companies'
@@ -15,8 +15,21 @@ import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
 const useStyles = makeStyles({
+  btnAllServices: {
+    display       : 'flex',
+    justifyContent: 'center',
+    marginTop     : 50
+  },
+  containerServices: {
+    display            : 'grid',
+    gridGap            : '30px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 360px))',
+    justifyContent     : 'center'
+  },
   servicesTitle: {
-    marginBottom: 40
+    fontWeight  : '600',
+    marginBottom: 40,
+    marginTop   : 30
   },
   testimonials: {
     paddingTop: 60
@@ -34,26 +47,39 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      {/* <Companies /> */}
+
+      {/* slider service detail */}
+      <div className={classes.sliderServiceContainer}>
+        <div className={classes.sliderServiceLeft}>
+          <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
+        </div>
+        <div className={classes.sliderServiceCenter}>
+
+        </div>
+        <div className={classes.sliderServiceRight}>
+
+        </div>
+      </div>
+
+      {/* <Services /> */}
       <Container maxWidth='lg'>
         <Typography
           align='center'
           className={classes.servicesTitle}
           component='h2'
-          variant='h4'>
+          variant='h5'>
             Services & Repairment
         </Typography>
-        <Grid container spacing={3}>
+        <div className={classes.containerServices}>
           {
             [ 1,2,3,4,5,6 ].map((item, index) => (
-              <Grid
-                item key={index} md={4}
-                xs={6}>
-                <CardService />
-              </Grid>
+              <CardService key={index} />
             ))
           }
-        </Grid>
+        </div>
+        <div className={classes.btnAllServices}>
+          <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
+        </div>
       </Container>
 
       <Container className={classes.testimonials} maxWidth={false}>

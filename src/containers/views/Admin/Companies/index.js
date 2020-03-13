@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect  } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { makeStyles } from '@material-ui/core/styles'
-import {
-  Grid,
-  Button
-} from '@material-ui/core'
-
-import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
-import Table from 'components/Admin/Common/Table'
+// import { makeStyles } from '@material-ui/core/styles'
 
 import companiesDucks from 'reducers/companies'
+import CrudTable from 'components/Admin/Common/CrudTable'
 
 const {
   getCompanies,
-  removeCompany
+  removeCompany,
+  createCompany,
+  getCompany,
+  resetCompany,
+  updateCompany
 } = companiesDucks.creators
 
 // const styles = makeStyles(theme => ({
@@ -147,7 +145,8 @@ const Companies = () => {
     status,
     columns,
     rows,
-    pagination
+    pagination,
+    company
   } = useSelector(state => state.companies)
 
   // const classes = styles()
@@ -157,35 +156,85 @@ const Companies = () => {
       dispatch(getCompanies())
   }, [])
 
-  // useEffect(() => {
-  //   if (status === 'DELETE_FULFILLED')
-  //     set
-  // }, [])
-
   const _handleClickRemove = id => {
     dispatch(removeCompany(id))
   }
 
-  return (
-    <ContainerAdmin
-      actionSave={
-        <Button color='secondary' variant='contained'>Save</Button>
-      }
-      title='Companies List'>
-      <Grid container>
-        <Grid item xs>
-          <Table
-            columns={columns}
-            onRemove={_handleClickRemove}
-            pagination={pagination}
-            rows={rows}
-            withActions
-            withPagination
-            withRemove />
-        </Grid>
-      </Grid>
-    </ContainerAdmin>
+  const _handleClickCreate = data => {
+    dispatch(createCompany(data))
+  }
 
+  const _handleClickUpdate = data => {
+    dispatch(updateCompany(data))
+  }
+
+  const _handleClickEdit = id => {
+    dispatch(getCompany(id))
+  }
+
+  const _handleCloseModalEdit = bol => {
+    if(bol) dispatch(resetCompany())
+  }
+
+  return (
+    <CrudTable
+      btnAdd='New Company'
+      modalAdd={{
+        cancel : 'Cancel',
+        confirm: 'Confirm',
+        form   : [
+          {
+            label   : 'Image',
+            name    : 'image',
+            required: true,
+            type    : 'image'
+          },
+          {
+            label   : 'Alt text',
+            name    : 'alt_text',
+            required: true,
+            type    : 'text'
+          }
+        ],
+        onConfirm: _handleClickCreate,
+        title    : 'New Company'
+      }}
+      modalEdit={{
+        confirm: 'Update',
+        data   : company,
+        form   : [
+          {
+            label   : 'Image',
+            name    : 'image',
+            required: true,
+            type    : 'image'
+          },
+          {
+            label   : 'Alt text',
+            name    : 'alt_text',
+            required: true,
+            type    : 'text'
+          }
+        ],
+        onConfirm: _handleClickUpdate,
+        onReset  : _handleCloseModalEdit,
+        title    : 'Edit Company'
+      }}
+      table={{
+        columns,
+        modalRemoveMessage: {
+          cancel : 'Cancel',
+          confirm: 'Confirm',
+          title  : 'Are you sure?'
+        },
+        onEdit    : _handleClickEdit,
+        onRemove  : _handleClickRemove,
+        pagination,
+        rows,
+        withEdit  : true,
+        withRemove: true
+      }}
+      title='Companies List' />
   )
 }
 

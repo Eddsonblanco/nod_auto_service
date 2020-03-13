@@ -4,23 +4,36 @@ import { makeStyles } from '@material-ui/core/styles'
 import {
   Container,
   Grid,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core'
 
 const styles = makeStyles(theme => (
   {
+    btnAdd: {
+      marginLeft: theme.spacing(3)
+    },
     container: {
       paddingBottom: 20,
       paddingTop   : 20
     },
     title: {
-      color       : theme.palette.primary.main,
+      color: theme.palette.primary.main
+    },
+    titleContent: {
+      alignItems  : 'flex-end',
+      display     : 'flex',
       marginBottom: theme.spacing(3)
     }
   }
 ))
 
-const ContainerAdmin = ({ children, title }) => {
+const ContainerAdmin = (props) => {
+  const {
+    children,
+    title,
+    btnAdd
+  } = props
   const classes = styles()
 
   return (
@@ -30,7 +43,17 @@ const ContainerAdmin = ({ children, title }) => {
         backgroundColor: '#fff'
       }}>
       <Grid className={classes.container} container>
-        <Typography className={classes.title} variant='h5'>{title}</Typography>
+        <div className={classes.titleContent}>
+          <Typography className={classes.title} variant='h5'>{title}</Typography>
+          {
+            btnAdd.length ?
+              <Button
+                className={classes.btnAdd}
+                color='primary'
+                size='small'
+                variant='outlined'>{btnAdd}</Button> : null
+          }
+        </div>
         {children}
       </Grid>
 

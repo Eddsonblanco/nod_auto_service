@@ -19,6 +19,8 @@ import {
   Button
 } from '@material-ui/core'
 
+import Pagination from 'components/Admin/Common/Pagination'
+
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -119,6 +121,15 @@ const styles = makeStyles(theme => ({
   optionSelect: {
     fontSize: 14
   },
+  paginationContainer: {
+    // bottom        : 0,
+    display       : 'flex',
+    justifyContent: 'flex-end',
+    padding       : 24
+    // position      : 'absolute',
+    // right         : 0,
+    // width         : '100%'
+  },
   searchIcon: {
     cursor: 'pointer'
   },
@@ -153,18 +164,7 @@ const styles = makeStyles(theme => ({
 export default (props) => {
   const {
     rows = [],
-    columns = [
-      // {
-      //   _id     : 1,
-      //   align   : 'left',
-      //   key     : 'image',
-      //   label   : 'Image',
-      //   minWidth: '200px',
-      //   ordering: 1,
-      //   type    : 'image',
-      //   visible : true
-      // },
-    ],
+    columns = [],
     sortTable = {},
     withOrder = false,
     withCheckbox = false,
@@ -173,9 +173,15 @@ export default (props) => {
     withRemove = false,
     withView = false,
     withActions = false,
+    pagination = {},
     omView = () => { },
     onEdit = () => { },
-    onRemove = () => { }
+    onRemove = () => { },
+    modalRemoveMessage = {
+      cancel : 'Cancel',
+      confirm: 'Confirm',
+      title  : 'Are you sure?'
+    }
   } = props
   const classes = styles()
 
@@ -197,7 +203,7 @@ export default (props) => {
   }
 
   return (
-    <>
+    <div>
       <TableContainer>
         <Table aria-label='simple table' className={classes.table}>
           <TableHead>
@@ -235,7 +241,7 @@ export default (props) => {
               ))}
 
               {
-                withActions && <TableCell>Actions</TableCell>
+                (withActions && rows.length) ? <TableCell>Actions</TableCell> : null
               }
             </TableRow>
           </TableHead>
@@ -307,28 +313,32 @@ export default (props) => {
         </Table>
       </TableContainer>
 
+      <div className={classes.paginationContainer}>
+        <Pagination pagination={pagination} />
+      </div>
+
       <Dialog
         keepMounted
         onClose={_handleClickRemove}
         open={openAlert}
         TransitionComponent={Transition}>
         <DialogTitle id='alert-dialog-slide-title'>
-          Are you sure?
+          {modalRemoveMessage.title}
         </DialogTitle>
 
         <DialogActions>
           <Button color='primary' onClick={_handleClickRemove} variant='text'>
-            Cancel
+            {modalRemoveMessage.cancel}
           </Button>
           <Button
             color='primary' onClick={() => {
               onRemove(currentId)
               _handleClickRemove()
             }} variant='contained'>
-            Agree
+            {modalRemoveMessage.confirm}
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   )
 }
