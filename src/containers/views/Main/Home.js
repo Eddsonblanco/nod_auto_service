@@ -5,8 +5,7 @@ import Carousel from 'components/Common/Carousel'
 import { makeStyles } from '@material-ui/styles'
 import {
   Container,
-  Typography,
-  Grid
+  Typography
 } from '@material-ui/core'
 
 // import Companies from 'components/Companies'
@@ -15,6 +14,12 @@ import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
 const useStyles = makeStyles({
+  containerServices: {
+    display            : 'grid',
+    gridGap            : '30px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 360px))',
+    justifyContent     : 'center'
+  },
   servicesTitle: {
     marginBottom: 40
   },
@@ -43,17 +48,13 @@ export default function Home() {
           variant='h4'>
             Services & Repairment
         </Typography>
-        <Grid container spacing={3}>
+        <div className={classes.containerServices}>
           {
             [ 1,2,3,4,5,6 ].map((item, index) => (
-              <Grid
-                item key={index} md={4}
-                xs={6}>
-                <CardService />
-              </Grid>
+              <CardService key={index} />
             ))
           }
-        </Grid>
+        </div>
       </Container>
 
       <Container className={classes.testimonials} maxWidth={false}>

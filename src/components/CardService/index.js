@@ -5,16 +5,37 @@ import {
   Card,
   CardActions,
   CardContent,
-  Typography,
-  IconButton
+  Typography
 } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 const useStyles = makeStyles({
+  action: {
+    '& svg': {
+      color   : '#fff',
+      fontSize: '1rem'
+    },
+    alignItems    : 'center',
+    background    : '#d5d5d5',
+    borderRadius  : '50%',
+    display       : 'flex',
+    height        : 30,
+    justifyContent: 'center',
+    marginBottom  : 20,
+    width         : 30
+  },
   bullet: {
     display  : 'inline-block',
     margin   : '0 2px',
     transform: 'scale(0.8)'
+  },
+  contentImage: {
+    '& img': {
+      width: '100%'
+    },
+    marginBottom: 40,
+    marginTop   : 40,
+    maxWidth    : 40
   },
   description: {
     maxWidth: 250
@@ -30,6 +51,9 @@ const useStyles = makeStyles({
       '& $title': {
         color: '#fff'
       },
+      '& img': {
+        filter: 'brightness(0) invert(1)'
+      },
       background : 'rgba(246, 78, 78, 0.57)',
       borderColor: 'rgba(246, 78, 78, 0.57)',
       boxShadow  : '0 3px 20px 0 rgba(0, 0, 0, 0.16)',
@@ -38,7 +62,8 @@ const useStyles = makeStyles({
     },
     borderColor : '#d5d5d5',
     borderRadius: 12,
-    minWidth    : 275
+    minWidth    : 275,
+    padding     : 20
   },
   title: {
     color        : '#353535',
@@ -57,6 +82,9 @@ export default function CardService() {
   return (
     <Card className={classes.root} variant='outlined'>
       <CardContent>
+        <div className={classes.contentImage}>
+          <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/287cb8d5-6a26-4c07-8618-fc76f730afab.svg' />
+        </div>
         <Typography className={classes.title} color='textSecondary' gutterBottom>
           Suspensión repair
         </Typography>
@@ -66,9 +94,9 @@ export default function CardService() {
         </Typography>
       </CardContent>
       <CardActions>
-        <IconButton>
+        <div className={classes.action}>
           <ArrowForwardIosIcon />
-        </IconButton>
+        </div>
       </CardActions>
     </Card>
   )
