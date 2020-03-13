@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/styles'
 import {
   Container,
   Typography,
-  Grid
+  Button
 } from '@material-ui/core'
 
 // import Companies from 'components/Companies'
@@ -14,9 +14,51 @@ import Banner from 'components/Banner/Banner'
 import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  btnAllServices: {
+    display       : 'flex',
+    justifyContent: 'center',
+    marginTop     : 50
+  },
+  containerServices: {
+    display            : 'grid',
+    gridGap            : '30px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 360px))',
+    justifyContent     : 'center'
+  },
   servicesTitle: {
-    marginBottom: 40
+    fontWeight  : '600',
+    marginBottom: 40,
+    marginTop   : 30
+  },
+  sliderServiceCenter: {
+    '& img': {
+      marginTop: 40
+    },
+    background  : theme.palette.primary.main,
+    borderRadius: 12,
+    height      : 360,
+    margin      : '0 50px',
+    maxWidth    : 640,
+    width       : '100%'
+  },
+  sliderServiceContainer: {
+    alignItems    : 'center',
+    display       : 'flex',
+    justifyContent: 'center',
+    margin        : '100px 0 200px 0'
+  },
+  sliderServiceImg: {
+    display       : 'flex',
+    justifyContent: 'center'
+  },
+  sliderServiceLeft: {
+    maxWidth: 290,
+    width   : '100%'
+  },
+  sliderServiceRight: {
+    maxWidth: 410,
+    width   : '100%'
   },
   testimonials: {
     paddingTop: 60
@@ -26,7 +68,7 @@ const useStyles = makeStyles({
     fontWeight  : 600,
     marginBottom: 60
   }
-})
+}))
 
 export default function Home() {
   const classes = useStyles()
@@ -34,26 +76,46 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      {/* <Companies /> */}
+
+      {/* slider service detail */}
+      <div className={classes.sliderServiceContainer}>
+        <div className={classes.sliderServiceLeft}>
+          <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
+        </div>
+        <div className={classes.sliderServiceCenter}>
+          <div className={classes.sliderServiceImg}>
+            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/4d57eb34-10bd-4d25-8947-83c40d90a6d7.png' />
+          </div>
+        </div>
+        <div className={classes.sliderServiceRight}>
+          <Typography>Oil change at home</Typography>
+          <Typography>
+            Enjoy convenient car repair and maintenance at your home or office.
+            It's as easy as 1-2-3.
+          </Typography>
+          <Button color='primary' variant='contained'>Ver mas info</Button>
+        </div>
+      </div>
+
+      {/* <Services /> */}
       <Container maxWidth='lg'>
         <Typography
           align='center'
           className={classes.servicesTitle}
           component='h2'
-          variant='h4'>
+          variant='h5'>
             Services & Repairment
         </Typography>
-        <Grid container spacing={3}>
+        <div className={classes.containerServices}>
           {
             [ 1,2,3,4,5,6 ].map((item, index) => (
-              <Grid
-                item key={index} md={4}
-                xs={6}>
-                <CardService />
-              </Grid>
+              <CardService key={index} />
             ))
           }
-        </Grid>
+        </div>
+        <div className={classes.btnAllServices}>
+          <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
+        </div>
       </Container>
 
       <Container className={classes.testimonials} maxWidth={false}>

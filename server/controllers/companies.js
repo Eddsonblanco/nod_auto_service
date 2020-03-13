@@ -1,16 +1,14 @@
 
-import { companies } from '../models'
+import { Companies, Datatables } from '../models'
 import { Types } from 'mongoose'
 import { removeImage } from '../utils'
-
-// import { escapeRegex } from '../utils/regex'
 
 const create = async (req) => {
   try {
     const {
       alt_text
     } = req.body
-    const company = companies({
+    const company = Companies({
       alt_text
     })
 
@@ -23,12 +21,43 @@ const create = async (req) => {
   }
 }
 
-const all = async () => {
+const all = async (query) => {
   try {
-    const companiesData = await companies.find({})
+    const {
+      perPage = 10,
+      page = 1,
+      orderBy,
+      sort
+    } = query
+
+    const sortNumber = sort === 'asc' ? 1 : -1
+
+    const columns = await Datatables.find({ source: 'companies' }).sort({ index: 1 })
+
+    const [ { count: [ { total } ], data: rows } ] = await Companies.aggregate([
+      {
+        $facet: {
+          count: [
+            { $count: 'total' }
+          ],
+          data: [
+            { $project: { __v: 0, createdAt: 0 } },
+            { $sort: { [orderBy || 'updatedAt']: sortNumber } },
+            { $skip: parseInt(page - 1) * parseInt(perPage) },
+            { $limit: parseInt(perPage) }
+          ]
+        }
+      }
+    ])
 
     return {
-      items: companiesData
+      columns,
+      pagination: {
+        page   : parseInt(page),
+        perPage: parseInt(perPage),
+        total
+      },
+      rows
     }
   } catch (err) {
     return err
@@ -37,12 +66,12 @@ const all = async () => {
 
 const remove = async (id) => {
   try {
-    const { image } = await companies.findOne({ _id: Types.ObjectId(id) }).select('image')
+    const { image } = await Companies.findOne({ _id: Types.ObjectId(id) }).select('image')
 
     if(image)
       removeImage(image)
 
-    const { deletedCount } = await companies.deleteOne({ _id: Types.ObjectId(id) }).lean()
+    const { deletedCount } = await Companies.deleteOne({ _id: Types.ObjectId(id) }).lean()
 
     return deletedCount
   } catch (err) {
@@ -57,19 +86,27 @@ const edit = async (req) => {
       ...others
     } = req.body
 
-    const company = companies(others)
+    const company = Companies(others)
 
     if(req.file) {
-      const { image } = await companies.findOne({ _id: Types.ObjectId(id) }).select('image')
+      const { image } = await Companies.findOne({ _id: Types.ObjectId(id) }).select('image')
       removeImage(image)
       company.setImgUrl(req.file.filename)
     }
 
     delete company._doc._id
 
-    return await companies.findOneAndUpdate({ _id: Types.ObjectId(id) },
+    return await Companies.findOneAndUpdate({ _id: Types.ObjectId(id) },
       { $set: company },
       { 'new': true, upsert: true })
+  } catch (err) {
+    return err
+  }
+}
+
+const one = async (id) => {
+  try {
+    return await Companies.findOne({ _id: Types.ObjectId(id) })
   } catch (err) {
     return err
   }
@@ -78,5 +115,6 @@ export {
   create,
   all,
   remove,
-  edit
+  edit,
+  one
 }

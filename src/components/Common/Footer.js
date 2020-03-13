@@ -51,7 +51,7 @@ const styles = makeStyles(theme => {
           marginBottom: 0
         },
         [theme.breakpoints.up('lg')]: {
-          fontSize    : '1rem',
+          // fontSize    : '1rem',
           marginBottom: 0,
           marginRight : 30
         }

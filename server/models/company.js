@@ -10,7 +10,7 @@ const companySchema = new mongoose.Schema({
     required: true,
     type    : String
   }
-})
+}, { timestamps: true })
 
 companySchema.methods.setImgUrl = function setImgUrl(filename) {
   this.image = `/api/public/${filename}`
