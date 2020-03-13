@@ -5,7 +5,8 @@ import Carousel from 'components/Common/Carousel'
 import { makeStyles } from '@material-ui/styles'
 import {
   Container,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core'
 
 // import Companies from 'components/Companies'
@@ -14,6 +15,11 @@ import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
 const useStyles = makeStyles({
+  btnAllServices: {
+    display       : 'flex',
+    justifyContent: 'center',
+    marginTop     : 50
+  },
   containerServices: {
     display            : 'grid',
     gridGap            : '30px',
@@ -41,7 +47,21 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      {/* <Companies /> */}
+
+      {/* slider service detail */}
+      <div className={classes.sliderServiceContainer}>
+        <div className={classes.sliderServiceLeft}>
+          <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
+        </div>
+        <div className={classes.sliderServiceCenter}>
+
+        </div>
+        <div className={classes.sliderServiceRight}>
+
+        </div>
+      </div>
+
+      {/* <Services /> */}
       <Container maxWidth='lg'>
         <Typography
           align='center'
@@ -56,6 +76,9 @@ export default function Home() {
               <CardService key={index} />
             ))
           }
+        </div>
+        <div className={classes.btnAllServices}>
+          <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
         </div>
       </Container>
 
