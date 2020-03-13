@@ -21,7 +21,9 @@ const useStyles = makeStyles({
     justifyContent     : 'center'
   },
   servicesTitle: {
-    marginBottom: 40
+    fontWeight  : '600',
+    marginBottom: 40,
+    marginTop   : 30
   },
   testimonials: {
     paddingTop: 60
@@ -45,7 +47,7 @@ export default function Home() {
           align='center'
           className={classes.servicesTitle}
           component='h2'
-          variant='h4'>
+          variant='h5'>
             Services & Repairment
         </Typography>
         <div className={classes.containerServices}>
