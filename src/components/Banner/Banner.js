@@ -4,15 +4,16 @@ import { Typography, Button, Container } from '@material-ui/core'
 
 const useStyles = makeStyles(theme =>({
 
-  // CallToAction: {
-  //   '&:hover': {
-  //     backgroundColor: theme.palette.primary.main
-  //   },
-  //   color        : theme.palette.common.white,
-  //   fontWeight   : 300,
-  //   paddingBottom: 6,
-  //   paddingTop   : 6
-  // },
+  CallToAction: {
+    marginTop: 40
+    // '&:hover': {
+    //   backgroundColor: theme.palette.primary.main
+    // },
+    // color        : theme.palette.common.white,
+    // fontWeight   : 300,
+    // paddingBottom: 6,
+    // paddingTop   : 6
+  },
   backgroundImg: {
     backgroundRepeat: 'no-repeat',
     backgroundSize  : 'contain',
@@ -82,7 +83,7 @@ export default function banner() {
             rather than transparent technologies </Typography>
           <Typography className={classes.contentBanner}> Competently maintain holistic internal or "organic" sources via compelling benefits.
             Collaboratively engage error-free paradigms rather than. </Typography>
-          <Button className={classes.CallToAction} color='inherit' variant='outlined'> GET AN APPOIMENT NOW </Button>
+          <Button className={classes.CallToAction} color='primary' variant='contained'> GET AN APPOIMENT NOW </Button>
         </div>
       </Container>
     </div>
