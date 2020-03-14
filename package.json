@@ -51,6 +51,7 @@
     "axios-debug-log": "0.7.0",
     "connected-react-router": "6.7.0",
     "extensible-duck": "1.6.0",
+    "google-maps-react": "2.0.2",
     "hero-slider": "2.0.3",
     "js-cookie": "2.2.1",
     "mongoose": "5.9.4",

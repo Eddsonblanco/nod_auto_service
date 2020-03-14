@@ -116,13 +116,13 @@ const Footer = () => {
           container
           direction='row'
           justify='space-between'>
-          <Grid item md='1' xs='12'>
+          <Grid item md={1} xs={12}>
             <div className={classes.logoContainer}>
               <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/cee9ca9e-99dd-40c5-bc5e-bbd64caaee39.svg' />
             </div>
           </Grid>
 
-          <Grid item md='8' xs='12'>
+          <Grid item md={8} xs={12}>
             <ul className={classes.listNav}>
               <li className={classes.listNavItem}>HOME</li>
               <li className={classes.listNavItem}>SERVICES</li>
@@ -134,7 +134,7 @@ const Footer = () => {
             </ul>
           </Grid>
 
-          <Grid item md='2' xs='12'>
+          <Grid item md={2} xs={12}>
             <div className={classes.socialList}>
               <div className={classes.socialItem}>
                 <TwitterIcon />
