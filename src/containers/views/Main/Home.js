@@ -116,7 +116,7 @@ export default function Home() {
       </div>
 
       {/* slider service detail */}
-      <div className={classes.sliderServiceContainer}>
+      {/* <div className={classes.sliderServiceContainer}>
         <div className={classes.sliderServiceLeft}>
           <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
         </div>
@@ -133,7 +133,7 @@ export default function Home() {
           </Typography>
           <Button color='primary' variant='contained'>Ver mas info</Button>
         </div>
-      </div>
+      </div> */}
 
       {/* <Services /> */}
       <Container maxWidth='lg'>

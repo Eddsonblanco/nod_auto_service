@@ -28,6 +28,17 @@ const useStyles = makeStyles(theme =>({
     display   : 'flex',
     height    : '100%'
   },
+  contentBanner: {
+    fontSize                              : '0.9rem',
+    textAlign                             : 'center',
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    '@media screen and (min-width: 640px)': {
+      fontSize    : '1rem',
+      marginBottom: 30,
+      textAlign   : 'left'
+
+    }
+  },
   overlay: {
     backgroundImage: 'linear-gradient(to bottom, rgba(53, 53, 53, 0.23) 3%, rgba(246, 78, 78, 0.99))',
     height         : '100%',
@@ -37,34 +48,51 @@ const useStyles = makeStyles(theme =>({
     top            : 0,
     width          : '100%'
   },
-  // contentBanner: {
-  //   fontSize    : '0.9rem',
-  //   marginBottom: 30
-  // },
   titleBanner: {
-    color       : theme.palette.common.white,
-    fontSize    : '2.5rem',
-    fontWeight  : '900',
-    lineHeight  : '60px',
-    marginBottom: 30
-
+    color                                 : theme.palette.common.white,
+    fontSize                              : '1.2rem',
+    fontWeight                            : '900',
+    lineHeight                            : '30px',
+    marginBottom                          : 30,
+    textAlign                             : 'center',
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    '@media screen and (min-width: 640px)': {
+      fontSize  : '1.5rem',
+      lineHeight: '30px',
+      textAlign : 'left'
+    },
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    '@media screen and (min-width: 1024px)': {
+      fontSize  : '2.5rem',
+      lineHeight: '60px',
+      textAlign : 'left'
+    }
   },
   wrapperBanner: {
     alignItems: 'center',
     color     : theme.palette.common.white,
-    height    : 800,
+    height    : 'calc(100vh - 100px)',
     position  : 'relative'
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    // '@media screen and(min-width: 1200px)': {
+    //   height: 800
+    // }
+
   },
   wrapperTextBanner: {
     // alignContent  : 'center',
-    color   : theme.palette.common.white,
-    // display       : 'flex',
-    // flexDirection : 'column',
+    color                                 : theme.palette.common.white,
+    display                               : 'flex',
+    flexDirection                         : 'column',
     // height        : '100%',
-    // justifyContent: 'center',
-    maxWidth: 640,
-    position: 'relative',
-    width   : '100%'
+    justifyContent                        : 'center',
+    maxWidth                              : 640,
+    position                              : 'relative',
+    width                                 : '100%',
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    '@media screen and (min-width: 640px)': {
+      display: 'block'
+    }
   }
 
 }))
