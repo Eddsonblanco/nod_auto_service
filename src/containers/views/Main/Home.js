@@ -15,6 +15,31 @@ import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
 const useStyles = makeStyles(theme => ({
+  brandContainer: {
+    display       : 'flex',
+    justifyContent: 'flex-end',
+    marginTop     : '-50px',
+    position      : 'relative',
+    zIndex        : 4
+  },
+  brandItem: {
+    '& img': {
+      width: '100%'
+    },
+    boxSizing: 'content-box',
+    maxWidth : 120,
+    padding  : '40px'
+  },
+  brandList: {
+    background     : 'black',
+    backgroundColor: '#ffffff',
+    border         : 'solid 1px #d5d5d5',
+    borderRadius   : '10px 0 0 10px',
+    boxShadow      : '6px 30px 68px 0 rgba(0, 0, 0, 0.12)',
+    maxWidth       : '75%',
+    overflow       : 'hidden',
+    width          : '100%'
+  },
   btnAllServices: {
     display       : 'flex',
     justifyContent: 'center',
@@ -77,6 +102,14 @@ export default function Home() {
     <div>
       <Banner />
 
+      <div className={classes.brandContainer}>
+        <div className={classes.brandList}>
+          <div className={classes.brandItem}>
+            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7c1f5df4-02f4-4b04-be23-0f7edc8885a0.png' />
+          </div>
+        </div>
+      </div>
+
       {/* slider service detail */}
       <div className={classes.sliderServiceContainer}>
         <div className={classes.sliderServiceLeft}>
@@ -118,6 +151,7 @@ export default function Home() {
         </div>
       </Container>
 
+      {/* testimonials */}
       <Container className={classes.testimonials} maxWidth={false}>
         <Typography
           align='center'
