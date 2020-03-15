@@ -11,6 +11,9 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles({
+  btnAction: {
+    marginTop: 40
+  },
   carContainer: {
     display: 'flex'
   },
@@ -18,9 +21,15 @@ const useStyles = makeStyles({
     marginLeft: 14
   },
   mapContainer: {
-    height  : '100%',
+    height  : '560px',
     position: 'relative',
     width   : '100%'
+  },
+  subtitle: {
+    marginBottom: 55
+  },
+  title: {
+    fontWeight: 600
   },
   wrapper: {
     marginTop: 70
@@ -49,60 +58,39 @@ const Contact = (props) => {
 
   return (
     <Container maxWidth='lg'>
-      <Grid className={classes.wrapper} container spacing={3}>
+      <Grid className={classes.wrapper} container spacing={10}>
         <Grid item xs={5}>
           <div>
-            <Typography variant='h4'>Contact.</Typography>
-            <Typography variant='body1'>Leave us a message</Typography>
-
-            <Grid container spacing={4}>
+            <Typography className={classes.title} variant='h4'>Contact.</Typography>
+            <Typography className={classes.subtitle} variant='body1'>Leave us a message</Typography>
+            <Grid container spacing={5}>
               <Grid item xs={6}>
                 <TextField
-                  helperText='Full width!'
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  label='Label'
-                  margin='normal'
-                  placeholder='Placeholder'
-                  style={{ margin: 8 }} />
+                  label='Full Name'
+                  variant='outlined' />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  helperText='Full width!'
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  label='Label'
-                  margin='normal'
-                  placeholder='Placeholder'
-                  style={{ margin: 8 }} />
+                  label='Phone'
+                  variant='outlined' />
               </Grid>
             </Grid>
 
             <TextField
               fullWidth
-              helperText='Full width!'
-              InputLabelProps={{
-                shrink: true
-              }}
-              label='Label'
-              margin='normal'
-              placeholder='Placeholder'
-              style={{ margin: 8 }} />
+              label='Email'
+              style={{ marginTop: 20 }}
+              variant='outlined' />
 
             <TextField
               fullWidth
-              helperText='Full width!'
-              InputLabelProps={{
-                shrink: true
-              }}
-              label='Label'
-              margin='normal'
-              placeholder='Placeholder'
-              style={{ margin: 8 }} />
+              label='Message'
+              multiline
+              rows='8'
+              style={{ marginTop: 20 }}
+              variant='outlined' />
 
-            <Button color='primary' variant='contained'>I want you to contact me</Button>
+            <Button className={classes.btnAction} color='primary' variant='contained'>I want you to contact me</Button>
           </div>
         </Grid>
         <Grid item xs={7}>
@@ -111,7 +99,7 @@ const Contact = (props) => {
               google={props.google}
               initialCenter={{ lat: 47.444, lng: -122.176 }}
               // style={mapStyles}
-              zoom={8} >
+              zoom={8}>
               <Marker
                 name={'Current location'}
                 onClick={_handleClickMarker} />
