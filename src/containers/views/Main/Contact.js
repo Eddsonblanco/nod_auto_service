@@ -10,7 +10,7 @@ import {
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import { makeStyles } from '@material-ui/styles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   btnAction: {
     marginTop: 40
   },
@@ -25,16 +25,30 @@ const useStyles = makeStyles({
     position: 'relative',
     width   : '100%'
   },
+  messageContainer: {
+    marginBottom: 70
+  },
+  parent: {
+    overflow: 'hidden'
+  },
   subtitle: {
     marginBottom: 55
   },
   title: {
     fontWeight: 600
   },
+  twoInput: {
+    [theme.breakpoints.up('md')]: {
+      gridGap            : 30,
+      gridTemplateColumns: '1fr 1fr'
+    },
+    display: 'grid'
+  },
   wrapper: {
-    marginTop: 70
+    marginBottom: 100,
+    marginTop   : 70
   }
-})
+}))
 
 const Contact = (props) => {
   const classes = useStyles()
@@ -57,24 +71,26 @@ const Contact = (props) => {
   }
 
   return (
-    <Container maxWidth='lg'>
+    <Container className={classes.parent} maxWidth='lg'>
       <Grid className={classes.wrapper} container spacing={10}>
-        <Grid item xs={5}>
+        <Grid item md={5} xs={12}>
           <div>
             <Typography className={classes.title} variant='h4'>Contact.</Typography>
             <Typography className={classes.subtitle} variant='body1'>Leave us a message</Typography>
-            <Grid container spacing={5}>
-              <Grid item xs={6}>
-                <TextField
-                  label='Full Name'
-                  variant='outlined' />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label='Phone'
-                  variant='outlined' />
-              </Grid>
-            </Grid>
+            <div className={classes.twoInput}>
+
+              <TextField
+                fullWidth
+                label='Full Name'
+                style={{ marginTop: 20 }}
+                variant='outlined' />
+
+              <TextField
+                fullWidth
+                label='Phone'
+                style={{ marginTop: 20 }}
+                variant='outlined' />
+            </div>
 
             <TextField
               fullWidth
@@ -93,7 +109,7 @@ const Contact = (props) => {
             <Button className={classes.btnAction} color='primary' variant='contained'>I want you to contact me</Button>
           </div>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item md={7} xs={12}>
           <div className={classes.mapContainer}>
             <Map
               google={props.google}
@@ -117,8 +133,16 @@ const Contact = (props) => {
         </Grid>
       </Grid>
 
+      <div className={classes.messageContainer}>
+        <Typography variant='h6'>Quick,</Typography>
+        <Typography gutterBottom={2} variant='h6'>Support<span>:</span></Typography>
+        <Typography variant='body1'>You can get all the contact information</Typography>
+      </div>
+
       <Grid container spacing={5}>
-        <Grid item xs={4}>
+        <Grid
+          item md={4} sm={6}
+          xs={12}>
           <div className={classes.carContainer}>
             <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7e63f71f-4359-4307-b9c6-b0bc6286b576.svg' />
             <div className={classes.carContainerText}>
@@ -127,7 +151,9 @@ const Contact = (props) => {
             </div>
           </div>
         </Grid>
-        <Grid item xs={4}>
+        <Grid
+          item md={4} sm={6}
+          xs={12}>
           <div className={classes.carContainer}>
             <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7e63f71f-4359-4307-b9c6-b0bc6286b576.svg' />
             <div className={classes.carContainerText}>
@@ -136,7 +162,9 @@ const Contact = (props) => {
             </div>
           </div>
         </Grid>
-        <Grid item xs={4}>
+        <Grid
+          item md={4} sm={6}
+          xs={12}>
           <div className={classes.carContainer}>
             <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7e63f71f-4359-4307-b9c6-b0bc6286b576.svg' />
             <div className={classes.carContainerText}>
