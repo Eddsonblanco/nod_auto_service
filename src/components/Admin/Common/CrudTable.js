@@ -115,7 +115,6 @@ const CrudTable = props => {
   }
 
   const _onExitedModalEdit = () => {
-    console.log('===> XAVI <===: _onExitedModalEdit -> openModalEdit', openModalEdit)
     if(openModalEdit) {
       setDataEdit(null)
       onResetEdit(true)

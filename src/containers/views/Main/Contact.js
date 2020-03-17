@@ -7,6 +7,7 @@ import {
   TextField,
   Button
 } from '@material-ui/core'
+import { useForm, Controller } from 'react-hook-form'
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import { makeStyles } from '@material-ui/styles'
 
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden'
   },
   subtitle: {
-    marginBottom: 55
+    marginBottom: 40
   },
   title: {
     fontWeight: 600
@@ -52,6 +53,8 @@ const useStyles = makeStyles(theme => ({
 
 const Contact = (props) => {
   const classes = useStyles()
+  const { handleSubmit, control } = useForm()
+  const onSubmit = data => console.log(data)
 
   const [ activeMarker, setActiveMarker ] = useState({})
   // eslint-disable-next-line no-unused-vars
@@ -77,36 +80,70 @@ const Contact = (props) => {
           <div>
             <Typography className={classes.title} variant='h4'>Contact.</Typography>
             <Typography className={classes.subtitle} variant='body1'>Leave us a message</Typography>
-            <div className={classes.twoInput}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className={classes.twoInput}>
+                <Controller
+                  as={
+                    <TextField
+                      fullWidth
+                      label='Full Name'
+                      style={{ marginTop: 20 }}
+                      variant='outlined' />
+                  }
+                  control={control}
+                  defaultValue=''
+                  name='fullName' />
 
-              <TextField
-                fullWidth
-                label='Full Name'
-                style={{ marginTop: 20 }}
-                variant='outlined' />
+                <Controller
+                  as={
+                    <TextField
+                      fullWidth
+                      label='Phone'
+                      style={{ marginTop: 20 }}
+                      variant='outlined' />
+                  }
+                  control={control}
+                  defaultValue=''
+                  name='phone' />
 
-              <TextField
-                fullWidth
-                label='Phone'
-                style={{ marginTop: 20 }}
-                variant='outlined' />
-            </div>
+              </div>
 
-            <TextField
-              fullWidth
-              label='Email'
-              style={{ marginTop: 20 }}
-              variant='outlined' />
+              <Controller
+                as={
+                  <TextField
+                    fullWidth
+                    label='Email'
+                    style={{ marginTop: 20 }}
+                    variant='outlined' />
 
-            <TextField
-              fullWidth
-              label='Message'
-              multiline
-              rows='8'
-              style={{ marginTop: 20 }}
-              variant='outlined' />
+                }
+                control={control}
+                defaultValue=''
+                name='email' />
 
-            <Button className={classes.btnAction} color='primary' variant='contained'>I want you to contact me</Button>
+              <Controller
+                as={
+                  <TextField
+                    fullWidth
+                    label='Message'
+                    multiline
+                    rows='8'
+                    style={{ marginTop: 20 }}
+                    variant='outlined' />
+
+                }
+                control={control}
+                defaultValue=''
+                name='message' />
+
+              <Button
+                className={classes.btnAction}
+                color='primary'
+                type='submit'
+                variant='contained'>I want you to contact me</Button>
+
+            </form>
+
           </div>
         </Grid>
         <Grid item md={7} xs={12}>
@@ -135,7 +172,7 @@ const Contact = (props) => {
 
       <div className={classes.messageContainer}>
         <Typography variant='h6'>Quick,</Typography>
-        <Typography gutterBottom={2} variant='h6'>Support<span>:</span></Typography>
+        <Typography gutterBottom variant='h6'>Support<span>:</span></Typography>
         <Typography variant='body1'>You can get all the contact information</Typography>
       </div>
 
