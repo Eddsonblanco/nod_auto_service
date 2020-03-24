@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 
 const Contact = (props) => {
   const classes = useStyles()
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control, errors } = useForm()
   const onSubmit = data => console.log(data)
 
   const [ activeMarker, setActiveMarker ] = useState({})
@@ -85,33 +85,41 @@ const Contact = (props) => {
                 <Controller
                   as={
                     <TextField
+                      error={Boolean(errors['fullName'])}
                       fullWidth
+                      helperText={(errors['fullName'] && errors['fullName'].type === 'required') ? 'Your input is required' : ''}
                       label='Full Name'
                       style={{ marginTop: 20 }}
                       variant='outlined' />
                   }
                   control={control}
                   defaultValue=''
-                  name='fullName' />
+                  name='fullName'
+                  rules={{ required: true }} />
 
                 <Controller
                   as={
                     <TextField
+                      error={Boolean(errors['phone'])}
                       fullWidth
+                      helperText={(errors['phone'] && errors['phone'].type === 'required') ? 'Your input is required' : ''}
                       label='Phone'
                       style={{ marginTop: 20 }}
                       variant='outlined' />
                   }
                   control={control}
                   defaultValue=''
-                  name='phone' />
+                  name='phone'
+                  rules={{ required: true }} />
 
               </div>
 
               <Controller
                 as={
                   <TextField
+                    error={Boolean(errors['email'])}
                     fullWidth
+                    helperText={(errors['email'] && errors['email'].type === 'required') ? 'Your input is required' : ''}
                     label='Email'
                     style={{ marginTop: 20 }}
                     variant='outlined' />
@@ -119,12 +127,15 @@ const Contact = (props) => {
                 }
                 control={control}
                 defaultValue=''
-                name='email' />
+                name='email'
+                rules={{ required: true }} />
 
               <Controller
                 as={
                   <TextField
+                    error={Boolean(errors['message'])}
                     fullWidth
+                    helperText={(errors['message'] && errors['message'].type === 'required') ? 'Your input is required' : ''}
                     label='Message'
                     multiline
                     rows='8'
@@ -134,7 +145,8 @@ const Contact = (props) => {
                 }
                 control={control}
                 defaultValue=''
-                name='message' />
+                name='message'
+                rules={{ required: true }} />
 
               <Button
                 className={classes.btnAction}
