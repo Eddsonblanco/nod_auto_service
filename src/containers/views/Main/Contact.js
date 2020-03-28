@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   Grid,
@@ -10,6 +11,12 @@ import {
 import { useForm, Controller } from 'react-hook-form'
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import { makeStyles } from '@material-ui/styles'
+
+import contactDucks from 'reducers/contacts'
+
+const {
+  createContact
+} = contactDucks.creators
 
 const useStyles = makeStyles(theme => ({
   btnAction: {
@@ -53,13 +60,47 @@ const useStyles = makeStyles(theme => ({
 
 const Contact = (props) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  const {
+    messageSend
+  } = useSelector(store => store.contacts)
+
   const { handleSubmit, control, errors } = useForm()
-  const onSubmit = data => console.log(data)
+  const onSubmit = data => dispatch(createContact(data))
 
   const [ activeMarker, setActiveMarker ] = useState({})
   // eslint-disable-next-line no-unused-vars
   const [ selectedPlace, setSelectedPlace ] = useState({})
   const [ showingInfoWindow, setShowingInfoWindow ] = useState(false)
+
+  const validFormMessage = (errors, data) => {
+    const {
+      name = '',
+      message = {
+        pattern : '',
+        required: 'Your input is required'
+      }
+    } = data
+
+    if(errors && errors[name]) {
+      const {
+        type = ''
+      } = errors[name]
+      switch (type) {
+        case 'required':
+
+          return message.required
+
+        case 'pattern':
+
+          return message.pattern
+
+        default:
+          return ''
+      }
+    }
+  }
 
   const _handleClickMarker = (props, marker) => {
     setActiveMarker(marker)
@@ -77,86 +118,103 @@ const Contact = (props) => {
     <Container className={classes.parent} maxWidth='lg'>
       <Grid className={classes.wrapper} container spacing={10}>
         <Grid item md={5} xs={12}>
-          <div>
-            <Typography className={classes.title} variant='h4'>Contact.</Typography>
-            <Typography className={classes.subtitle} variant='body1'>Leave us a message</Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className={classes.twoInput}>
-                <Controller
-                  as={
-                    <TextField
-                      error={Boolean(errors['fullName'])}
-                      fullWidth
-                      helperText={(errors['fullName'] && errors['fullName'].type === 'required') ? 'Your input is required' : ''}
-                      label='Full Name'
-                      style={{ marginTop: 20 }}
-                      variant='outlined' />
-                  }
-                  control={control}
-                  defaultValue=''
-                  name='fullName'
-                  rules={{ required: true }} />
+          {
+            !messageSend ?
+              <div>
+                <Typography className={classes.title} variant='h4'>Contact.</Typography>
+                <Typography className={classes.subtitle} variant='body1'>Leave us a message</Typography>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className={classes.twoInput}>
+                    <Controller
+                      as={
+                        <TextField
+                          error={Boolean(errors['name'])}
+                          fullWidth
+                          helperText={validFormMessage(errors, {
+                            name: 'name'
+                          })}
+                          label='Full Name'
+                          style={{ marginTop: 20 }}
+                          variant='outlined' />
+                      }
+                      control={control}
+                      defaultValue=''
+                      name='name'
+                      rules={{ required: true }} />
 
-                <Controller
-                  as={
-                    <TextField
-                      error={Boolean(errors['phone'])}
-                      fullWidth
-                      helperText={(errors['phone'] && errors['phone'].type === 'required') ? 'Your input is required' : ''}
-                      label='Phone'
-                      style={{ marginTop: 20 }}
-                      variant='outlined' />
-                  }
-                  control={control}
-                  defaultValue=''
-                  name='phone'
-                  rules={{ required: true }} />
+                    <Controller
+                      as={
+                        <TextField
+                          error={Boolean(errors['phone'])}
+                          fullWidth
+                          helperText={validFormMessage(errors, {
+                            message: {
+                              pattern : 'it must be a number',
+                              required: 'Your input is required'
+                            },
+                            name: 'phone'
+                          })
+                          }
+                          label='Phone'
+                          style={{ marginTop: 20 }}
+                          variant='outlined' />
+                      }
+                      control={control}
+                      defaultValue=''
+                      name='phone'
+                      rules={{ maxLength: 10, pattern: /^\d+$/, required: true }} />
 
+                  </div>
+
+                  <Controller
+                    as={
+                      <TextField
+                        error={Boolean(errors['email'])}
+                        fullWidth
+                        helperText={validFormMessage(errors, {
+                          name: 'email'
+                        })}
+                        label='Email'
+                        style={{ marginTop: 20 }}
+                        variant='outlined' />
+
+                    }
+                    control={control}
+                    defaultValue=''
+                    name='email'
+                    rules={{ required: true }} />
+
+                  <Controller
+                    as={
+                      <TextField
+                        error={Boolean(errors['message'])}
+                        fullWidth
+                        helperText={(errors['message'] && errors['message'].type === 'required') ? 'Your input is required' : ''}
+                        label='Message'
+                        multiline
+                        rows='8'
+                        style={{ marginTop: 20 }}
+                        variant='outlined' />
+
+                    }
+                    control={control}
+                    defaultValue=''
+                    name='message'
+                    rules={{ required: true }} />
+
+                  <Button
+                    className={classes.btnAction}
+                    color='primary'
+                    type='submit'
+                    variant='contained'>I want you to contact me</Button>
+
+                </form>
+
+              </div> :
+              <div>
+                <Typography className={classes.title} variant='h4'>Thanks.</Typography>
               </div>
-
-              <Controller
-                as={
-                  <TextField
-                    error={Boolean(errors['email'])}
-                    fullWidth
-                    helperText={(errors['email'] && errors['email'].type === 'required') ? 'Your input is required' : ''}
-                    label='Email'
-                    style={{ marginTop: 20 }}
-                    variant='outlined' />
-
-                }
-                control={control}
-                defaultValue=''
-                name='email'
-                rules={{ required: true }} />
-
-              <Controller
-                as={
-                  <TextField
-                    error={Boolean(errors['message'])}
-                    fullWidth
-                    helperText={(errors['message'] && errors['message'].type === 'required') ? 'Your input is required' : ''}
-                    label='Message'
-                    multiline
-                    rows='8'
-                    style={{ marginTop: 20 }}
-                    variant='outlined' />
-
-                }
-                control={control}
-                defaultValue=''
-                name='message'
-                rules={{ required: true }} />
-
-              <Button
-                className={classes.btnAction}
-                color='primary'
-                type='submit'
-                variant='contained'>I want you to contact me</Button>
-
-            </form>
-
-          </div>
+          }
         </Grid>
         <Grid item md={7} xs={12}>
           <div className={classes.mapContainer}>
