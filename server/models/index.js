@@ -7,6 +7,7 @@ import services from './service'
 import social from './social'
 import reservation from './reservation'
 import Datatables from './dataTable'
+import Contact from './contact'
 
 export {
   user,
@@ -17,5 +18,6 @@ export {
   insurances,
   services,
   social,
-  reservation
+  reservation,
+  Contact
 }

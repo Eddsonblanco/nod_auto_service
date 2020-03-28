@@ -14,7 +14,33 @@ import Banner from 'components/Banner/Banner'
 import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  brandContainer: {
+    display       : 'flex',
+    justifyContent: 'flex-end',
+    marginTop     : '-50px',
+    position      : 'relative',
+    zIndex        : 4
+  },
+  brandItem: {
+    '& img': {
+      width: '100%'
+    },
+    boxSizing: 'content-box',
+    maxWidth : 120,
+    padding  : '40px'
+  },
+  brandList: {
+    background     : 'black',
+    backgroundColor: '#ffffff',
+    border         : 'solid 1px #d5d5d5',
+    borderRadius   : '10px 0 0 10px',
+    boxShadow      : '6px 30px 68px 0 rgba(0, 0, 0, 0.12)',
+    display        : 'flex',
+    maxWidth       : '75%',
+    overflow       : 'hidden',
+    width          : '100%'
+  },
   btnAllServices: {
     display       : 'flex',
     justifyContent: 'center',
@@ -31,6 +57,35 @@ const useStyles = makeStyles({
     marginBottom: 40,
     marginTop   : 30
   },
+  sliderServiceCenter: {
+    '& img': {
+      marginTop: 40
+    },
+    background  : theme.palette.primary.main,
+    borderRadius: 12,
+    height      : 360,
+    margin      : '0 50px',
+    maxWidth    : 640,
+    width       : '100%'
+  },
+  sliderServiceContainer: {
+    alignItems    : 'center',
+    display       : 'flex',
+    justifyContent: 'center',
+    margin        : '100px 0 200px 0'
+  },
+  sliderServiceImg: {
+    display       : 'flex',
+    justifyContent: 'center'
+  },
+  sliderServiceLeft: {
+    maxWidth: 290,
+    width   : '100%'
+  },
+  sliderServiceRight: {
+    maxWidth: 410,
+    width   : '100%'
+  },
   testimonials: {
     paddingTop: 60
   },
@@ -39,7 +94,7 @@ const useStyles = makeStyles({
     fontWeight  : 600,
     marginBottom: 60
   }
-})
+}))
 
 export default function Home() {
   const classes = useStyles()
@@ -48,18 +103,37 @@ export default function Home() {
     <div>
       <Banner />
 
+      <div className={classes.brandContainer}>
+        <div className={classes.brandList}>
+          {
+            [ 1,2,3,4,5,6,7 ].map((item, index) => (
+              <div className={classes.brandItem} key={index}>
+                <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7c1f5df4-02f4-4b04-be23-0f7edc8885a0.png' />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
       {/* slider service detail */}
-      <div className={classes.sliderServiceContainer}>
+      {/* <div className={classes.sliderServiceContainer}>
         <div className={classes.sliderServiceLeft}>
           <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
         </div>
         <div className={classes.sliderServiceCenter}>
-
+          <div className={classes.sliderServiceImg}>
+            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/4d57eb34-10bd-4d25-8947-83c40d90a6d7.png' />
+          </div>
         </div>
         <div className={classes.sliderServiceRight}>
-
+          <Typography>Oil change at home</Typography>
+          <Typography>
+            Enjoy convenient car repair and maintenance at your home or office.
+            It's as easy as 1-2-3.
+          </Typography>
+          <Button color='primary' variant='contained'>Ver mas info</Button>
         </div>
-      </div>
+      </div> */}
 
       {/* <Services /> */}
       <Container maxWidth='lg'>
@@ -82,6 +156,7 @@ export default function Home() {
         </div>
       </Container>
 
+      {/* testimonials */}
       <Container className={classes.testimonials} maxWidth={false}>
         <Typography
           align='center'
