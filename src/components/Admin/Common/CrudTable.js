@@ -50,14 +50,14 @@ const CrudTable = props => {
       modalRemoveMessage,
       withRemove = false,
       withEdit = false
-    },
+    } = {},
     modalAdd: {
       cancel: modalAddCancel = 'Cancel',
       confirm: modalAddConfirm = 'Confirm',
       form: modalAddForm = [],
       title: titleModalAdd = 'New',
       onConfirm: onConfirmModalAdd = () => {}
-    },
+    } = {},
     modalEdit: {
       cancel: modalEditCancel = 'Cancel',
       confirm: modalEditConfirm = 'Confirm',
@@ -66,7 +66,7 @@ const CrudTable = props => {
       title: titleModalEdit = 'New',
       onReset: onResetEdit = () => {},
       onConfirm: onConfirmModalEdit = () => { }
-    }
+    } = {}
   } = props
 
   const classes = styles()
