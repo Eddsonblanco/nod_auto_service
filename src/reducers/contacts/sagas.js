@@ -1,5 +1,42 @@
-import { Post } from 'lib/Request'
-import { put, call } from 'redux-saga/effects'
+import { Post, GetList } from 'lib/Request'
+import { put, call, select } from 'redux-saga/effects'
+
+export const getContacts = ({ types, selectors }) => function* () {
+  try {
+    yield put({ type: types.FETCH_PENDING })
+
+    const getPagination = yield select(selectors.pagination)
+
+    const params = {
+      page   : getPagination.page,
+      perPage: getPagination.perPage
+    }
+
+    const { data: { columns, rows, pagination } } = yield call(GetList, '/contact', params)
+
+    yield put({
+      payload: {
+        columns,
+        pagination,
+        rows
+      },
+      type: types.FETCH_FULFILLED
+    })
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.FETCH_CANCEL })
+        break
+      default:
+        yield put({
+          error: messageResponse || message,
+          type : types.FETCH_FAILURE
+        })
+        break
+    }
+  }
+}
 
 export const createContact = ({ types }) => function* ({ data }) {
   try {
