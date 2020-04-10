@@ -1,4 +1,7 @@
 import React from 'react'
+import {
+  Link
+} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -7,7 +10,7 @@ import {
   Button,
   IconButton,
   Typography,
-  Link,
+  // Link,
   Container,
   Paper,
   Popper,
@@ -96,9 +99,11 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.primary.main
     },
     alignItems                  : 'center',
+    color                       : theme.palette.common.white,
     display                     : 'flex',
     justifyContent              : 'center',
     padding                     : '10px 15px',
+    textDecoration              : 'none',
     [theme.breakpoints.up('sm')]: {
       cursor : 'pointer',
       padding: '16px 20px'
@@ -174,19 +179,19 @@ export default function ButtonAppBar() {
                   <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/c54e8fa6-451f-4a7c-9b6e-b3a04c250649.svg' />
                 </div>
                 <nav className={classes.navList}>
-                  <li className={classes.navItem}>Home</li>
-                  <li className={classes.navItem}>Services</li>
-                  <li className={classes.navItem}>Contact</li>
-                  <li className={classes.navItem}>About us</li>
-                  <li className={classes.navItem}>FAQ</li>
+                  <Link className={classes.navItem} to='/'>Home</Link>
+                  <Link className={classes.navItem} to='/services'>Services</Link>
+                  <Link className={classes.navItem} to='/contact'>Contact</Link>
+                  <Link className={classes.navItem} to='about'>About us</Link>
+                  <Link className={classes.navItem} to='/faq'>FAQ</Link>
                 </nav>
               </div>
               <div className={classes.headerRight}>
 
-                <Link className={classes.linkPhone} href='#'>
+                <a className={classes.linkPhone} href='tel:4159887557'>
                   <PhoneIcon />
                   <Typography className={classes.phoneText} variant='subtitle2'>(415) 988-7557</Typography>
-                </Link>
+                </a>
 
                 <Button className={classes.callToAction} variant='outlined'>Get an appointment</Button>
 
