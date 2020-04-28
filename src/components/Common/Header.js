@@ -17,7 +17,13 @@ import {
   MenuList,
   Grow,
   MenuItem,
-  ClickAwayListener
+  ClickAwayListener,
+  Stepper,
+  Step,
+  StepButton,
+  DialogContent,
+  Dialog,
+  DialogTitle
 } from '@material-ui/core'
 
 import {
@@ -130,10 +136,37 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+function getSteps() {
+  return [
+    'Customer information',
+    'Vehicle details & Services',
+    'Appointment time'
+  ]
+}
+
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return 'Step 1: Select campaign settings...'
+    case 1:
+      return 'Step 2: What is an ad group anyways?'
+    case 2:
+      return 'Step 3: This is the bit I really care about!'
+    default:
+      return 'Unknown step'
+  }
+}
+
 export default function ButtonAppBar() {
   const classes = useStyles()
   const [ open, setOpen ] = React.useState(false)
   const anchorRef = React.useRef(null)
+
+  const [ openDialog, setOpenDialog ] = React.useState(true)
+
+  const [ activeStep, setActiveStep ] = React.useState(0)
+  const [ completed, setCompleted ] = React.useState({})
+  const steps = getSteps()
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen)
@@ -161,6 +194,50 @@ export default function ButtonAppBar() {
 
     prevOpen.current = open
   }, [ open ])
+
+  const totalSteps = () => {
+    return steps.length
+  }
+
+  const completedSteps = () => {
+    return Object.keys(completed).length
+  }
+
+  const isLastStep = () => {
+    return activeStep === totalSteps() - 1
+  }
+
+  const allStepsCompleted = () => {
+    return completedSteps() === totalSteps()
+  }
+
+  const handleNext = () => {
+    const newActiveStep =
+      isLastStep() && !allStepsCompleted()        ? // It's the last step, but not all steps have been completed,
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !(i in completed)) :
+        activeStep + 1
+    setActiveStep(newActiveStep)
+  }
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
+
+  const handleStep = (step) => () => {
+    setActiveStep(step)
+  }
+
+  const handleComplete = () => {
+    const newCompleted = completed
+    newCompleted[activeStep] = true
+    setCompleted(newCompleted)
+    handleNext()
+  }
+
+  const _handleCloseDialog = () => {
+    setOpenDialog(false)
+  }
 
   return (
     <div>
@@ -234,6 +311,69 @@ export default function ButtonAppBar() {
           </Container>
         </Toolbar>
       </AppBar>
+
+      {/* apoimnet */}
+
+      {/* <Button color='primary' onClick={handleClickOpen} variant='outlined'>
+        Open dialog
+      </Button> */}
+      {/* <Dialog aria-labelledby='customized-dialog-title' onClose={_handleCloseDialog} open={openDialog}>
+        <DialogTitle id='customized-dialog-title' onClose={_handleCloseDialog}>
+          Modal title
+        </DialogTitle>
+        <DialogContent>
+          <Stepper
+            activeStep={activeStep}
+            connector={false}
+            nonLinear>
+            {steps.map((label, index) => (
+              <Step
+                key={label}>
+                <StepButton completed={completed[index]} onClick={handleStep(index)}>
+                  {label}
+                </StepButton>
+              </Step>
+            ))}
+          </Stepper>
+
+          {allStepsCompleted() ? (
+            <div>
+              <Typography className={classes.instructions}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Button onClick={handleReset}>Reset</Button>
+            </div>
+          ) : (
+            <div>
+              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+              <div>
+                <Button className={classes.button} disabled={activeStep === 0} onClick={handleBack}>
+                    Back
+                </Button>
+                <Button
+                  className={classes.button}
+                  color='primary'
+                  onClick={handleNext}
+                  variant='contained'>
+                    Next
+                </Button>
+                {activeStep !== steps.length &&
+                    (completed[activeStep] ? (
+                      <Typography className={classes.completed} variant='caption'>
+                        Step {activeStep + 1} already completed
+                      </Typography>
+                    ) : (
+                      <Button color='primary' onClick={handleComplete} variant='contained'>
+                        {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
+                      </Button>
+                    ))}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+
+      </Dialog> */}
+
     </div>
   )
 }
