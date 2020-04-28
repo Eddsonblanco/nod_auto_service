@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
+import { CssBaseline } from '@material-ui/core'
 
 export default class Root extends Component {
   componentDidMount() {
@@ -11,7 +12,10 @@ export default class Root extends Component {
   render() {
     const { store, children } = this.props
 
-    return <Provider store={store}>{children}</Provider>
+    return (<Provider store={store}>
+      <CssBaseline />
+      {children}
+    </Provider>)
   }
 }
 

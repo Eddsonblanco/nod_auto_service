@@ -1,114 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import {
-  Grid,
-  TextField,
-  Button
-} from '@material-ui/core'
+import CrudTable from 'components/Admin/Common/CrudTable'
 
-import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
-import TabsAdmin from 'components/Admin/Common/TabsAdmin'
+import contactsDucks from 'reducers/contacts'
 
-const Settings = () => {
-  const info = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+const {
+  getContacts
+} = contactsDucks.creators
 
-  const social = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+const Contact = () => {
+  const dispatch = useDispatch()
+  const {
+    columns,
+    rows,
+    status,
+    pagination
+  } = useSelector(store => store.contacts)
 
-  const identity = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
-
-  const seo = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
-
-  const form = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+  console.log('===> XAVI <===: Contact -> rows', rows)
+  useEffect(() => {
+    if(status === 'NEW')
+      dispatch(getContacts())
+  }, [])
 
   return (
-    <ContainerAdmin
-      actionSave={
-        <Button color='secondary' variant='contained'>Save</Button>
+    <CrudTable
+      table={
+        { columns,
+          pagination,
+          rows
+          // onRemove,
+          // onEdit,
+          // modalRemoveMessage,
+          // withRemove = false,
+          // withEdit = false
+        }
       }
-      title='Settings'>
-      <Grid container>
-        <Grid item xs>
-          <TabsAdmin
-            tabContent={[
-              info,
-              social,
-              identity,
-              seo,
-              form
-            ]}
-            tabHeader={[
-              'Info',
-              'Social',
-              'Identity',
-              'Seo',
-              'Form'
-            ]}
-            tabName='settings' />
-        </Grid>
-      </Grid>
-    </ContainerAdmin>
-
+      title='Contact List' />
   )
 }
 
-export default Settings
+export default Contact
