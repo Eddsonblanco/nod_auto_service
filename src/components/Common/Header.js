@@ -254,7 +254,8 @@ export default function ButtonAppBar() {
             <div className={classes.headerWrapper}>
               <div className={classes.headerLeft}>
                 <div className={classes.logoContainer}>
-                  <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/c54e8fa6-451f-4a7c-9b6e-b3a04c250649.svg' />
+                  <h2>N.O.D. Auto Service</h2>
+                  {/* <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/c54e8fa6-451f-4a7c-9b6e-b3a04c250649.svg' /> */}
                 </div>
                 <nav className={classes.navList}>
                   <Link className={classes.navItem} to='/'>Home</Link>
