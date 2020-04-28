@@ -83,7 +83,8 @@ export default function CardService() {
     <Card className={classes.root} variant='outlined'>
       <CardContent>
         <div className={classes.contentImage}>
-          <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/287cb8d5-6a26-4c07-8618-fc76f730afab.svg' />
+          <h1>N.O.D. Auto Service</h1>
+          {/* <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/287cb8d5-6a26-4c07-8618-fc76f730afab.svg' /> */}
         </div>
         <Typography className={classes.title} color='textSecondary' gutterBottom>
           Suspensión repair
