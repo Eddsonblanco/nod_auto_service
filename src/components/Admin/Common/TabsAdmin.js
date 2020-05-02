@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Box
+} from '@material-ui/core'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -36,9 +38,18 @@ const useStyles = makeStyles(theme => ({
     boxShadow      : 'none',
     color          : theme.palette.primary.main
   },
+  contentPanel: {
+    height  : '100%',
+    // maxWidth: 540,
+    overflow: 'auto'
+  },
   root: {
+    backgroundColor: '#fff',
+    display        : 'flex',
+    flexDirection  : 'column',
+    flexGrow       : 1,
     // backgroundColor: theme.palette.background.paper,
-    flexGrow: 1
+    height         : '100%'
   }
 }))
 
@@ -57,7 +68,9 @@ const TabsAdmin = (props) => {
 
   return (
     <div className={classes.root}>
-      dsffas
+      <Typography color='primary' style={{ padding: 20 }} variant='h5'>
+        {tabName}
+      </Typography>
       <AppBar className={classes.appBar} position='static'>
         <Tabs onChange={handleChange} value={value} >
           {
@@ -68,9 +81,11 @@ const TabsAdmin = (props) => {
         </Tabs>
       </AppBar>
       {
-        tabContent.map((tabItem, index) => (
-          <TabPanel index={index} key={index} value={value}>
-            {tabItem}
+        tabContent.map(({ component }, index) => (
+          <TabPanel
+            className={classes.contentPanel} index={index} key={index}
+            value={value}>
+            {component}
           </TabPanel>
         ))
       }

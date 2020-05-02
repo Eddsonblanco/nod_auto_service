@@ -8,6 +8,7 @@ import social from './social'
 import reservation from './reservation'
 import Datatables from './dataTable'
 import Contact from './contact'
+import PageHome from './page_home'
 
 export {
   user,
@@ -19,5 +20,6 @@ export {
   services,
   social,
   reservation,
-  Contact
+  Contact,
+  PageHome
 }
