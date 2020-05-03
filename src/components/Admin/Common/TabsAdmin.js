@@ -57,7 +57,8 @@ const TabsAdmin = (props) => {
   const {
     tabHeader = [],
     tabName = '',
-    tabContent = []
+    tabContent = [],
+    tabActions
   } = props
   const classes = useStyles()
   const [ value, setValue ] = React.useState(0)
@@ -69,7 +70,7 @@ const TabsAdmin = (props) => {
   return (
     <div className={classes.root}>
       <Typography color='primary' style={{ padding: 20 }} variant='h5'>
-        {tabName}
+        {tabName} {tabActions}
       </Typography>
       <AppBar className={classes.appBar} position='static'>
         <Tabs onChange={handleChange} value={value} >
@@ -81,7 +82,7 @@ const TabsAdmin = (props) => {
         </Tabs>
       </AppBar>
       {
-        tabContent.map(({ component }, index) => (
+        tabContent.map((component, index) => (
           <TabPanel
             className={classes.contentPanel} index={index} key={index}
             value={value}>

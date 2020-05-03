@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import {
   Link
 } from 'react-router-dom'
@@ -90,7 +91,11 @@ const useStyles = makeStyles(theme => ({
     }
   },
   logoContainer: {
+    '& img': {
+      width: '100%'
+    },
     marginRight                 : 20,
+    maxWidth                    : 200,
     [theme.breakpoints.up('lg')]: {
       marginRight: 60
     }
@@ -157,8 +162,13 @@ function getStepContent(step) {
   }
 }
 
-export default function ButtonAppBar() {
+export default function Header() {
   const classes = useStyles()
+  const {
+    logo,
+    phone
+  } = useSelector(state => state.settings)
+
   const [ open, setOpen ] = React.useState(false)
   const anchorRef = React.useRef(null)
 
@@ -254,8 +264,7 @@ export default function ButtonAppBar() {
             <div className={classes.headerWrapper}>
               <div className={classes.headerLeft}>
                 <div className={classes.logoContainer}>
-                  <h2>N.O.D. Auto Service</h2>
-                  {/* <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/c54e8fa6-451f-4a7c-9b6e-b3a04c250649.svg' /> */}
+                  <img src={logo} />
                 </div>
                 <nav className={classes.navList}>
                   <Link className={classes.navItem} to='/'>Home</Link>
@@ -266,11 +275,13 @@ export default function ButtonAppBar() {
                 </nav>
               </div>
               <div className={classes.headerRight}>
-
-                <a className={classes.linkPhone} href='tel:4159887557'>
-                  <PhoneIcon />
-                  <Typography className={classes.phoneText} variant='subtitle2'>(415) 988-7557</Typography>
-                </a>
+                {
+                  phone &&
+                  <a className={classes.linkPhone} href={`tel:${phone}`}>
+                    <PhoneIcon />
+                    <Typography className={classes.phoneText} variant='subtitle2'>{phone}</Typography>
+                  </a>
+                }
 
                 <Button className={classes.callToAction} variant='outlined'>Get an appointment</Button>
 

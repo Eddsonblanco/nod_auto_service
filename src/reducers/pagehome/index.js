@@ -32,7 +32,7 @@ export default base({
     show_services    : false,
     show_testimonials: false
   },
-  namespace: 'nod-services',
+  namespace: 'nod_services',
   store    : 'page_home'
 }).extend({
   creators: ({ types }) => ({

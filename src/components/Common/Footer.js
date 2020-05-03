@@ -100,10 +100,8 @@ const styles = makeStyles(theme => {
 
 const Footer = () => {
   const {
-    // direction = '',
-    // email = '',
-    // phone = '',
-    // copyright = ''
+    logo,
+    copyright
   } = useSelector(state => state.settings)
 
   const classes = styles()
@@ -118,7 +116,7 @@ const Footer = () => {
           justify='space-between'>
           <Grid item md={1} xs={12}>
             <div className={classes.logoContainer}>
-              <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/cee9ca9e-99dd-40c5-bc5e-bbd64caaee39.svg' />
+              <img src={logo} />
             </div>
           </Grid>
 
@@ -157,7 +155,7 @@ const Footer = () => {
           container
           direction='row'
           justify='space-between'>
-          <Typography variant='body2'>Copyright © 2020 All Rights Reserved.</Typography>
+          <Typography variant='body2'>{copyright}</Typography>
           <Typography variant='body2'>Designed by ª <strong>Fernando Goicochea</strong></Typography>
         </Grid>
 

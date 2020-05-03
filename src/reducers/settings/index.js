@@ -1,34 +1,42 @@
 // import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
-
 import base from 'reducers/base'
+import { takeEvery } from 'redux-saga/effects'
 
-import {  } from './sagas'
+import {
+  getSettings,
+  updateSettings
+} from './sagas'
 
 export default base({
   initialState: {
-    copyright  : 'copyright',
-    direction  : 'direction',
-    email      : 'prueba@email.com',
+    _id        : null,
+    copyright  : '',
+    direction  : '',
+    email      : '',
     logo       : '',
-    phone      : '55-555-555',
+    phone      : '',
     phone_extra: '',
     title      : ''
   },
-  namespace: 'nod-services',
+  namespace: 'nod_services',
   store    : 'settings'
 }).extend({
-  // creators: ({ types }) => ({
+  creators: ({ types }) => ({
+    getSettings   : () => ({ type: types.FETCH }),
+    updateSettings: payload => ({ payload, type: types.UPDATE_SETTINGS })
+  }),
+  sagas: duck => ({
+    getSettings   : getSettings(duck),
+    updateSettings: updateSettings(duck)
+  }),
+  selectors: ({ store }) => ({
 
-  // }),
-  // sagas: duck => ({
-  // }),
-  // selectors: ({ store }) => ({
-
-  // }),
-  // takes: duck => [
-
-  // ],
-  // types: [
-
-  // ]
+  }),
+  takes: ({ types, sagas }) => [
+    takeEvery(types.FETCH, sagas.getSettings),
+    takeEvery(types.UPDATE_SETTINGS, sagas.updateSettings)
+  ],
+  types: [
+    'UPDATE_SETTINGS'
+  ]
 })

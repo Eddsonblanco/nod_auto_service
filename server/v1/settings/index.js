@@ -18,10 +18,6 @@ router.get('/', async (req, res) =>  {
 })
 
 router.put('/', upload.single('logo'), async (req, res) => {
-  //   console.log('===> XAVI <===: req', req.headers)
-  //   console.log('===> XAVI <===: req', req.params)
-  //   console.log('===> XAVI <===: req', req.query)
-  //   console.log('===> XAVI <===: res', res)
   try {
     const data = await update(req)
     res.status(200).send({ data, success: true })
