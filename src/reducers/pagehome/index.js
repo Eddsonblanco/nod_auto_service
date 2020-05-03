@@ -16,6 +16,14 @@ export default base({
         position     : 0,
         title        : '',
         url          : ''
+      },
+      {
+        desc         : '',
+        image        : '',
+        openAppoiment: true,
+        position     : 1,
+        title        : '',
+        url          : ''
       }
     ],
     show_banner      : false,

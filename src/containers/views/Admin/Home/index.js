@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -29,6 +29,8 @@ const {
   removeBannerItem,
   updateBannersData
 } = pageHomeDucks.creators
+
+Sortable.mount(new Swap())
 
 const useStyles = makeStyles(theme => ({
   actionsBanner: {
@@ -69,6 +71,11 @@ const PageHome = () => {
     show_testimonials,
     banners
   } = useSelector(state => state.page_home)
+
+  const [ stateBanner, setStateBanner ] = useState([
+    {  name: 'aaa' },
+    {  name: 'bbbbb' }
+  ])
 
   useEffect(() => {
     if(status === 'NEW')
@@ -172,48 +179,60 @@ const PageHome = () => {
         {
           component: <div>
             {
-              banners.map((item, index) => (
-                <div className={classes.containerBanner} key={`banner-${index}`}>
-                  <div className={classes.formBanner}>
-                    <div>
-                      <TextField
-                        fullWidth
-                        name='title'
-                        onChange={ev => _handleChangeBanners(ev, index)}
-                        placeholder='Title'
-                        style={{ marginBottom: 20 }}
-                        value={item.title} />
+              <ReactSortable list={stateBanner} setList={setStateBanner} swap>
+                {
+                  stateBanner.map((item, index) => (
+                    <div key={`banner-${index}`}>
+                      <div>
+                        <li >{item.name}</li>
+                      </div>
                     </div>
-                    <div>
-                      <TextField
-                        fullWidth
-                        name='desc'
-                        onChange={ev => _handleChangeBanners(ev, index)}
-                        placeholder='Sub-title'
-                        style={{ marginBottom: 20 }}
-                        value={item.desc} />
-                    </div>
-                    <div style={{ marginBottom: 20 }}>
-                      <InputImage
-                        error={false}
-                        key={`banner-img-${index}`}
-                        maxWidth='450px'
-                        name='image' onImage={ev => _handleChangeBanners(ev, index)} />
-                    </div>
+                  ))
+                }
+                {/* {
+                  stateBanner.map((item, index) => (
 
-                    <div style={{ marginBottom: 20 }}>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={item.openAppoiment}
-                            name='openAppoiment'
-                            onChange={ev => _handleChangeBanners(ev, index)} />
-                        }
-                        label='Boton open modal appoiment' />
-                    </div>
+                    <div className={classes.containerBanner} key={`banner-${index}`}>
+                      <div className={classes.formBanner}>
+                        <div>
+                          <TextField
+                            fullWidth
+                            name='title'
+                            onChange={ev => _handleChangeBanners(ev, index)}
+                            placeholder='Title'
+                            style={{ marginBottom: 20 }}
+                            value={item.title} />
+                        </div>
+                        <div>
+                          <TextField
+                            fullWidth
+                            name='desc'
+                            onChange={ev => _handleChangeBanners(ev, index)}
+                            placeholder='Sub-title'
+                            style={{ marginBottom: 20 }}
+                            value={item.desc} />
+                        </div>
+                        <div style={{ marginBottom: 20 }}>
+                          <InputImage
+                            error={false}
+                            key={`banner-img-${index}`}
+                            maxWidth='450px'
+                            name='image' onImage={ev => _handleChangeBanners(ev, index)} />
+                        </div>
 
-                    {
-                      !item.openAppoiment &&
+                        <div style={{ marginBottom: 20 }}>
+                          <FormControlLabel
+                            control={
+                              <Switch
+                                checked={item.openAppoiment}
+                                name='openAppoiment'
+                                onChange={ev => _handleChangeBanners(ev, index)} />
+                            }
+                            label='Boton open modal appoiment' />
+                        </div>
+
+                        {
+                          !item.openAppoiment &&
                       <div>
                         <TextField
                           fullWidth
@@ -223,27 +242,30 @@ const PageHome = () => {
                           style={{ marginBottom: 20 }}
                           value={item.url} />
                       </div>
-                    }
-                  </div>
+                        }
+                      </div>
 
-                  <div className={classes.actionsBanner}>
-                    <DeleteIcon onClick={() => _handleClickRemoveBanner(index)} />
-                    {
-                      index !== 0 ?
-                        <ExpandLessIcon onClick={() => _handleChangePositionBanner('up', item.position)} /> : null
-                    }
-                    {
-                      index !== (banners.length - 1) ?
-                        <ExpandMoreIcon onClick={() => _handleChangePositionBanner('down', item.position)} /> : null
-                    }
-                    {
-                      index === (banners.length - 1) ?
-                        <AddBoxIcon onClick={_handleAddItemBammer} /> : null
-                    }
-                  </div>
+                      <div className={classes.actionsBanner}>
+                        <DeleteIcon onClick={() => _handleClickRemoveBanner(index)} />
+                        {
+                          index !== 0 ?
+                            <ExpandLessIcon onClick={() => _handleChangePositionBanner('up', item.position)} /> : null
+                        }
+                        {
+                          index !== (banners.length - 1) ?
+                            <ExpandMoreIcon onClick={() => _handleChangePositionBanner('down', item.position)} /> : null
+                        }
+                        {
+                          index === (banners.length - 1) ?
+                            <AddBoxIcon onClick={_handleAddItemBammer} /> : null
+                        }
+                      </div>
 
-                </div>
-              ))
+                    </div>
+                  ))
+                } */}
+              </ReactSortable>
+
             }
           </div>
         }

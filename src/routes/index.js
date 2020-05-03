@@ -70,6 +70,11 @@ const Contact = loadable(() => import('../containers/views/Main/Contact'), {
 const Services = loadable(() => import('../containers/views/Main/Services'), {
   fallback: <Loading />
 })
+
+const Service = loadable(() => import('../containers/views/Main/Service'), {
+  fallback: <Loading />
+})
+
 const Faq = loadable(() => import('../containers/views/Main/Faq'), {
   fallback: <Loading />
 })
@@ -111,8 +116,9 @@ export default history => {
               <Route component={Home} exact path='/' />
               <Route component={Contact} exact path='/contact' />
               <Route component={Services} exact path='/services' />
+              <Route component={Service} exact path='/service/:id' />
               <Route component={Faq} exact path='/faq' />
-              <Route component={AboutUs} exact path='/aboutUs' />
+              <Route component={AboutUs} exact path='/aboutus' />
             </Switch>
           </Main>
         </Route>
