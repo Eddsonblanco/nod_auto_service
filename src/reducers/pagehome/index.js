@@ -14,7 +14,7 @@ export default base({
         image        : '',
         openAppoiment: true,
         position     : 0,
-        title        : '',
+        title        : '111',
         url          : ''
       },
       {
@@ -22,7 +22,7 @@ export default base({
         image        : '',
         openAppoiment: true,
         position     : 1,
-        title        : '',
+        title        : '222',
         url          : ''
       }
     ],
