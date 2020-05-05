@@ -2,14 +2,9 @@ import axios from 'axios'
 
 require('axios-debug-log')
 
-const {
-  REACT_APP_REST_API_LOCATION = 'http://localhost:',
-  REACT_APP_PORT_SERVER,
-  REACT_APP_API_VERSION = 'v1'
-} = process.env
+const { REACT_APP_REST_API_LOCATION = 'http://localhost:5000', REACT_APP_API_VERSION = 'v1' } = process.env
 
-export const baseURL = `${REACT_APP_REST_API_LOCATION}${REACT_APP_PORT_SERVER || '5000'}/api/${REACT_APP_API_VERSION}/`
-
+export const baseURL = `${REACT_APP_REST_API_LOCATION}/api/${REACT_APP_API_VERSION}/`
 function serialize(obj) {
   var str = []
   for (var p in obj) if(obj.hasOwnProperty(p)) str.push(encodeURIComponent(p) + '=' + obj[p])
