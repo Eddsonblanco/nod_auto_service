@@ -8,13 +8,17 @@ import settings from './settings'
 import companies from './companies'
 import contacts from './contacts'
 
+// admin
+import pageHome from './pagehome'
+
 export default history => combineReducers({
   router           : connectRouter(history),
   [theme.store]    : theme.reducer,
   [products.store] : products.reducer,
   [settings.store] : settings.reducer,
   [companies.store]: companies.reducer,
-  [contacts.store] : contacts.reducer
+  [contacts.store] : contacts.reducer,
+  [pageHome.store] : pageHome.reducer
 })
 
 export function* rootSaga() {
@@ -22,6 +26,7 @@ export function* rootSaga() {
     ...products.takes,
     ...settings.takes,
     ...companies.takes,
-    ...contacts.takes
+    ...contacts.takes,
+    ...pageHome.takes
   ])
 }

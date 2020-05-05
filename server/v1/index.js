@@ -5,6 +5,8 @@ import settings from './settings'
 import insurances from './insurances'
 import services from './services'
 import contact from './contact'
+// ppages
+import pageHome from './page_home'
 
 const router = express.Router()
 
@@ -14,5 +16,7 @@ router.use('/settings', settings)
 router.use('/insurances', insurances)
 router.use('/services', services)
 router.use('/contact', contact)
+// pages
+router.use('/page_home', pageHome)
 
 export default router

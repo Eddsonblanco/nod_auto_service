@@ -46,7 +46,7 @@ const ContainerAdmin = (props) => {
         <div className={classes.titleContent}>
           <Typography className={classes.title} variant='h5'>{title}</Typography>
           {
-            btnAdd.length ?
+            btnAdd && btnAdd.length ?
               <Button
                 className={classes.btnAdd}
                 color='primary'

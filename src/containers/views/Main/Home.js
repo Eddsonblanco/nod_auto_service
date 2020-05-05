@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Carousel from 'components/Common/Carousel'
 
@@ -13,6 +14,17 @@ import {
 import Banner from 'components/Banner/Banner'
 import CardService from 'components/CardService'
 import Testimony from 'components/Testimony'
+
+import companiesDucks from 'reducers/companies'
+import pageHomeDucks from 'reducers/pagehome'
+
+const {
+  getCompanies
+} = companiesDucks.creators
+
+const {
+  getPageConfig
+} = pageHomeDucks.creators
 
 const useStyles = makeStyles(theme => ({
   brandContainer: {
@@ -97,23 +109,54 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Home() {
+  const dispatch = useDispatch()
   const classes = useStyles()
+
+  const {
+    status: statusCompanies,
+    rows: companies
+  } = useSelector(state => state.companies)
+
+  const {
+    status: satusPage,
+    show_banner,
+    show_brands,
+    show_newsletter,
+    show_services,
+    show_testimonials
+  } = useSelector(state => state.page_home)
+
+  useEffect(() => {
+    if(statusCompanies === 'NEW')
+      dispatch(getCompanies())
+  }, [ statusCompanies ])
+
+  useEffect(() => {
+    if(satusPage === 'NEW')
+      dispatch(getPageConfig())
+  }, [ satusPage ])
 
   return (
     <div>
-      <Banner />
-
-      <div className={classes.brandContainer}>
-        <div className={classes.brandList}>
-          {
-            [ 1,2,3,4,5,6,7 ].map((item, index) => (
-              <div className={classes.brandItem} key={index}>
-                <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7c1f5df4-02f4-4b04-be23-0f7edc8885a0.png' />
+      {
+        show_banner ?
+          <Banner /> : null
+      }
+      {
+        show_brands ?
+          companies.length ?
+            <div className={classes.brandContainer}>
+              <div className={classes.brandList}>
+                {
+                  companies.map((item, index) => (
+                    <div className={classes.brandItem} key={index}>
+                      <img alt={item.alt_text} src={item.image} />
+                    </div>
+                  ))
+                }
               </div>
-            ))
-          }
-        </div>
-      </div>
+            </div> : null : null
+      }
 
       {/* slider service detail */}
       {/* <div className={classes.sliderServiceContainer}>
@@ -136,123 +179,128 @@ export default function Home() {
       </div> */}
 
       {/* <Services /> */}
-      <Container maxWidth='lg'>
-        <Typography
-          align='center'
-          className={classes.servicesTitle}
-          component='h2'
-          variant='h5'>
-            Services & Repairment
-        </Typography>
-        <div className={classes.containerServices}>
-          {
-            [ 1,2,3,4,5,6 ].map((item, index) => (
-              <CardService key={index} />
-            ))
-          }
-        </div>
-        <div className={classes.btnAllServices}>
-          <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
-        </div>
-      </Container>
+      {
+        show_services ?
+          <Container maxWidth='lg'>
+            <Typography
+              align='center'
+              className={classes.servicesTitle}
+              component='h2'
+              variant='h5'>
+              Services & Repairment
+            </Typography>
+            <div className={classes.containerServices}>
+              {
+                [ 1,2,3,4,5,6 ].map((item, index) => (
+                  <CardService key={index} />
+                ))
+              }
+            </div>
+            <div className={classes.btnAllServices}>
+              <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
+            </div>
+          </Container> : null
+      }
 
       {/* testimonials */}
-      <Container className={classes.testimonials} maxWidth={false}>
-        <Typography
-          align='center'
-          className={classes.testimonialsTitle}
-          variant='h5'>
+      {
+        show_testimonials ?
+          <Container className={classes.testimonials} maxWidth={false}>
+            <Typography
+              align='center'
+              className={classes.testimonialsTitle}
+              variant='h5'>
           What people say about us
-        </Typography>
-        <Carousel settings={
-          9 <= 3 ? {
-            responsive: [
-              {
-                breakpoint: 5000,
-                settings  : {
-                  infinite      : 5 > 4,
-                  slidesToScroll: 4,
-                  slidesToShow  : 4
-                }
-              },
-              {
-                breakpoint: 1024,
-                settings  : {
-                  infinite      : 4 > 3,
-                  slidesToScroll: 3,
-                  slidesToShow  : 3
-                }
-              },
-              {
-                breakpoint: 920,
-                settings  : {
-                  infinite      : 3 > 2,
-                  slidesToScroll: 2,
-                  slidesToShow  : 2
-                }
-              },
-              {
-                breakpoint: 520,
-                infinite  : 2 > 1,
-                settings  : {
-                  slidesToScroll: 1,
-                  slidesToShow  : 1
-                }
+            </Typography>
+            <Carousel settings={
+              9 <= 3 ? {
+                responsive: [
+                  {
+                    breakpoint: 5000,
+                    settings  : {
+                      infinite      : 5 > 4,
+                      slidesToScroll: 4,
+                      slidesToShow  : 4
+                    }
+                  },
+                  {
+                    breakpoint: 1024,
+                    settings  : {
+                      infinite      : 4 > 3,
+                      slidesToScroll: 3,
+                      slidesToShow  : 3
+                    }
+                  },
+                  {
+                    breakpoint: 920,
+                    settings  : {
+                      infinite      : 3 > 2,
+                      slidesToScroll: 2,
+                      slidesToShow  : 2
+                    }
+                  },
+                  {
+                    breakpoint: 520,
+                    infinite  : 2 > 1,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 1
+                    }
+                  }
+                ]
+              } : {
+                centerMode: true,
+                // centerPadding: '-250px',
+                infinite  : true,
+                // marginInitial: '-250px',
+                responsive: [
+                  {
+                    breakpoint: 5000,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 3
+                    }
+                  },
+                  {
+                    breakpoint: 1200,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 2
+                    }
+                  },
+                  {
+                    breakpoint: 1024,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 2
+                    }
+                  },
+                  {
+                    breakpoint: 920,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 2
+                    }
+                  },
+                  {
+                    breakpoint: 520,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 1
+                    }
+                  }
+                ],
+                rows: 1
               }
-            ]
-          } : {
-            centerMode: true,
-            // centerPadding: '-250px',
-            infinite  : true,
-            // marginInitial: '-250px',
-            responsive: [
+            }>
               {
-                breakpoint: 5000,
-                settings  : {
-                  slidesToScroll: 1,
-                  slidesToShow  : 3
-                }
-              },
-              {
-                breakpoint: 1200,
-                settings  : {
-                  slidesToScroll: 1,
-                  slidesToShow  : 2
-                }
-              },
-              {
-                breakpoint: 1024,
-                settings  : {
-                  slidesToScroll: 1,
-                  slidesToShow  : 2
-                }
-              },
-              {
-                breakpoint: 920,
-                settings  : {
-                  slidesToScroll: 1,
-                  slidesToShow  : 2
-                }
-              },
-              {
-                breakpoint: 520,
-                settings  : {
-                  slidesToScroll: 1,
-                  slidesToShow  : 1
-                }
-              }
-            ],
-            rows: 1
-          }
-        }>
-          {
-            [ 1, 2, 3, 4, 5, 6 ].map((job, index) => (
-              <div
-                key={`slide-${index}`}>
-                <Testimony
-                  key={`slide-${index}`} />
+                [ 1, 2, 3, 4, 5, 6 ].map((job, index) => (
+                  <div
+                    key={`slide-${index}`}>
+                    <Testimony
+                      key={`slide-${index}`} />
 
-                {/* <CardJob
+                    {/* <CardJob
                 history={history}
                 job={job}
                 key={`slide-${index}`}
@@ -260,11 +308,12 @@ export default function Home() {
                 userLogin={userLogin}
                 wished={wishList.includes(job.job_id)} /> */}
 
-              </div>
-            ))
-          }
-        </Carousel>
-      </Container>
+                  </div>
+                ))
+              }
+            </Carousel>
+          </Container> : null
+      }
 
     </div>
   )

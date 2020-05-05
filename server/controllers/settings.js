@@ -4,7 +4,7 @@ import { removeImage } from '../utils'
 
 const all = async () => {
   try {
-    return await settings.find({}).limit(1)
+    return await settings.findOne({})
   } catch (err) {
     return err
   }
@@ -13,21 +13,23 @@ const all = async () => {
 const update = async (req) => {
   try {
     const {
-      id,
+      _id,
       ...others
     } = req.body
 
     const setting = settings(others)
 
     if(req.file) {
-      const { logo } = await settings.findOne({ _id: Types.ObjectId(id) }).select('logo')
-      removeImage(logo)
+      const { logo } = await settings.findOne({ _id: Types.ObjectId(_id) }).select('logo')
+      if(logo)
+        removeImage(logo)
+
       setting.setImgUrl(req.file.filename)
     }
 
     delete setting._doc._id
 
-    return await settings.findOneAndUpdate({ _id: Types.ObjectId(id) },
+    return await settings.findOneAndUpdate({ _id: Types.ObjectId(_id) },
       { $set: setting },
       { 'new': true, upsert: true })
   } catch (err) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -86,6 +86,7 @@ const InputImage = (props) => {
     error = true,
     helperText = '',
     data = null,
+    maxWidth = '100%',
     onImage = () => {}
   } = props
   const classes = styles()
@@ -113,7 +114,9 @@ const InputImage = (props) => {
   }
 
   return (
-    <div>
+    <div style={{
+      maxWidth: maxWidth
+    }}>
       <div className={clsx(
         classes.containerInput,
         {

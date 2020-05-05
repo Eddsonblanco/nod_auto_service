@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
@@ -7,6 +8,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import Footer from 'components/Common/Footer'
 import Header from 'components/Common/Header'
 import Newsletter from 'components/Newsletter'
+
+import settingsDucks from 'reducers/settings'
+
+const {
+  getSettings
+} = settingsDucks.creators
 
 const theme = createMuiTheme({
   overrides: {
@@ -64,7 +71,16 @@ const styles = makeStyles({
 })
 
 export default ({ children }) => {
+  const dispatch = useDispatch()
   const classes = styles()
+  const {
+    _id
+  } = useSelector(state => state.settings)
+
+  useEffect(() => {
+    if(!_id)
+      dispatch(getSettings())
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
