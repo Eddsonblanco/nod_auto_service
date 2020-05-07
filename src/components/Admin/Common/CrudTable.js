@@ -221,6 +221,26 @@ const CrudTable = props => {
                         name={input.name}
                         rules={{ required: input.required }} />
                     )
+
+                  case 'textarea':
+
+                    return (
+                      <Controller
+                        as={
+                          <TextField
+                            error={Boolean(errors[input.name])}
+                            fullWidth
+                            helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                            label={input.label}
+                            margin='dense'
+                            multiline
+                            rows={4} />}
+                        control={control}
+                        defaultValue=''
+                        key={`${input.name}-${index}`}
+                        name={input.name}
+                        rules={{ required: input.required }} />
+                    )
                   default:
                     return
                 }
@@ -291,6 +311,26 @@ const CrudTable = props => {
                             helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
                             label={input.label}
                             margin='dense' />}
+                        control={control}
+                        defaultValue={dataModalEdit[input.name]}
+                        key={`${input.name}-${index}`}
+                        name={input.name}
+                        rules={{ required: input.required }} />
+                    )
+
+                  case 'textarea':
+
+                    return (
+                      <Controller
+                        as={
+                          <TextField
+                            error={Boolean(errors[input.name])}
+                            fullWidth
+                            helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                            label={input.label}
+                            margin='dense'
+                            multiline
+                            rows={4} />}
                         control={control}
                         defaultValue={dataModalEdit[input.name]}
                         key={`${input.name}-${index}`}

@@ -2,10 +2,16 @@ import mongoose from 'mongoose'
 import { connectMongoSpa } from '../config/database/mongoose'
 
 const serviceShema = new mongoose.Schema({
-  image: {
+  desc: {
     type: String
   },
-  text: {
+  icon: {
+    type: String
+  },
+  image1: {
+    type: String
+  },
+  image2: {
     type: String
   },
   title: {

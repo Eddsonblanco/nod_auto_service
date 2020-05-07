@@ -37,7 +37,7 @@ const ContactAdmin = loadable(() => import('../containers/views/Admin/Contact'),
   fallback: <Loading />
 })
 
-const Insurances = loadable(() => import('../containers/views/Admin/Insurances'), {
+const Banners = loadable(() => import('../containers/views/Admin/Banners'), {
   fallback: <Loading />
 })
 
@@ -54,6 +54,10 @@ const Users = loadable(() => import('../containers/views/Admin/Users'), {
 })
 
 const Companies = loadable(() => import('../containers/views/Admin/Companies'), {
+  fallback: <Loading />
+})
+
+const Testimonials = loadable(() => import('../containers/views/Admin/Testimonials'), {
   fallback: <Loading />
 })
 
@@ -102,7 +106,8 @@ export default history => {
               <Route component={About} path='/admin/about' />
               <Route component={ContactAdmin} path='/admin/contact' />
               <Route component={Companies} path='/admin/companies' />
-              <Route component={Insurances} path='/admin/insurances' />
+              <Route component={Testimonials} path='/admin/testimonials' />
+              <Route component={Banners} path='/admin/banners' />
               <Route component={Reservations} path='/admin/reservations' />
               <Route component={ServicesAdmin} path='/admin/services' />
               <Route component={Users} path='/admin/users' />

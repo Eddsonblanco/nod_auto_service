@@ -7,18 +7,22 @@ import products from './products'
 import settings from './settings'
 import companies from './companies'
 import contacts from './contacts'
+import banners from './banners'
+import testimonials from './testimonials'
 
 // admin
 import pageHome from './pagehome'
 
 export default history => combineReducers({
-  router           : connectRouter(history),
-  [theme.store]    : theme.reducer,
-  [products.store] : products.reducer,
-  [settings.store] : settings.reducer,
-  [companies.store]: companies.reducer,
-  [contacts.store] : contacts.reducer,
-  [pageHome.store] : pageHome.reducer
+  router              : connectRouter(history),
+  [theme.store]       : theme.reducer,
+  [products.store]    : products.reducer,
+  [settings.store]    : settings.reducer,
+  [companies.store]   : companies.reducer,
+  [contacts.store]    : contacts.reducer,
+  [pageHome.store]    : pageHome.reducer,
+  [banners.store]     : banners.reducer,
+  [testimonials.store]: testimonials.reducer
 })
 
 export function* rootSaga() {
@@ -27,6 +31,8 @@ export function* rootSaga() {
     ...settings.takes,
     ...companies.takes,
     ...contacts.takes,
-    ...pageHome.takes
+    ...pageHome.takes,
+    ...banners.takes,
+    ...testimonials.takes
   ])
 }

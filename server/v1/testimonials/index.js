@@ -1,5 +1,4 @@
 import express from 'express'
-import { upload } from '../../middleware/multer'
 
 import {
   create,
@@ -7,22 +6,19 @@ import {
   remove,
   edit,
   one
-} from '../../controllers/services'
+} from '../../controllers/testimonials'
 
 const router = express.Router()
 
-router.post('/',
-  upload.fields([ { maxCount: 1, name: 'icon' },
-    { maxCount: 1, name: 'image1' },
-    { maxCount: 1, name: 'image2' } ]), async (req, res) => {
-    try {
+router.post('/', async (req, res) => {
+  try {
     // req.headers // token
-      const data = await create(req)
-      res.status(200).send({ data, success: true })
-    } catch (err) {
-      res.status(500).send({ error: err.message, success: false })
-    }
-  })
+    const data = await create(req)
+    res.status(200).send({ data, success: true })
+  } catch (err) {
+    res.status(500).send({ error: err.message, success: false })
+  }
+})
 
 router.get('/', async (req, res) => {
   try {
@@ -55,9 +51,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-router.put('/', upload.fields([ { maxCount: 1, name: 'icon' },
-  { maxCount: 1, name: 'image1' },
-  { maxCount: 1, name: 'image2' } ]), async (req, res) => {
+router.put('/', async (req, res) => {
   try {
     // const { id } = req.params
 
