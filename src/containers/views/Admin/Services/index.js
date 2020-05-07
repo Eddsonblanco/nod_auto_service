@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import servicesDucks from 'reducers/services'
 import CrudTable from 'components/Admin/Common/CrudTable'
+import TabsAdmin from 'components/Admin/Common/TabsAdmin'
 
 const {
   getServices,
@@ -53,89 +54,102 @@ const Services = () => {
     if(bol) dispatch(resetService())
   }
 
-  return (
-    <CrudTable
-      btnAdd='New Service'
-      modalAdd={{
-        cancel : 'Cancel',
-        confirm: 'Confirm',
-        form   : [
-          {
-            label   : 'Title',
-            name    : 'title',
-            required: false,
-            type    : 'text'
-          },
-          {
-            label   : 'Sub Title',
-            name    : 'sub_title',
-            required: false,
-            type    : 'text'
-          },
-          {
-            label   : 'Image',
-            name    : 'image',
-            required: true,
-            type    : 'image'
-          },
-          {
-            label   : 'Alt text',
-            name    : 'alt_text',
-            required: true,
-            type    : 'text'
-          }
-        ],
-        onConfirm: _handleClickCreate,
-        title    : 'New Company'
-      }}
-      modalEdit={{
-        confirm: 'Update',
-        data   : service,
-        form   : [
-          {
-            label   : 'Title',
-            name    : 'title',
-            required: false,
-            type    : 'text'
-          },
-          {
-            label   : 'Sub Title',
-            name    : 'sub_title',
-            required: false,
-            type    : 'text'
-          },
-          {
-            label   : 'Image',
-            name    : 'image',
-            required: true,
-            type    : 'image'
-          },
-          {
-            label   : 'Alt text',
-            name    : 'alt_text',
-            required: true,
-            type    : 'text'
-          }
-        ],
-        onConfirm: _handleClickUpdate,
-        onReset  : _handleCloseModalEdit,
-        title    : 'Edit Banner'
-      }}
-      table={{
-        columns,
-        modalRemoveMessage: {
+  return (<TabsAdmin
+    // tabActions={actions}
+    tabContent={[
+      <CrudTable
+        key='sd'
+        modalAdd={{
           cancel : 'Cancel',
           confirm: 'Confirm',
-          title  : 'Are you sure?'
-        },
-        onEdit    : _handleClickEdit,
-        onRemove  : _handleClickRemove,
-        pagination,
-        rows,
-        withEdit  : true,
-        withRemove: true
-      }}
-      title='Services List' />
+          form   : [
+            {
+              label   : 'Title',
+              name    : 'title',
+              required: false,
+              type    : 'text'
+            },
+            {
+              label   : 'Sub Title',
+              name    : 'sub_title',
+              required: false,
+              type    : 'text'
+            },
+            {
+              label   : 'Image',
+              name    : 'image',
+              required: true,
+              type    : 'image'
+            },
+            {
+              label   : 'Alt text',
+              name    : 'alt_text',
+              required: true,
+              type    : 'text'
+            },
+            {
+              label   : 'Alt text',
+              name    : 'alt_text',
+              required: true,
+              type    : 'page'
+            }
+          ],
+          onConfirm: _handleClickCreate,
+          title    : 'New Company'
+        }}
+        modalEdit={{
+          confirm: 'Update',
+          data   : service,
+          form   : [
+            {
+              label   : 'Title',
+              name    : 'title',
+              required: false,
+              type    : 'text'
+            },
+            {
+              label   : 'Sub Title',
+              name    : 'sub_title',
+              required: false,
+              type    : 'text'
+            },
+            {
+              label   : 'Image',
+              name    : 'image',
+              required: true,
+              type    : 'image'
+            },
+            {
+              label   : 'Alt text',
+              name    : 'alt_text',
+              required: true,
+              type    : 'text'
+            }
+
+          ],
+          onConfirm: _handleClickUpdate,
+          onReset  : _handleCloseModalEdit,
+          title    : 'Edit Banner'
+        }}
+        table={{
+          columns,
+          modalRemoveMessage: {
+            cancel : 'Cancel',
+            confirm: 'Confirm',
+            title  : 'Are you sure?'
+          },
+          onEdit    : _handleClickEdit,
+          onRemove  : _handleClickRemove,
+          pagination,
+          rows,
+          withEdit  : true,
+          withRemove: true
+        }} />
+    ]}
+    tabHeader={[
+      'Services List'
+    ]}
+    tabName='Services' />
   )
 }
 
