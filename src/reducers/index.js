@@ -9,6 +9,7 @@ import companies from './companies'
 import contacts from './contacts'
 import banners from './banners'
 import testimonials from './testimonials'
+import services from './services'
 
 // admin
 import pageHome from './pagehome'
@@ -22,7 +23,8 @@ export default history => combineReducers({
   [contacts.store]    : contacts.reducer,
   [pageHome.store]    : pageHome.reducer,
   [banners.store]     : banners.reducer,
-  [testimonials.store]: testimonials.reducer
+  [testimonials.store]: testimonials.reducer,
+  [services.store]    : services.reducer
 })
 
 export function* rootSaga() {
@@ -33,6 +35,7 @@ export function* rootSaga() {
     ...contacts.takes,
     ...pageHome.takes,
     ...banners.takes,
-    ...testimonials.takes
+    ...testimonials.takes,
+    ...services.takes
   ])
 }

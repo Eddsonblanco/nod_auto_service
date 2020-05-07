@@ -1,114 +1,142 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import {
-  Grid,
-  TextField,
-  Button
-} from '@material-ui/core'
+// import { makeStyles } from '@material-ui/core/styles'
 
-import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
-import TabsAdmin from 'components/Admin/Common/TabsAdmin'
+import servicesDucks from 'reducers/services'
+import CrudTable from 'components/Admin/Common/CrudTable'
 
-const Settings = () => {
-  const info = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+const {
+  getServices,
+  removeService,
+  createService,
+  getService,
+  resetService,
+  updateService
+} = servicesDucks.creators
 
-  const social = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+const Services = () => {
+  const dispatch = useDispatch()
 
-  const identity = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+  const {
+    status,
+    columns,
+    rows,
+    pagination,
+    service
+  } = useSelector(state => state.services)
 
-  const seo = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+  // const classes = styles()
 
-  const form = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+  useEffect(() => {
+    if(status === 'NEW')
+      dispatch(getServices())
+  }, [])
+
+  const _handleClickRemove = id => {
+    dispatch(removeService(id))
+  }
+
+  const _handleClickCreate = data => {
+    dispatch(createService(data))
+  }
+
+  const _handleClickUpdate = data => {
+    dispatch(updateService(data))
+  }
+
+  const _handleClickEdit = id => {
+    dispatch(getService(id))
+  }
+
+  const _handleCloseModalEdit = bol => {
+    if(bol) dispatch(resetService())
+  }
 
   return (
-    <ContainerAdmin
-      actionSave={
-        <Button color='secondary' variant='contained'>Save</Button>
-      }
-      title='Settings'>
-      <Grid container>
-        <Grid item xs>
-          <TabsAdmin
-            tabContent={[
-              info,
-              social,
-              identity,
-              seo,
-              form
-            ]}
-            tabHeader={[
-              'Info',
-              'Social',
-              'Identity',
-              'Seo',
-              'Form'
-            ]}
-            tabName='settings' />
-        </Grid>
-      </Grid>
-    </ContainerAdmin>
-
+    <CrudTable
+      btnAdd='New Service'
+      modalAdd={{
+        cancel : 'Cancel',
+        confirm: 'Confirm',
+        form   : [
+          {
+            label   : 'Title',
+            name    : 'title',
+            required: false,
+            type    : 'text'
+          },
+          {
+            label   : 'Sub Title',
+            name    : 'sub_title',
+            required: false,
+            type    : 'text'
+          },
+          {
+            label   : 'Image',
+            name    : 'image',
+            required: true,
+            type    : 'image'
+          },
+          {
+            label   : 'Alt text',
+            name    : 'alt_text',
+            required: true,
+            type    : 'text'
+          }
+        ],
+        onConfirm: _handleClickCreate,
+        title    : 'New Company'
+      }}
+      modalEdit={{
+        confirm: 'Update',
+        data   : service,
+        form   : [
+          {
+            label   : 'Title',
+            name    : 'title',
+            required: false,
+            type    : 'text'
+          },
+          {
+            label   : 'Sub Title',
+            name    : 'sub_title',
+            required: false,
+            type    : 'text'
+          },
+          {
+            label   : 'Image',
+            name    : 'image',
+            required: true,
+            type    : 'image'
+          },
+          {
+            label   : 'Alt text',
+            name    : 'alt_text',
+            required: true,
+            type    : 'text'
+          }
+        ],
+        onConfirm: _handleClickUpdate,
+        onReset  : _handleCloseModalEdit,
+        title    : 'Edit Banner'
+      }}
+      table={{
+        columns,
+        modalRemoveMessage: {
+          cancel : 'Cancel',
+          confirm: 'Confirm',
+          title  : 'Are you sure?'
+        },
+        onEdit    : _handleClickEdit,
+        onRemove  : _handleClickRemove,
+        pagination,
+        rows,
+        withEdit  : true,
+        withRemove: true
+      }}
+      title='Services List' />
   )
 }
 
-export default Settings
+export default Services
