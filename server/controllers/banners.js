@@ -5,15 +5,20 @@ import { removeImage } from '../utils'
 
 const create = async (req) => {
   try {
-    const {
-      alt_text
-    } = req.body
     const banner = Banners(req.body)
 
     if(req.file)
       banner.setImgUrl(req.file.filename)
 
     return await banner.save()
+  } catch (err) {
+    return err
+  }
+}
+
+const allHome = async () => {
+  try {
+    return await Banners.find({})
   } catch (err) {
     return err
   }
@@ -112,6 +117,7 @@ const one = async (id) => {
 export {
   create,
   all,
+  allHome,
   remove,
   edit,
   one

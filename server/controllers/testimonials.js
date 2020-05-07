@@ -13,6 +13,10 @@ const create = async (req) => {
   }
 }
 
+const allHome = async () => {
+  return Testimonials.find({})
+}
+
 const all = async (query) => {
   try {
     const {
@@ -106,6 +110,7 @@ const one = async (id) => {
 export {
   create,
   all,
+  allHome,
   remove,
   edit,
   one

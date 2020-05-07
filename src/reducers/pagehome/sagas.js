@@ -5,7 +5,17 @@ export const getPageConfig = ({ types }) => function* () {
   try {
     yield put({ type: types.FETCH_PENDING })
 
-    const { data } = yield call(Get, '/page_home')
+    const { data: dataHome } = yield call(Get, '/page_home')
+    const { data: dataTestimonials } = yield call(Get, '/testimonials/home')
+    const { data: dataBanners } = yield call(Get, '/banners/home')
+    console.log('===> XAVI <===: getPageConfig -> dataBanners', dataBanners)
+
+    const data = {
+      ...dataHome,
+      banners     : dataBanners,
+      testimonials: dataTestimonials
+
+    }
 
     yield put({
       payload: data,

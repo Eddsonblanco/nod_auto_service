@@ -3,6 +3,7 @@ import express from 'express'
 import {
   create,
   all,
+  allHome,
   remove,
   edit,
   one
@@ -14,6 +15,15 @@ router.post('/', async (req, res) => {
   try {
     // req.headers // token
     const data = await create(req)
+    res.status(200).send({ data, success: true })
+  } catch (err) {
+    res.status(500).send({ error: err.message, success: false })
+  }
+})
+
+router.get('/home', async (req, res) => {
+  try {
+    const data = await allHome(req.query)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })

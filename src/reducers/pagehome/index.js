@@ -9,22 +9,14 @@ import {
 
 export default base({
   initialState: {
-    _id    : null,
-    banners: [
-      {
-        desc         : '',
-        image        : '',
-        openAppoiment: true,
-        position     : 0,
-        title        : '',
-        url          : ''
-      }
-    ],
+    _id              : null,
+    banners          : [],
     show_banner      : false,
     show_brands      : false,
     show_newsletter  : false,
     show_services    : false,
-    show_testimonials: false
+    show_testimonials: false,
+    testimonials     : []
   },
   namespace: 'nod_services',
   store    : 'page_home'

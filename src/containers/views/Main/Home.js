@@ -121,9 +121,10 @@ export default function Home() {
     status: satusPage,
     show_banner,
     show_brands,
-    show_newsletter,
+    // show_newsletter,
     show_services,
-    show_testimonials
+    show_testimonials,
+    testimonials
   } = useSelector(state => state.page_home)
 
   useEffect(() => {
@@ -294,10 +295,11 @@ export default function Home() {
               }
             }>
               {
-                [ 1, 2, 3, 4, 5, 6 ].map((job, index) => (
+                testimonials.map((job, index) => (
                   <div
                     key={`slide-${index}`}>
                     <Testimony
+                      data={job}
                       key={`slide-${index}`} />
 
                     {/* <CardJob

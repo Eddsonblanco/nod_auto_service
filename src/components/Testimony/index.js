@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   }
 })
 
-const Testimony = () => {
+const Testimony = ({ data }) => {
   const classes = useStyles()
 
   return (
@@ -47,17 +47,14 @@ const Testimony = () => {
           <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/1c59260a-6a72-4440-a068-5ebd53c24570.svg' />
         </div>
         <Typography className={classes.description} component='p'>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-          sed diam nonumy eirmod tempor invidunt ut labore et
-          dolore magna aliquyam erat, sed diam voluptua.
-          At vero eos et accusam et justo duo dolores et ea.
+          {data.desc}
         </Typography>
         <Typography
           align='right'
           className={classes.date}
           color='primary'
           component='p'>
-          Kathleen Harvell, 02/20/2020
+          {data.author}, {data.date}
         </Typography>
       </CardContent>
     </Card>
