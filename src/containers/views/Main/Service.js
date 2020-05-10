@@ -43,6 +43,9 @@ const {
 
 const useStyles = makeStyles(() => ({
   rootHtmlRender: {
+    '& .ory-plugins-content-spacer.ory-plugins-content-spacer-read-only': {
+      border: 'none !important'
+    },
     '& img': {
       width: '100%'
     },
@@ -52,9 +55,9 @@ const useStyles = makeStyles(() => ({
   titleService: {
     color     : '#353535',
     fontFamily: 'Poppins',
-    fontSize  : '0.75rem',
+    fontSize  : '1.5rem',
     fontWeight: '600',
-    padding   : '14px 0 12px 0'
+    margin    : '20px 0 20px 0'
   }
 }))
 
