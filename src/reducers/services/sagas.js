@@ -70,7 +70,10 @@ export const createService = ({ types }) => function* ({ payload }) {
     const formData = new FormData()
     const payloadData = Object.keys(payload)
     payloadData.map(item => {
-      formData.append(item, payload[item])
+      if(item === 'content')
+        formData.append(item, JSON.stringify(payload[item]))
+      else
+        formData.append(item, payload[item])
     })
     const { data, success } = yield call(Post, '/services', formData, {
       'content-type': 'multipart/form-data'
@@ -80,18 +83,18 @@ export const createService = ({ types }) => function* ({ payload }) {
         data,
         success
       },
-      type: types.POST_BANNER_FULFILLED
+      type: types.POST_SERVICE_FULFILLED
     })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {
       case 'cancel':
-        yield put({ type: types.FETCH_CANCEL })
+        yield put({ type: types.POST_CANCEL })
         break
       default:
         yield put({
           error: messageResponse || message,
-          type : types.FETCH_FAILURE
+          type : types.POST_FAILURE
         })
         break
     }
@@ -101,10 +104,10 @@ export const createService = ({ types }) => function* ({ payload }) {
 export const getService = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.FETCH_PENDING })
-    const { data: banner, success } = yield call(Get, `/services/${id}`)
+    const { data: serviceDetail, success } = yield call(Get, `/services/${id}`)
     yield put({
       payload: {
-        banner,
+        serviceDetail,
         success
       },
       type: types.FETCH_FULFILLED

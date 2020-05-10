@@ -7,6 +7,7 @@ import services from './services'
 import contact from './contact'
 import banners from './banners'
 import testimonials from './testimonials'
+import galleries from './galleries'
 // ppages
 import pageHome from './page_home'
 
@@ -20,6 +21,7 @@ router.use('/services', services)
 router.use('/contact', contact)
 router.use('/banners', banners)
 router.use('/testimonials', testimonials)
+router.use('/galleries', galleries)
 // pages
 router.use('/page_home', pageHome)
 

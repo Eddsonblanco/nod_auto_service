@@ -114,7 +114,7 @@ export default history => {
               <Route component={Banners} path='/admin/banners' />
               <Route component={Reservations} path='/admin/reservations' />
               <Route component={ServicesAdmin} path='/admin/services' />
-              <Route component={ServicesNewAdmin} exact path='/admin/service' />
+              <Route component={ServicesNewAdmin} path='/admin/service' />
               <Route component={Users} path='/admin/users' />
             </Switch>
           </MainAdmin>

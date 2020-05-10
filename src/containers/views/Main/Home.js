@@ -124,7 +124,8 @@ export default function Home() {
     // show_newsletter,
     show_services,
     show_testimonials,
-    testimonials
+    testimonials,
+    services
   } = useSelector(state => state.page_home)
 
   useEffect(() => {
@@ -192,8 +193,8 @@ export default function Home() {
             </Typography>
             <div className={classes.containerServices}>
               {
-                [ 1,2,3,4,5,6 ].map((item, index) => (
-                  <CardService key={index} />
+                services.map((item, index) => (
+                  <CardService data={item} key={index} />
                 ))
               }
             </div>

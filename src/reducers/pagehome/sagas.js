@@ -8,11 +8,12 @@ export const getPageConfig = ({ types }) => function* () {
     const { data: dataHome } = yield call(Get, '/page_home')
     const { data: dataTestimonials } = yield call(Get, '/testimonials/home')
     const { data: dataBanners } = yield call(Get, '/banners/home')
-    console.log('===> XAVI <===: getPageConfig -> dataBanners', dataBanners)
+    const { data: dataServices } = yield call(Get, '/services/home')
 
     const data = {
       ...dataHome,
       banners     : dataBanners,
+      services    : dataServices,
       testimonials: dataTestimonials
 
     }

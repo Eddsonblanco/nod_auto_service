@@ -11,6 +11,7 @@ export default base({
   initialState: {
     _id              : null,
     banners          : [],
+    services         : [],
     show_banner      : false,
     show_brands      : false,
     show_newsletter  : false,
