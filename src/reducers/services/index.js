@@ -21,7 +21,7 @@ export default base({
     },
     rows         : [],
     service      : {},
-    serviceDetail: {}
+    serviceDetail: null
   },
   namespace: 'nod-services',
   store    : 'services'

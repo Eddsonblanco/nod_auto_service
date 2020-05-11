@@ -32,7 +32,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import serviceDucks from 'reducers/services'
 
 const {
-  createService
+  createService,
+  getService,
+  updateService
 } = serviceDucks.creators
 
 const style = makeStyles(() => ({
@@ -92,9 +94,18 @@ const New = () => {
   const dispatch = useDispatch()
   const classes = style()
   const history = useHistory()
+
   const {
-    status
+    status,
+    serviceDetail
   } = useSelector(state => state.services)
+
+  const {
+    location: {
+      state
+    }
+  } = useSelector(state => state.router)
+
   const [ editorValue, setEditorValue ] = useState(
     {
       cells: [
@@ -111,7 +122,7 @@ const New = () => {
                       version: '0.0.1'
                     },
                     state: {
-                      src: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg'
+                      src: ''
                     }
                   },
                   id    : '84fbde3b-738c-4fa1-a845-af38335fbe53',
@@ -239,7 +250,7 @@ const New = () => {
                       version: '0.0.1'
                     },
                     state: {
-                      src: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg'
+                      src: ''
                     }
                   },
                   id    : '9fd28c51-df1e-49af-a022-9f5259a6cda0',
@@ -256,18 +267,37 @@ const New = () => {
       id: 'd7bb57b1-8e73-4008-9891-46b7aa16e912'
     }
   )
-  const [ dataForm, setDataForm ] = useState({
-    content  : {},
-    desc     : '',
-    icon     : '',
-    show_home: false,
-    title    : ''
-  })
+  const [ dataForm, setDataForm ] = useState(null)
 
   useEffect(() => {
-    if(status === 'SERVICE_CREATED')
+    if(status === 'SERVICE_CREATED' || status === 'SAVED')
       history.push('/admin/services')
   }, [ status ])
+
+  useEffect(() => {
+    if(state && state.id)
+      dispatch(getService(state.id))
+    // else
+    //   setDataForm(
+    //     {
+    //       content  : {},
+    //       desc     : '',
+    //       icon     : '',
+    //       show_home: false,
+    //       title    : ''
+    //     }
+    //   )
+  }, [])
+
+  useEffect(() => {
+    if(status === 'READY' && !dataForm && serviceDetail)
+      setDataForm(prevState => {
+        setEditorValue(JSON.parse(serviceDetail.content))
+
+        return serviceDetail
+      })
+  }, [ status ])
+  console.log('===> XAVI <===: New -> dataForm', dataForm)
 
   const _handleChangeForm = (ev) => {
     if(ev.target.name === 'show_home')
@@ -297,69 +327,84 @@ const New = () => {
     }))
   }
 
+  const uppdateToDatabase = () => {
+    dispatch(updateService({
+      ...dataForm,
+      content: editorValue,
+      id     : state.id
+    }))
+  }
+
   return (
-    <div className={classes.rootNew}>
-      <div className={classes.containerTitle}>
-        <Typography variant='h4'>New Services</Typography>
-        <Button color='primary' onClick={saveToDatabase} variant='contained'>
-          save
-        </Button>
-      </div>
-
-      <div>
-        <TextField
-          fullWidth
-          id='service-name'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Name'
-          margin='normal'
-          name='title'
-          onChange={_handleChangeForm}
-          placeholder='Service name'
-          style={{ margin: 8 }}
-          value={dataForm.title} />
-
-        <TextField
-          fullWidth
-          id='desc-name'
-          InputLabelProps={{
-            shrink: true
-          }}
-          label='Description'
-          margin='normal'
-          name='desc'
-          onChange={_handleChangeForm}
-          placeholder='Description'
-          style={{ margin: 8 }}
-          value={dataForm.desc} />
-
-        <InputImage
-          data={dataForm.icon}
-          error={false}
-          key='servce-img'
-          maxWidth='450px'
-          name='icon'
-          onImage={handleChangeImage} />
+    dataForm ?
+      <div className={classes.rootNew}>
+        <div className={classes.containerTitle}>
+          <Typography variant='h4'>New Services</Typography>
+          {
+            (state && state.hasOwnProperty('id')) ?
+              <Button color='primary' onClick={uppdateToDatabase} variant='contained'>
+          update
+              </Button> :
+              <Button color='primary' onClick={saveToDatabase} variant='contained'>
+              save
+              </Button>
+          }
+        </div>
 
         <div>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={dataForm.show_home}
-                color='primary'
-                name='show_home'
-                onChange={_handleChangeForm} />
-            }
-            label='Show at home' />
-        </div>
-      </div>
+          <TextField
+            fullWidth
+            id='service-name'
+            InputLabelProps={{
+              shrink: true
+            }}
+            label='Name'
+            margin='normal'
+            name='title'
+            onChange={_handleChangeForm}
+            placeholder='Service name'
+            style={{ margin: 8 }}
+            value={dataForm.title} />
 
-      <div className={classes.rootPage}>
-        <Editor onChange={setEditorValue} plugins={plugins} value={editorValue} />
-      </div>
-    </div>
+          <TextField
+            fullWidth
+            id='desc-name'
+            InputLabelProps={{
+              shrink: true
+            }}
+            label='Description'
+            margin='normal'
+            name='desc'
+            onChange={_handleChangeForm}
+            placeholder='Description'
+            style={{ margin: 8 }}
+            value={dataForm.desc} />
+
+          <InputImage
+            data={dataForm.icon}
+            error={false}
+            key='servce-img'
+            maxWidth='450px'
+            name='icon'
+            onImage={handleChangeImage} />
+
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={dataForm.show_home}
+                  color='primary'
+                  name='show_home'
+                  onChange={_handleChangeForm} />
+              }
+              label='Show at home' />
+          </div>
+        </div>
+
+        <div className={classes.rootPage}>
+          <Editor onChange={setEditorValue} plugins={plugins} value={editorValue} />
+        </div>
+      </div> : null
   )
 }
 

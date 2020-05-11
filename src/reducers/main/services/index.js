@@ -16,9 +16,8 @@ export default base({
       perPage: 100,
       total  : 0
     },
-    rows         : [],
-    service      : {},
-    serviceDetail: {}
+    rows   : [],
+    service: {}
   },
   namespace: 'nod-services',
   store    : 'main_services'

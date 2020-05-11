@@ -40,10 +40,10 @@ export const getServices = ({ types, selectors }) => function* () {
 export const getService = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.FETCH_PENDING })
-    const { data: serviceDetail, success } = yield call(Get, `/services/${id}`)
+    const { data: service, success } = yield call(Get, `/services/${id}`)
     yield put({
       payload: {
-        serviceDetail,
+        service,
         success
       },
       type: types.FETCH_FULFILLED

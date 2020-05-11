@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 // import { makeStyles } from '@material-ui/core/styles'
@@ -21,6 +21,7 @@ const {
 
 const Services = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const {
     status,
@@ -33,7 +34,7 @@ const Services = () => {
   // const classes = styles()
 
   useEffect(() => {
-    if(status === 'NEW' || status === 'SERVICE_CREATED')
+    if(status === 'NEW' || status === 'SERVICE_CREATED' || status === 'SAVED')
       dispatch(getServices())
   }, [])
 
@@ -50,7 +51,11 @@ const Services = () => {
   }
 
   const _handleClickEdit = id => {
-    dispatch(getService(id))
+    history.push({
+      pathname: '/admin/service',
+      state   : { id: id }
+    // dispatch(getService(id))
+    })
   }
 
   const _handleCloseModalEdit = bol => {

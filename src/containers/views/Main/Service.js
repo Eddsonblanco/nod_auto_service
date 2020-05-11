@@ -27,7 +27,7 @@ import {
 } from '@material-ui/core'
 import Testimony from 'components/Testimony'
 
-import servicesDucks from 'reducers/services'
+import servicesDucks from 'reducers/main/services'
 import pageHomeDucks from 'reducers/pagehome'
 
 const plugins = {
@@ -86,8 +86,8 @@ export default function Services() {
   } = useSelector(state => state.router)
 
   const {
-    serviceDetail = {}
-  } = useSelector(state => state.services)
+    service = {}
+  } = useSelector(state => state.main_services)
 
   const {
     status: statusHome,
@@ -112,19 +112,19 @@ export default function Services() {
           <Link color='inherit' href='/'>
           Home
           </Link>
-          <Typography color='textPrimary'>{serviceDetail.title}</Typography>
+          <Typography color='textPrimary'>{service.title}</Typography>
         </Breadcrumbs>
 
         <div className={classes.contentTitle}>
-          <Typography className={classes.titleService} variant='h4'>{serviceDetail.title}</Typography>
+          <Typography className={classes.titleService} variant='h4'>{service.title}</Typography>
 
         </div>
 
         {
-          serviceDetail.content ?
+          service.content ?
             <div className={classes.rootHtmlRender}>
               <HTMLRenderer
-                plugins={plugins} state={JSON.parse(serviceDetail.content)} />
+                plugins={plugins} state={JSON.parse(service.content)} />
             </div> : null
 
         }

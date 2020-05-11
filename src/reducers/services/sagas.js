@@ -134,21 +134,21 @@ export const updateService = ({ types }) => function* ({ payload }) {
     const formData = new FormData()
     const payloadData = Object.keys(payload)
     payloadData.map(item => {
-      formData.append(item, payload[item])
+      if(item === 'content')
+        formData.append(item, JSON.stringify(payload[item]))
+      else
+        formData.append(item, payload[item])
     })
-    // const { data, success } = yield call(Post, '/companies', formData, {
-    //   'content-type': 'multipart/form-data'
-    // })
 
-    const data = yield call(Put, '/services', formData)
-    console.log('===> XAVI <===: updateCompany -> data', data)
-    // yield put({
-    //   payload: {
-    //     company,
-    //     success
-    //   },
-    //   type: types.FETCH_FULFILLED
-    // })
+    const { success } = yield call(Put, '/services', formData, {
+      'content-type': 'multipart/form-data'
+    })
+    yield put({
+      payload: {
+        success
+      },
+      type: types.PUT_FULFILLED
+    })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {

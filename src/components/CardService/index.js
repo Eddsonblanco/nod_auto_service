@@ -61,19 +61,21 @@ const useStyles = makeStyles({
       cursor     : 'pointer'
       // transform   : 'scale(1.1)'
     },
-    borderColor : '#d5d5d5',
-    borderRadius: 12,
-    minWidth    : 275,
-    padding     : 20
+    borderColor   : '#d5d5d5',
+    borderRadius  : 12,
+    minWidth      : 275,
+    padding       : 20,
+    textDecoration: 'none'
   },
   title: {
-    color        : '#353535',
-    fontSize     : '1.125rem',
-    fontWeight   : 600,
-    letterSpacing: 'normal',
-    lineHeight   : 1.22,
-    marginBottom : 10,
-    textAlign    : 'left'
+    color         : '#353535',
+    fontSize      : '1.125rem',
+    fontWeight    : 600,
+    letterSpacing : 'normal',
+    lineHeight    : 1.22,
+    marginBottom  : 10,
+    textAlign     : 'left',
+    textDecoration: 'none'
   }
 })
 
@@ -82,10 +84,12 @@ export default function CardService({ data }) {
 
   return (
     <Card className={classes.root} variant='outlined'>
-      <Link to={{
-        pathname: `/service/${data.title.replace(' ', '-')}`,
-        state   : { id: data._id }
-      }}>
+      <Link
+        component='div'
+        to={{
+          pathname: `/service/${data.title.replace(' ', '-')}`,
+          state   : { id: data._id }
+        }}>
         <CardContent>
           <div className={classes.contentImage}>
             <img src={data.icon} />

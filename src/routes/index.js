@@ -105,6 +105,7 @@ export default history => {
           <MainAdmin>
             <Switch>
               <Route component={Dashboard} exact path='/admin/dashboard' />
+              {/* <Route component={ServicesNewAdmin} path='/admin/service/:id' /> */}
               <Route component={Settings} path='/admin/settings' />
               <Route component={HomeAdmin} path='/admin/home' />
               <Route component={About} path='/admin/about' />
