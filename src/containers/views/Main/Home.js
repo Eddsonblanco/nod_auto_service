@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 
 import Carousel from 'components/Common/Carousel'
 
@@ -121,9 +122,11 @@ export default function Home() {
     status: satusPage,
     show_banner,
     show_brands,
-    show_newsletter,
+    // show_newsletter,
     show_services,
-    show_testimonials
+    show_testimonials,
+    testimonials,
+    services
   } = useSelector(state => state.page_home)
 
   useEffect(() => {
@@ -191,13 +194,15 @@ export default function Home() {
             </Typography>
             <div className={classes.containerServices}>
               {
-                [ 1,2,3,4,5,6 ].map((item, index) => (
-                  <CardService key={index} />
+                services.map((item, index) => (
+                  <CardService data={item} key={index} />
                 ))
               }
             </div>
             <div className={classes.btnAllServices}>
-              <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
+              <Button
+                color='primary' component={RouterLink}
+                to='/services' variant='contained'>SEE ALL SERVICES</Button>
             </div>
           </Container> : null
       }
@@ -214,6 +219,7 @@ export default function Home() {
             </Typography>
             <Carousel settings={
               9 <= 3 ? {
+                autoplay  : true,
                 responsive: [
                   {
                     breakpoint: 5000,
@@ -249,10 +255,13 @@ export default function Home() {
                   }
                 ]
               } : {
+                // marginInitial: '-250px',
+                autoplay: true,
+
                 centerMode: true,
+
                 // centerPadding: '-250px',
                 infinite  : true,
-                // marginInitial: '-250px',
                 responsive: [
                   {
                     breakpoint: 5000,
@@ -294,10 +303,11 @@ export default function Home() {
               }
             }>
               {
-                [ 1, 2, 3, 4, 5, 6 ].map((job, index) => (
+                testimonials.map((job, index) => (
                   <div
                     key={`slide-${index}`}>
                     <Testimony
+                      data={job}
                       key={`slide-${index}`} />
 
                     {/* <CardJob

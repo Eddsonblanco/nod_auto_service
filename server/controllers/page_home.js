@@ -8,14 +8,14 @@ const get = async () => {
 const edit = async req => {
   try {
     const {
-      id,
+      _id,
       ...others
     } = req.body
 
     const page = PageHome(others)
     delete page._doc._id
 
-    return await PageHome.findOneAndUpdate({ _id: Types.ObjectId(id) },
+    return await PageHome.findOneAndUpdate({ _id: Types.ObjectId(_id) },
       { $set: page },
       { 'new': true, upsert: true })
   } catch (err) {

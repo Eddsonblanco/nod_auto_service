@@ -37,7 +37,7 @@ const ContactAdmin = loadable(() => import('../containers/views/Admin/Contact'),
   fallback: <Loading />
 })
 
-const Insurances = loadable(() => import('../containers/views/Admin/Insurances'), {
+const Banners = loadable(() => import('../containers/views/Admin/Banners'), {
   fallback: <Loading />
 })
 
@@ -49,11 +49,19 @@ const ServicesAdmin = loadable(() => import('../containers/views/Admin/Services'
   fallback: <Loading />
 })
 
+const ServicesNewAdmin = loadable(() => import('../containers/views/Admin/Services/New'), {
+  fallback: <Loading />
+})
+
 const Users = loadable(() => import('../containers/views/Admin/Users'), {
   fallback: <Loading />
 })
 
 const Companies = loadable(() => import('../containers/views/Admin/Companies'), {
+  fallback: <Loading />
+})
+
+const Testimonials = loadable(() => import('../containers/views/Admin/Testimonials'), {
   fallback: <Loading />
 })
 
@@ -97,14 +105,17 @@ export default history => {
           <MainAdmin>
             <Switch>
               <Route component={Dashboard} exact path='/admin/dashboard' />
+              {/* <Route component={ServicesNewAdmin} path='/admin/service/:id' /> */}
               <Route component={Settings} path='/admin/settings' />
               <Route component={HomeAdmin} path='/admin/home' />
               <Route component={About} path='/admin/about' />
               <Route component={ContactAdmin} path='/admin/contact' />
               <Route component={Companies} path='/admin/companies' />
-              <Route component={Insurances} path='/admin/insurances' />
+              <Route component={Testimonials} path='/admin/testimonials' />
+              <Route component={Banners} path='/admin/banners' />
               <Route component={Reservations} path='/admin/reservations' />
               <Route component={ServicesAdmin} path='/admin/services' />
+              <Route component={ServicesNewAdmin} path='/admin/service' />
               <Route component={Users} path='/admin/users' />
             </Switch>
           </MainAdmin>

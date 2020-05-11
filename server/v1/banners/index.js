@@ -4,24 +4,23 @@ import { upload } from '../../middleware/multer'
 import {
   create,
   all,
+  allHome,
   remove,
   edit,
-  one,
-  allHome
-} from '../../controllers/services'
+  one
+} from '../../controllers/banners'
 
 const router = express.Router()
 
-router.post('/',
-  upload.single('icon'), async (req, res) => {
-    try {
+router.post('/', upload.single('image'), async (req, res) => {
+  try {
     // req.headers // token
-      const data = await create(req)
-      res.status(200).send({ data, success: true })
-    } catch (err) {
-      res.status(500).send({ error: err.message, success: false })
-    }
-  })
+    const data = await create(req)
+    res.status(200).send({ data, success: true })
+  } catch (err) {
+    res.status(500).send({ error: err.message, success: false })
+  }
+})
 
 router.get('/home', async (req, res) => {
   try {
@@ -63,7 +62,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-router.put('/', upload.single('icon'), async (req, res) => {
+router.put('/', upload.single('image'), async (req, res) => {
   try {
     // const { id } = req.params
 

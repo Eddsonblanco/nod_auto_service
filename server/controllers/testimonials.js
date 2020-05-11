@@ -1,19 +1,20 @@
 
-import { Services, Datatables } from '../models'
+import { Testimonials, Datatables } from '../models'
 import { Types } from 'mongoose'
 import { removeImage } from '../utils'
 
 const create = async (req) => {
   try {
-    const service = Services(req.body)
+    const testimonial = Testimonials(req.body)
 
-    if(req.file)
-      service.setImgUrl(req.file.filename)
-
-    return await service.save()
+    return await testimonial.save()
   } catch (err) {
     return err
   }
+}
+
+const allHome = async () => {
+  return Testimonials.find({})
 }
 
 const all = async (query) => {
@@ -27,9 +28,9 @@ const all = async (query) => {
 
     const sortNumber = sort === 'asc' ? 1 : -1
 
-    const columns = await Datatables.find({ source: 'services' }).sort({ index: 1 })
+    const columns = await Datatables.find({ source: 'testimonials' }).sort({ index: 1 })
 
-    const [ { count: [ { total } ], data: rows } ] = await Services.aggregate([
+    const [ { count: [ { total } ], data: rows } ] = await Testimonials.aggregate([
       {
         $facet: {
           count: [
@@ -59,25 +60,14 @@ const all = async (query) => {
   }
 }
 
-const allHome = async () => {
-  try {
-    return await Services.find({ show_home: true })
-  } catch (err) {
-    return err
-  }
-}
-
 const remove = async (id) => {
   try {
-    const { image1, image2 } = await Services.findOne({ _id: Types.ObjectId(id) }).lean()
+    const { image } = await Testimonials.findOne({ _id: Types.ObjectId(id) }).select('image')
 
-    if(image1)
-      removeImage(image1)
+    if(image)
+      removeImage(image)
 
-    if(image2)
-      removeImage(image2)
-
-    const { deletedCount } = await Services.deleteOne({ _id: Types.ObjectId(id) }).lean()
+    const { deletedCount } = await Testimonials.deleteOne({ _id: Types.ObjectId(id) }).lean()
 
     return deletedCount
   } catch (err) {
@@ -92,18 +82,18 @@ const edit = async (req) => {
       ...others
     } = req.body
 
-    const service = Services(others)
+    const testimonial = Testimonials(others)
 
-    if(req.file) {
-      const { icon } = await Services.findOne({ _id: Types.ObjectId(id) }).lean()
-      removeImage(icon)
-      service.setImgUrl(req.file.filename)
-    }
+    // if(req.file) {
+    //   const { image } = await Testimonials.findOne({ _id: Types.ObjectId(id) }).select('image')
+    //   removeImage(image)
+    //   testimonial.setImgUrl(req.file.filename)
+    // }
 
-    delete service._doc._id
+    delete testimonial._doc._id
 
-    return await Services.findOneAndUpdate({ _id: Types.ObjectId(id) },
-      { $set: service },
+    return await Testimonials.findOneAndUpdate({ _id: Types.ObjectId(id) },
+      { $set: testimonial },
       { 'new': true, upsert: true })
   } catch (err) {
     return err
@@ -112,7 +102,7 @@ const edit = async (req) => {
 
 const one = async (id) => {
   try {
-    return await Services.findOne({ _id: Types.ObjectId(id) })
+    return await Testimonials.findOne({ _id: Types.ObjectId(id) })
   } catch (err) {
     return err
   }
@@ -120,8 +110,8 @@ const one = async (id) => {
 export {
   create,
   all,
+  allHome,
   remove,
   edit,
-  one,
-  allHome
+  one
 }

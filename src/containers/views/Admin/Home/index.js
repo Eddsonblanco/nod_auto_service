@@ -5,7 +5,8 @@ import {
   FormControlLabel,
   Checkbox,
   TextField,
-  Switch
+  Switch,
+  Button
 } from '@material-ui/core'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -24,10 +25,7 @@ import InputImage from 'components/Admin/Common/InputImage'
 const {
   getPageConfig,
   updateCheckbox,
-  addNewItemBanner,
-  updatePositionBannerItem,
-  removeBannerItem,
-  updateBannersData
+  updatePageConfig
 } = pageHomeDucks.creators
 
 const useStyles = makeStyles(theme => ({
@@ -83,7 +81,6 @@ const PageHome = () => {
   }
 
   const _handleChangeBanners = (ev, index) => {
-    console.log('===> XAVI <===: _handleChangeBanners -> ev', ev)
     if(ev.name === 'image')
       setStateBanner(stateBanner.map((item, itemIndex) => {
         if(itemIndex === index)
@@ -94,7 +91,6 @@ const PageHome = () => {
         else
           return item
       }))
-      // dispatch(updateBannersData({ [ev.name]: ev.file }, index))
     else if(ev.target.name === 'openAppoiment')
       setStateBanner(stateBanner.map((item, itemIndex) => {
         if(itemIndex === index)
@@ -105,7 +101,6 @@ const PageHome = () => {
         else
           return item
       }))
-      // dispatch(updateBannersData({ [ev.target.name]: ev.target.checked }, index))
     else
       setStateBanner(stateBanner.map((item, itemIndex) => {
         if(itemIndex === index)
@@ -116,7 +111,6 @@ const PageHome = () => {
         else
           return item
       }))
-      // dispatch(updateBannersData({ [ev.target.name]: ev.target.value }, index))
   }
 
   const _handleAddItemBammer = () => {
@@ -131,15 +125,26 @@ const PageHome = () => {
         url          : ''
       }
     ])
-    // dispatch(addNewItemBanner())
   }
 
   const _handleClickRemoveBanner = (index) => {
     setStateBanner(stateBanner.filter((item, itemIndex) => itemIndex !== index))
   }
 
+  const _handleClickSave = () => {
+    dispatch(updatePageConfig(stateBanner))
+  }
+
+  const actions = (<div>
+    <Button
+      color='primary'
+      onClick={_handleClickSave}
+      variant='contained'>Save</Button>
+  </div>)
+
   return (
     <TabsAdmin
+      tabActions={actions}
       tabContent={[
         <>
           <div>
@@ -202,88 +207,11 @@ const PageHome = () => {
               label='Show Testimonials' />
           </div>
 
-        </>,
-        <>
-          {
-            stateBanner.map((item, index) => (
-
-              <div className={classes.containerBanner} key={`banner-${index}`}>
-                <div className={classes.formBanner}>
-                  <div>
-                    <TextField
-                      fullWidth
-                      name='title'
-                      onChange={ev => _handleChangeBanners(ev, index)}
-                      placeholder='Title'
-                      style={{ marginBottom: 20 }}
-                      value={item.title} />
-                  </div>
-                  <div>
-                    <TextField
-                      fullWidth
-                      name='desc'
-                      onChange={ev => _handleChangeBanners(ev, index)}
-                      placeholder='Sub-title'
-                      style={{ marginBottom: 20 }}
-                      value={item.desc} />
-                  </div>
-                  <div style={{ marginBottom: 20 }}>
-                    <InputImage
-                      error={false}
-                      key={`banner-img-${index}`}
-                      maxWidth='450px'
-                      name='image' onImage={ev => _handleChangeBanners(ev, index)} />
-                  </div>
-
-                  <div style={{ marginBottom: 20 }}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={item.openAppoiment}
-                          name='openAppoiment'
-                          onChange={ev => _handleChangeBanners(ev, index)} />
-                      }
-                      label='Boton open modal appoiment' />
-                  </div>
-
-                  {
-                    !item.openAppoiment &&
-                      <div>
-                        <TextField
-                          fullWidth
-                          name='url'
-                          onChange={ev => _handleChangeBanners(ev, index)}
-                          placeholder='url'
-                          style={{ marginBottom: 20 }}
-                          value={item.url} />
-                      </div>
-                  }
-                </div>
-
-                <div className={classes.actionsBanner}>
-                  <DeleteIcon onClick={() => _handleClickRemoveBanner(index)} />
-                  {/* {
-                    index !== 0 ?
-                      <ExpandLessIcon onClick={() => _handleChangePositionBanner('up', item.position)} /> : null
-                  }
-                  {
-                    index !== (banners.length - 1) ?
-                      <ExpandMoreIcon onClick={() => _handleChangePositionBanner('down', item.position)} /> : null
-                  } */}
-                  {
-                    index === (stateBanner.length - 1) ?
-                      <AddBoxIcon onClick={_handleAddItemBammer} /> : null
-                  }
-                </div>
-
-              </div>
-            ))
-          }
         </>
+
       ]}
       tabHeader={[
-        'config',
-        'Banner'
+        'config'
       ]}
       tabName='Page Home' />
   )

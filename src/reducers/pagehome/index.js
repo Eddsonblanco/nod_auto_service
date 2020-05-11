@@ -3,34 +3,21 @@ import { takeEvery } from 'redux-saga/effects'
 import base from 'reducers/base'
 
 import {
-  getPageConfig
+  getPageConfig,
+  updatePageConfig
 } from './sagas'
 
 export default base({
   initialState: {
-    banners: [
-      {
-        desc         : '',
-        image        : '',
-        openAppoiment: true,
-        position     : 0,
-        title        : '111',
-        url          : ''
-      },
-      {
-        desc         : '',
-        image        : '',
-        openAppoiment: true,
-        position     : 1,
-        title        : '222',
-        url          : ''
-      }
-    ],
+    _id              : null,
+    banners          : [],
+    services         : [],
     show_banner      : false,
     show_brands      : false,
     show_newsletter  : false,
     show_services    : false,
-    show_testimonials: false
+    show_testimonials: false,
+    testimonials     : []
   },
   namespace: 'nod_services',
   store    : 'page_home'
@@ -41,6 +28,7 @@ export default base({
     removeBannerItem        : index => ({ index, type: types.REMOVE_ITEM_BANNER }),
     updateBannersData       : (data, index) => ({ data, index, type: types.UPDATE_DATA_BANNERS }),
     updateCheckbox          : (name, data) => ({ data, name, type: types.UPDATE_CHECKBOX }),
+    updatePageConfig        : banners => ({ banners, type: types.UPDATE_CONFIG }),
     updatePositionBannerItem: (orientation, position) => ({ orientation, position, type: types.UPDATE_POSITION_BANNER })
   }),
   reducer: (state, action, { types }) =>
@@ -115,7 +103,6 @@ export default base({
           return
 
         case types.UPDATE_DATA_BANNERS:
-          console.log('===> XAVI <===: action.data', action.data)
           draft.banners = draft.banners.map((item, index) => {
             if(action.index === index)
               return {
@@ -132,19 +119,40 @@ export default base({
       }
     }),
   sagas: duck => ({
-    getPageConfig: getPageConfig(duck)
+    getPageConfig   : getPageConfig(duck),
+    updatePageConfig: updatePageConfig(duck)
   }),
-  selectors: ({ store }) => [
+  selectors: ({ store }) => ({
+    getAllCheckbox: state => {
+      const {
+        show_banner,
+        show_brands,
+        show_newsletter,
+        show_services,
+        show_testimonials,
+        _id
+      } = state[store]
 
-  ],
+      return {
+        _id,
+        show_banner,
+        show_brands,
+        show_newsletter,
+        show_services,
+        show_testimonials
+      }
+    }
+  }),
   takes: ({ types, sagas }) => [
-    takeEvery(types.FETCH, sagas.getPageConfig)
+    takeEvery(types.FETCH, sagas.getPageConfig),
+    takeEvery(types.UPDATE_CONFIG, sagas.updatePageConfig)
   ],
   types: [
     'UPDATE_CHECKBOX',
     'ADD_ITEM_BANNER',
     'UPDATE_POSITION_BANNER',
     'REMOVE_ITEM_BANNER',
-    'UPDATE_DATA_BANNERS'
+    'UPDATE_DATA_BANNERS',
+    'UPDATE_CONFIG'
   ]
 })

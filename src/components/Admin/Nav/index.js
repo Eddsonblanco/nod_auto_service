@@ -318,24 +318,24 @@ const Nav = props => {
         title: 'page home',
         url  : '/admin/home'
       },
-      {
-        _id  : 3,
-        icon : <PagesIcon />,
-        title: 'Page about',
-        url  : '/admin/about'
-      },
-      {
-        _id  : 4,
-        icon : <PagesIcon />,
-        title: 'page contact',
-        url  : '/admin/conact'
-      },
-      {
-        _id  : 5,
-        icon : <PagesIcon />,
-        title: 'Page service',
-        url  : '/admin/service'
-      },
+      // {
+      //   _id  : 3,
+      //   icon : <PagesIcon />,
+      //   title: 'Page about',
+      //   url  : '/admin/about'
+      // },
+      // {
+      //   _id  : 4,
+      //   icon : <PagesIcon />,
+      //   title: 'page contact',
+      //   url  : '/admin/conact'
+      // },
+      // {
+      //   _id  : 5,
+      //   icon : <PagesIcon />,
+      //   title: 'Page service',
+      //   url  : '/admin/service'
+      // },
       {
         _id  : 6,
         icon : <BusinessIcon />,
@@ -345,27 +345,33 @@ const Nav = props => {
       {
         _id  : 7,
         icon : <SecurityIcon />,
-        title: 'Insurances',
-        url  : '/admin/insurances'
+        title: 'Banners',
+        url  : '/admin/banners'
       },
       {
         _id  : 8,
+        icon : <SecurityIcon />,
+        title: 'Testimonials',
+        url  : '/admin/testimonials'
+      },
+      {
+        _id  : 9,
         icon : <AssignmentTurnedInIcon />,
         title: 'Services',
         url  : '/admin/services'
       },
-      {
-        _id  : 9,
-        icon : <ReceiptIco />,
-        title: 'Reservations',
-        url  : '/admin/reservations'
-      },
-      {
-        _id  : 10,
-        icon : <GroupIcon />,
-        title: 'Users',
-        url  : '/admin/users'
-      },
+      // {
+      //   _id  : 9,
+      //   icon : <ReceiptIco />,
+      //   title: 'Reservations',
+      //   url  : '/admin/reservations'
+      // },
+      // {
+      //   _id  : 10,
+      //   icon : <GroupIcon />,
+      //   title: 'Users',
+      //   url  : '/admin/users'
+      // },
       {
         _id  : 11,
         icon : <GroupIcon />,
