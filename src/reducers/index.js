@@ -14,6 +14,9 @@ import services from './services'
 // admin
 import pageHome from './pagehome'
 
+// main
+import mainServices from './main/services'
+
 export default history => combineReducers({
   router              : connectRouter(history),
   [theme.store]       : theme.reducer,
@@ -24,7 +27,9 @@ export default history => combineReducers({
   [pageHome.store]    : pageHome.reducer,
   [banners.store]     : banners.reducer,
   [testimonials.store]: testimonials.reducer,
-  [services.store]    : services.reducer
+  [services.store]    : services.reducer,
+  // main
+  [mainServices.store]: mainServices.reducer
 })
 
 export function* rootSaga() {
@@ -36,6 +41,8 @@ export function* rootSaga() {
     ...pageHome.takes,
     ...banners.takes,
     ...testimonials.takes,
-    ...services.takes
+    ...services.takes,
+    // main
+    ...mainServices.takes
   ])
 }

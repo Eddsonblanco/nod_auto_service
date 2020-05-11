@@ -46,7 +46,7 @@ export const removeService = ({ types }) => function* ({ id }) {
         id,
         success
       },
-      type: types.DELETE_BANNER_FULFILLED
+      type: types.DELETE_SERVICE_FULFILLED
     })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e

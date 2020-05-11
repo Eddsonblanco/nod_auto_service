@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Post } from 'lib/Request'
 
-import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+
+import { useDispatch, useSelector } from 'react-redux'
 // The editor core
 import Editor from '@react-page/editor'
 import '@react-page/core/lib/index.css' // we also want to load the stylesheets
@@ -34,10 +36,18 @@ const {
 } = serviceDucks.creators
 
 const style = makeStyles(() => ({
+  containerTitle: {
+    '& > h4': {
+      marginRight: 20
+    },
+    display: 'flex'
+  },
   rootNew: {
-    height  : '100%',
-    overflow: 'auto',
-    position: 'relative'
+    background: '#fff',
+    height    : '100%',
+    overflow  : 'auto',
+    padding   : '20px',
+    position  : 'relative'
   },
   rootPage: {
     '& img': {
@@ -46,12 +56,11 @@ const style = makeStyles(() => ({
     '&:first-child': {
       position: 'initial'
     },
-    background: '#fff',
-    height    : '100%',
-    maxWidth  : '960px',
-    overflow  : 'auto',
-    padding   : '40px 80px',
-    width     : '100%'
+    height  : '100%',
+    // maxWidth  : '960px',
+    overflow: 'auto',
+    padding : '40px 80px',
+    width   : '100%'
   }
 }))
 
@@ -82,6 +91,10 @@ const plugins = {
 const New = () => {
   const dispatch = useDispatch()
   const classes = style()
+  const history = useHistory()
+  const {
+    status
+  } = useSelector(state => state.services)
   const [ editorValue, setEditorValue ] = useState(
     {
       cells: [
@@ -251,6 +264,11 @@ const New = () => {
     title    : ''
   })
 
+  useEffect(() => {
+    if(status === 'SERVICE_CREATED')
+      history.push('/admin/services')
+  }, [ status ])
+
   const _handleChangeForm = (ev) => {
     if(ev.target.name === 'show_home')
       setDataForm({
@@ -281,7 +299,13 @@ const New = () => {
 
   return (
     <div className={classes.rootNew}>
-      <Typography variant='h4'>New Services</Typography>
+      <div className={classes.containerTitle}>
+        <Typography variant='h4'>New Services</Typography>
+        <Button color='primary' onClick={saveToDatabase} variant='contained'>
+          save
+        </Button>
+      </div>
+
       <div>
         <TextField
           fullWidth
@@ -334,7 +358,6 @@ const New = () => {
 
       <div className={classes.rootPage}>
         <Editor onChange={setEditorValue} plugins={plugins} value={editorValue} />
-        <button onClick={saveToDatabase}>Save</button>
       </div>
     </div>
   )

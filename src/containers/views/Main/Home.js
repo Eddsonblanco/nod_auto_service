@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 
 import Carousel from 'components/Common/Carousel'
 
@@ -199,7 +200,9 @@ export default function Home() {
               }
             </div>
             <div className={classes.btnAllServices}>
-              <Button color='primary' variant='contained'>SEE ALL SERVICES</Button>
+              <Button
+                color='primary' component={RouterLink}
+                to='/services' variant='contained'>SEE ALL SERVICES</Button>
             </div>
           </Container> : null
       }
@@ -216,6 +219,7 @@ export default function Home() {
             </Typography>
             <Carousel settings={
               9 <= 3 ? {
+                autoplay  : true,
                 responsive: [
                   {
                     breakpoint: 5000,
@@ -251,10 +255,13 @@ export default function Home() {
                   }
                 ]
               } : {
+                // marginInitial: '-250px',
+                autoplay: true,
+
                 centerMode: true,
+
                 // centerPadding: '-250px',
                 infinite  : true,
-                // marginInitial: '-250px',
                 responsive: [
                   {
                     breakpoint: 5000,

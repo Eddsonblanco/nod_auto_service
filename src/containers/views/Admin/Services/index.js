@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 // import { makeStyles } from '@material-ui/core/styles'
-
+import {
+  Button
+} from '@material-ui/core'
 import servicesDucks from 'reducers/services'
 import CrudTable from 'components/Admin/Common/CrudTable'
 import TabsAdmin from 'components/Admin/Common/TabsAdmin'
@@ -30,7 +33,7 @@ const Services = () => {
   // const classes = styles()
 
   useEffect(() => {
-    if(status === 'NEW')
+    if(status === 'NEW' || status === 'SERVICE_CREATED')
       dispatch(getServices())
   }, [])
 
@@ -55,10 +58,18 @@ const Services = () => {
   }
 
   return (<TabsAdmin
-    // tabActions={actions}
+    tabActions={[
+      <>
+        <Button
+          color='primary' component={RouterLink} to='/admin/service'
+          variant='contained'>
+          New
+        </Button>
+      </>
+    ]}
     tabContent={[
       <CrudTable
-        key='sd'
+        key='new_service'
         modalAdd={{
           cancel : 'Cancel',
           confirm: 'Confirm',

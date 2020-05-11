@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/styles'
 // import clsx from 'clsx'
@@ -17,6 +18,12 @@ import {
 import SearchIcon from '@material-ui/icons/Search'
 
 import CardService from 'components/CardService'
+
+import servicesMainDucks from 'reducers/main/services'
+
+const {
+  getServices
+} = servicesMainDucks.creators
 
 const useStyles = makeStyles({
   breadcrumbs: {
@@ -50,7 +57,18 @@ const useStyles = makeStyles({
 })
 
 export default function Services() {
+  const dispatch = useDispatch()
   const classes = useStyles()
+
+  const {
+    status,
+    rows: services = []
+  } = useSelector(state => state.main_services)
+
+  useEffect(() => {
+    if(status === 'NEW')
+      dispatch(getServices())
+  }, [])
 
   return (
     <Container>
@@ -85,11 +103,12 @@ export default function Services() {
 
       <div className={classes.containerServices}>
         {
-          [ 1, 2, 3, 4, 5, 6 ].map((item, index) => (
-            <CardService key={index} />
+          services.map((item, index) => (
+            <CardService data={item} key={index} />
           ))
         }
       </div>
+
     </Container>
   )
 }

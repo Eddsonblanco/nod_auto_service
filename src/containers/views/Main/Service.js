@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/styles'
 // import clsx from 'clsx'
+import Carousel from 'components/Common/Carousel'
 
 import { HTMLRenderer } from '@react-page/renderer'
 import '@react-page/core/lib/index.css' // we also want to load the stylesheets
@@ -21,10 +22,13 @@ import {
   Container,
   Breadcrumbs,
   Link,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core'
+import Testimony from 'components/Testimony'
 
 import servicesDucks from 'reducers/services'
+import pageHomeDucks from 'reducers/pagehome'
 
 const plugins = {
   content: [
@@ -41,6 +45,10 @@ const {
   getService
 } = servicesDucks.creators
 
+const {
+  getPageConfig
+} = pageHomeDucks.creators
+
 const useStyles = makeStyles(() => ({
   rootHtmlRender: {
     '& .ory-plugins-content-spacer.ory-plugins-content-spacer-read-only': {
@@ -50,14 +58,20 @@ const useStyles = makeStyles(() => ({
       width: '100%'
     },
     backgroundColor: '#f6f6f6',
+    marginBottom   : '100px',
     padding        : '40px 80px'
+  },
+  testimonialsTitle: {
+    color       : '#353535',
+    fontWeight  : 600,
+    marginBottom: 60
   },
   titleService: {
     color     : '#353535',
     fontFamily: 'Poppins',
     fontSize  : '1.5rem',
     fontWeight: '600',
-    margin    : '20px 0 20px 0'
+    margin    : '30px 0 30px 0'
   }
 }))
 
@@ -75,30 +89,110 @@ export default function Services() {
     serviceDetail = {}
   } = useSelector(state => state.services)
 
+  const {
+    status: statusHome,
+    testimonials
+  } = useSelector(state => state.page_home)
+
   useEffect(() => {
     dispatch(getService(state.id))
   }, [])
 
+  useEffect(() => {
+    if(statusHome === 'NEW')
+      dispatch(getPageConfig())
+  }, [])
+
   return (
-    <Container>
-      <Breadcrumbs
-        aria-label='breadcrumb' className={classes.breadcrumbs}
-        separator={<span className={classes.separator} />}>
-        <Link color='inherit' href='/'>
+    <>
+      <Container>
+        <Breadcrumbs
+          aria-label='breadcrumb' className={classes.breadcrumbs}
+          separator={<span className={classes.separator} />}>
+          <Link color='inherit' href='/'>
           Home
-        </Link>
-        <Typography color='textPrimary'>{serviceDetail.title}</Typography>
-      </Breadcrumbs>
+          </Link>
+          <Typography color='textPrimary'>{serviceDetail.title}</Typography>
+        </Breadcrumbs>
 
-      <Typography className={classes.titleService} variant='h4'>{serviceDetail.title}</Typography>
+        <div className={classes.contentTitle}>
+          <Typography className={classes.titleService} variant='h4'>{serviceDetail.title}</Typography>
+
+        </div>
+
+        {
+          serviceDetail.content ?
+            <div className={classes.rootHtmlRender}>
+              <HTMLRenderer
+                plugins={plugins} state={JSON.parse(serviceDetail.content)} />
+            </div> : null
+
+        }
+
+      </Container>
+
+      {/* testimonials */ }
       {
-        serviceDetail.content ?
-          <div className={classes.rootHtmlRender}>
-            <HTMLRenderer
-              plugins={plugins} state={JSON.parse(serviceDetail.content)} />
-          </div> : null
+        // show_testimonials ?
+        <Container className={classes.testimonials} maxWidth={false}>
+          <Typography
+            align='center'
+            className={classes.testimonialsTitle}
+            variant='h5'>
+        What people say about us
+          </Typography>
+          <Carousel settings={{
+            autoplay  : true,
+            centerMode: true,
+            // centerPadding: '-250px',
+            infinite  : true,
+            responsive: [
+              {
+                breakpoint: 5000,
+                settings  : {
+                  slidesToScroll: 1,
+                  slidesToShow  : 3
+                }
+              },
+              {
+                breakpoint: 1300,
+                settings  : {
+                  slidesToScroll: 1,
+                  slidesToShow  : 2
+                }
+              },
+              {
+                breakpoint: 1024,
+                settings  : {
+                  slidesToScroll: 1,
+                  slidesToShow  : 1
+                }
+              }
+            ],
+            rows: 1
+          }}>
+            {
+              testimonials.map((job, index) => (
+                <div
+                  key={`slide-${index}`}>
+                  <Testimony
+                    data={job}
+                    key={`slide-${index}`} />
 
+                  {/* <CardJob
+                history={history}
+                job={job}
+                key={`slide-${index}`}
+                type='home'
+                userLogin={userLogin}
+                wished={wishList.includes(job.job_id)} /> */}
+
+                </div>
+              ))
+            }
+          </Carousel>
+        </Container>
       }
-    </Container>
+    </>
   )
 }
