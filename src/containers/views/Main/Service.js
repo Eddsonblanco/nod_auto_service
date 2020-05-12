@@ -50,6 +50,16 @@ const {
 } = pageHomeDucks.creators
 
 const useStyles = makeStyles(() => ({
+  bggray: {
+    background: '#f6f6f6'
+  },
+  breadcrumbs: {
+    marginTop: 18
+  },
+  breadcrumbsEnd: {
+    color   : 'inherit',
+    fontSize: '0.875rem'
+  },
   rootHtmlRender: {
     '& .ory-plugins-content-spacer.ory-plugins-content-spacer-read-only': {
       border: 'none !important'
@@ -58,8 +68,15 @@ const useStyles = makeStyles(() => ({
       width: '100%'
     },
     backgroundColor: '#f6f6f6',
+    fontFamily     : 'Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto',
     marginBottom   : '100px',
     padding        : '40px 80px'
+  },
+  separator: {
+    backgroundColor: '#f64e4e',
+    borderRadius   : '50%',
+    height         : '6px',
+    width          : '6px'
   },
   testimonialsTitle: {
     color       : '#353535',
@@ -112,7 +129,10 @@ export default function Services() {
           <Link color='inherit' href='/'>
           Home
           </Link>
-          <Typography color='textPrimary'>{service.title}</Typography>
+          <Link color='inherit' href='/services'>
+            All services
+          </Link>
+          <Typography className={classes.breadcrumbsEnd} color='textPrimary'>{service.title}</Typography>
         </Breadcrumbs>
 
         <div className={classes.contentTitle}>
@@ -120,16 +140,22 @@ export default function Services() {
 
         </div>
 
-        {
-          service.content ?
-            <div className={classes.rootHtmlRender}>
-              <HTMLRenderer
-                plugins={plugins} state={JSON.parse(service.content)} />
-            </div> : null
-
-        }
-
       </Container>
+
+      <div className={classes.bggray}>
+
+        <Container>
+          {
+            service.content ?
+              <div className={classes.rootHtmlRender}>
+                <HTMLRenderer
+                  plugins={plugins} state={JSON.parse(service.content)} />
+              </div> : null
+
+          }
+        </Container>
+
+      </div>
 
       {/* testimonials */ }
       {

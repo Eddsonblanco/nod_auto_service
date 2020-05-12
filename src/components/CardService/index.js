@@ -39,12 +39,19 @@ const useStyles = makeStyles({
     maxWidth    : 40
   },
   description: {
-    maxWidth: 250
+    color     : '#353535',
+    fontSize  : '0.875rem',
+    fontWeight: 'normal',
+    lineHeight: 1.5,
+    maxWidth  : 250
   },
   pos: {
     marginBottom: 12
   },
   root: {
+    '& a': {
+      textDecoration: 'none'
+    },
     '&:hover': {
       '& $description': {
         color: '#fff'
@@ -61,11 +68,10 @@ const useStyles = makeStyles({
       cursor     : 'pointer'
       // transform   : 'scale(1.1)'
     },
-    borderColor   : '#d5d5d5',
-    borderRadius  : 12,
-    minWidth      : 275,
-    padding       : 20,
-    textDecoration: 'none'
+    borderColor : '#d5d5d5',
+    borderRadius: 12,
+    minWidth    : 275,
+    padding     : 20
   },
   title: {
     color         : '#353535',
@@ -85,7 +91,6 @@ export default function CardService({ data }) {
   return (
     <Card className={classes.root} variant='outlined'>
       <Link
-        component='div'
         to={{
           pathname: `/service/${data.title.replace(' ', '-')}`,
           state   : { id: data._id }
