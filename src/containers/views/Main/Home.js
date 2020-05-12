@@ -28,10 +28,15 @@ const {
 } = pageHomeDucks.creators
 
 const useStyles = makeStyles(theme => ({
+  bannerPrincipal: {
+    '& .slick-slide > div': {
+      padding: '0 !important'
+    }
+  },
   brandContainer: {
     display       : 'flex',
     justifyContent: 'flex-end',
-    marginTop     : '-50px',
+    marginTop     : '-100px',
     position      : 'relative',
     zIndex        : 4
   },
@@ -122,6 +127,7 @@ export default function Home() {
     status: satusPage,
     show_banner,
     show_brands,
+    banners,
     // show_newsletter,
     show_services,
     show_testimonials,
@@ -143,7 +149,18 @@ export default function Home() {
     <div>
       {
         show_banner ?
-          <Banner /> : null
+          <div className={classes.bannerPrincipal}>
+            <Carousel settings={{
+              autoplay: true,
+              infinite: true,
+              rows    : 1
+            }}>
+              {banners.map((item, index) => (
+                <Banner data={item} key={`banner-${index}`} />
+              ))}
+            </Carousel>
+          </div> :
+          null
       }
       {
         show_brands ?
