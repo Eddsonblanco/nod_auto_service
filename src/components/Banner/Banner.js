@@ -97,20 +97,18 @@ const useStyles = makeStyles(theme =>({
 
 }))
 
-export default function banner() {
+export default function banner({ data }) {
   const classes = useStyles()
 
   return (
 
     <div className={classes.wrapperBanner}>
       <Container className={classes.containerBanner} maxWidth='lg'>
-        <img className={classes.backgroundImg} src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/07a463cc-2270-4ed1-a8ef-cc0a75448fc7.png'></img>
+        <img alt={data.alt_text} className={classes.backgroundImg} src={data.image} />
         <div className={classes.overlay} />
         <div className={classes.wrapperTextBanner}>
-          <Typography className={classes.titleBanner}> Energistically morph open-source technologies
-            rather than transparent technologies </Typography>
-          <Typography className={classes.contentBanner}> Competently maintain holistic internal or "organic" sources via compelling benefits.
-            Collaboratively engage error-free paradigms rather than. </Typography>
+          <Typography className={classes.titleBanner}>{data.title}</Typography>
+          <Typography className={classes.contentBanner}>{data.sub_title}</Typography>
           <Button className={classes.CallToAction} color='primary' variant='contained'> GET AN APPOIMENT NOW </Button>
         </div>
       </Container>

@@ -18,6 +18,7 @@ import Testimony from 'components/Testimony'
 
 import companiesDucks from 'reducers/companies'
 import pageHomeDucks from 'reducers/pagehome'
+import SliderServices from 'components/SliderServices'
 
 const {
   getCompanies
@@ -28,10 +29,15 @@ const {
 } = pageHomeDucks.creators
 
 const useStyles = makeStyles(theme => ({
+  bannerPrincipal: {
+    '& .slick-slide > div': {
+      padding: '0 !important'
+    }
+  },
   brandContainer: {
     display       : 'flex',
     justifyContent: 'flex-end',
-    marginTop     : '-50px',
+    marginTop     : '-100px',
     position      : 'relative',
     zIndex        : 4
   },
@@ -70,35 +76,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 40,
     marginTop   : 30
   },
-  sliderServiceCenter: {
-    '& img': {
-      marginTop: 40
-    },
-    background  : theme.palette.primary.main,
-    borderRadius: 12,
-    height      : 360,
-    margin      : '0 50px',
-    maxWidth    : 640,
-    width       : '100%'
-  },
-  sliderServiceContainer: {
-    alignItems    : 'center',
-    display       : 'flex',
-    justifyContent: 'center',
-    margin        : '100px 0 200px 0'
-  },
-  sliderServiceImg: {
-    display       : 'flex',
-    justifyContent: 'center'
-  },
-  sliderServiceLeft: {
-    maxWidth: 290,
-    width   : '100%'
-  },
-  sliderServiceRight: {
-    maxWidth: 410,
-    width   : '100%'
-  },
   testimonials: {
     paddingTop: 60
   },
@@ -122,6 +99,7 @@ export default function Home() {
     status: satusPage,
     show_banner,
     show_brands,
+    banners,
     // show_newsletter,
     show_services,
     show_testimonials,
@@ -143,7 +121,18 @@ export default function Home() {
     <div>
       {
         show_banner ?
-          <Banner /> : null
+          <div className={classes.bannerPrincipal}>
+            <Carousel settings={{
+              autoplay: true,
+              infinite: true,
+              rows    : 1
+            }}>
+              {banners.map((item, index) => (
+                <Banner data={item} key={`banner-${index}`} />
+              ))}
+            </Carousel>
+          </div> :
+          null
       }
       {
         show_brands ?
@@ -162,24 +151,7 @@ export default function Home() {
       }
 
       {/* slider service detail */}
-      {/* <div className={classes.sliderServiceContainer}>
-        <div className={classes.sliderServiceLeft}>
-          <Typography>Life’s too <span>short</span> to spend it at the repair shop</Typography>
-        </div>
-        <div className={classes.sliderServiceCenter}>
-          <div className={classes.sliderServiceImg}>
-            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/4d57eb34-10bd-4d25-8947-83c40d90a6d7.png' />
-          </div>
-        </div>
-        <div className={classes.sliderServiceRight}>
-          <Typography>Oil change at home</Typography>
-          <Typography>
-            Enjoy convenient car repair and maintenance at your home or office.
-            It's as easy as 1-2-3.
-          </Typography>
-          <Button color='primary' variant='contained'>Ver mas info</Button>
-        </div>
-      </div> */}
+      <SliderServices />
 
       {/* <Services /> */}
       {
