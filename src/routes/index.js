@@ -53,6 +53,10 @@ const ServicesNewAdmin = loadable(() => import('../containers/views/Admin/Servic
   fallback: <Loading />
 })
 
+const ServicesEditAdmin = loadable(() => import('../containers/views/Admin/Services/Edit'), {
+  fallback: <Loading />
+})
+
 const Users = loadable(() => import('../containers/views/Admin/Users'), {
   fallback: <Loading />
 })
@@ -116,6 +120,7 @@ export default history => {
               <Route component={Reservations} path='/admin/reservations' />
               <Route component={ServicesAdmin} path='/admin/services' />
               <Route component={ServicesNewAdmin} path='/admin/service' />
+              <Route component={ServicesEditAdmin} path='/admin/service-edit' />
               <Route component={Users} path='/admin/users' />
             </Switch>
           </MainAdmin>

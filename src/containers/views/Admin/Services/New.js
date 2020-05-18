@@ -268,13 +268,15 @@ const New = () => {
       id: 'd7bb57b1-8e73-4008-9891-46b7aa16e912'
     }
   )
-  const [ dataForm, setDataForm ] = useState({
-    content  : {},
-    desc     : '',
-    icon     : '',
-    show_home: false,
-    title    : ''
-  })
+  const [ dataForm, setDataForm ] = useState(
+    {
+      content  : {},
+      desc     : '',
+      icon     : '',
+      show_home: false,
+      title    : ''
+    }
+  )
 
   useEffect(() => {
     if(status === 'SERVICE_CREATED' || status === 'SAVED')
@@ -284,45 +286,32 @@ const New = () => {
   useEffect(() => {
     if(state && state.id)
       dispatch(getService(state.id))
-    else
-      setDataForm({
-        content  : {},
-        desc     : '',
-        icon     : '',
-        show_home: false,
-        title    : ''
-      })
+    // else
+    //   setDataForm(
+    //     {
+    //       content  : {},
+    //       desc     : '',
+    //       icon     : '',
+    //       show_home: false,
+    //       title    : ''
+    //     }
+    //   )
   }, [])
+
+  useEffect(() => {
+    if(status === 'READY' && !dataForm && serviceDetail)
+      setDataForm(prevState => {
+        setEditorValue(JSON.parse(serviceDetail.content))
+
+        return serviceDetail
+      })
+  }, [ status ])
 
   useEffect(() => {
     return () => {
       dispatch(resetService())
     }
   }, [])
-
-  useEffect(() => {
-    if(status === 'READY' && serviceDetail)
-      setDataForm(prevState => {
-        setEditorValue(JSON.parse(serviceDetail.content))
-
-        return serviceDetail
-      })
-
-    // if(status === 'NEW')
-    //   setDataForm(prevState => {
-    //     setEditorValue(JSON.parse(serviceDetail.content))
-
-    //     return (
-    //       {
-    //         content  : {},
-    //         desc     : '',
-    //         icon     : '',
-    //         show_home: false,
-    //         title    : ''
-    //       }
-    //     )
-    //   })
-  }, [ status, serviceDetail ])
 
   const _handleChangeForm = (ev) => {
     if(ev.target.name === 'show_home')
@@ -408,22 +397,13 @@ const New = () => {
             style={{ margin: 8 }}
             value={dataForm.desc} />
 
-          {
-            dataForm.icon ?
-              <InputImage
-                data={dataForm.icon}
-                error={false}
-                key='servce-img'
-                maxWidth='450px'
-                name='icon'
-                onImage={handleChangeImage} /> :
-              <InputImage
-                error={false}
-                key='servce-img'
-                maxWidth='450px'
-                name='icon'
-                onImage={handleChangeImage} />
-          }
+          <InputImage
+            data={dataForm.icon}
+            error={false}
+            key='servce-img'
+            maxWidth='450px'
+            name='icon'
+            onImage={handleChangeImage} />
 
           <div>
             <FormControlLabel
