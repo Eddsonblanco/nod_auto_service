@@ -138,7 +138,6 @@ export const updateBanner = ({ types }) => function* ({ payload }) {
     // })
 
     const data = yield call(Put, '/banners', formData)
-    console.log('===> XAVI <===: updateCompany -> data', data)
     // yield put({
     //   payload: {
     //     company,

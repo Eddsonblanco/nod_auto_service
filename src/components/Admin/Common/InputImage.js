@@ -93,6 +93,10 @@ const InputImage = (props) => {
 
   const [ currentImage, setCurentImage ] = useState(data)
 
+  useEffect(() => {
+    setCurentImage(props.data)
+  }, [ props ])
+
   const _handleChangeImage = ev => {
     if(ev.target.files.length) {
       ev.preventDefault()

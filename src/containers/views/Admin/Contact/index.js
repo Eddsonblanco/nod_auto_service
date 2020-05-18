@@ -18,7 +18,6 @@ const Contact = () => {
     pagination
   } = useSelector(store => store.contacts)
 
-  console.log('===> XAVI <===: Contact -> rows', rows)
   useEffect(() => {
     if(status === 'NEW')
       dispatch(getContacts())

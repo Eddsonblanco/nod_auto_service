@@ -95,8 +95,10 @@ const edit = async (req) => {
     const service = Services(others)
 
     if(req.file) {
-      const { icon } = await Services.findOne({ _id: Types.ObjectId(id) }).lean()
-      removeImage(icon)
+      const { icon } = await Services.findOne({ _id: Types.ObjectId(id) })
+      if(icon)
+        removeImage(icon)
+
       service.setImgUrl(req.file.filename)
     }
 
