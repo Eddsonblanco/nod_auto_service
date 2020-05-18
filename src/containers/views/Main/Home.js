@@ -30,6 +30,9 @@ const {
 
 const useStyles = makeStyles(theme => ({
   bannerPrincipal: {
+    '& .jss346 .slick-initialized .slick-slide': {
+      margin: 0
+    },
     '& .slick-slide > div': {
       padding: '0 !important'
     }

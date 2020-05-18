@@ -9,15 +9,16 @@ import {
 
 export default base({
   initialState: {
-    _id              : null,
-    banners          : [],
-    services         : [],
-    show_banner      : false,
-    show_brands      : false,
-    show_newsletter  : false,
-    show_services    : false,
-    show_testimonials: false,
-    testimonials     : []
+    _id                : null,
+    banners            : [],
+    openAppoimentGlobal: false,
+    services           : [],
+    show_banner        : false,
+    show_brands        : false,
+    show_newsletter    : false,
+    show_services      : false,
+    show_testimonials  : false,
+    testimonials       : []
   },
   namespace: 'nod_services',
   store    : 'page_home'
@@ -25,6 +26,7 @@ export default base({
   creators: ({ types }) => ({
     addNewItemBanner        : () => ({ type: types.ADD_ITEM_BANNER }),
     getPageConfig           : () => ({ type: types.FETCH }),
+    openAppoiment           : () => ({ type: types.UPDATE_OPEN_APPOIMENT }),
     removeBannerItem        : index => ({ index, type: types.REMOVE_ITEM_BANNER }),
     updateBannersData       : (data, index) => ({ data, index, type: types.UPDATE_DATA_BANNERS }),
     updateCheckbox          : (name, data) => ({ data, name, type: types.UPDATE_CHECKBOX }),
@@ -114,6 +116,12 @@ export default base({
           })
 
           return
+
+        case types.UPDATE_OPEN_APPOIMENT:
+
+          draft.openAppoimentGlobal = !draft.openAppoimentGlobal
+
+          return
         default:
           return
       }
@@ -153,6 +161,7 @@ export default base({
     'UPDATE_POSITION_BANNER',
     'REMOVE_ITEM_BANNER',
     'UPDATE_DATA_BANNERS',
-    'UPDATE_CONFIG'
+    'UPDATE_CONFIG',
+    'UPDATE_OPEN_APPOIMENT'
   ]
 })

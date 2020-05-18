@@ -12,6 +12,7 @@ import PageHome from './page_home'
 import Banners from './banner'
 import Testimonials from './testimonials'
 import Galleries from './gallery'
+import Appoiments from './appoiment'
 
 export {
   user,
@@ -27,5 +28,6 @@ export {
   PageHome,
   Banners,
   Testimonials,
-  Galleries
+  Galleries,
+  Appoiments
 }

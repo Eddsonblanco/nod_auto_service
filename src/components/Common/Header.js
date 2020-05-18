@@ -1,8 +1,10 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   Link
 } from 'react-router-dom'
+import clsx from 'clsx'
+
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -11,6 +13,7 @@ import {
   Button,
   IconButton,
   Typography,
+  TextField,
   // Link,
   Container,
   Paper,
@@ -24,14 +27,30 @@ import {
   StepButton,
   DialogContent,
   Dialog,
-  DialogTitle
+  FormControl,
+  Select
 } from '@material-ui/core'
+
+import CloseIcon from '@material-ui/icons/Close'
 
 import {
   Menu as MenuIcon,
   Phone as PhoneIcon,
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons'
+
+import DateInput from 'components/DatePicker'
+import pageHomeDucks from 'reducers/pagehome'
+import appoimentDucks from 'reducers/appoiments'
+
+const {
+  getPageConfig,
+  openAppoiment
+} = pageHomeDucks.creators
+
+const {
+  createAppoiment
+}  = appoimentDucks.creators
 
 const useStyles = makeStyles(theme => ({
   btnLanguage: {
@@ -53,12 +72,67 @@ const useStyles = makeStyles(theme => ({
     }
 
   },
+  contentModal: {
+    maxWidth: 560,
+    width   : '100%'
+  },
+  dialogActions: {
+    display       : 'flex',
+    justifyContent: 'flex-end',
+    marginTop     : 50
+  },
+  dialogContent: {
+
+    display: 'flex',
+
+    justifyContent: 'center',
+    // alignItems    : 'center',
+    marginTop     : 50
+  },
+  dialogDesc: {
+    color       : '#353535',
+    fontSize    : 16,
+    fontWeight  : 300,
+    lineHeight  : 1.86,
+    marginBottom: 30,
+    textAlign   : 'center'
+  },
+  dialogTitle: {
+    color       : '#353535',
+    fontSize    : 22,
+    fontStyle   : 'normal',
+    fontWeight  : 600,
+    lineHeight  : 1.5,
+    marginBottom: 20,
+    textAlign   : 'center'
+  },
   divider: {
     backgroundColor               : theme.palette.common.white,
     height                        : 27,
     margin                        : '0 20px',
     [theme.breakpoints.down('sm')]: {
       display: 'none'
+    }
+  },
+  formContent: {
+    margin  : '0 auto',
+    maxWidth: 740,
+    width   : '100%'
+  },
+  formControl: {
+    '& .MuiFilledInput-root': {
+      '&:before': {
+        content: 'none'
+      },
+      background: 'transparent',
+      border    : 'solid 1px rgba(0, 0, 0, 0.23)'
+    }
+  },
+  formTwo: {
+    display                     : 'flex',
+    flexDirection               : 'column',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row'
     }
   },
   headerLeft: {
@@ -136,6 +210,50 @@ const useStyles = makeStyles(theme => ({
       display: 'block'
     }
   },
+  rootStep: {
+    '& .MuiStepLabel-horizontal': {
+      paddingRight: 25
+    },
+    background: '#f6f6f6',
+    margin    : 0,
+    padding   : '15px 20px'
+  },
+  rootSteper: {
+    [theme.breakpoints.down('sm')]: {
+      '& .MuiStep-horizontal': {
+        width: '100%'
+      },
+      '& .MuiStepButton-root': {
+        boxSizing     : 'border-box',
+        justifyContent: 'flex-start'
+      },
+      flexDirection: 'column'
+    }
+  },
+  stepActive: {
+    '& .MuiStepIcon-root.MuiStepIcon-active': {
+      color: '#fff'
+    },
+    '& .MuiStepIcon-text': {
+      fill: '#f64e4e'
+    },
+    '& .MuiStepLabel-label.MuiStepLabel-active': {
+      color: '#fff'
+    },
+    '& button': {
+      background: '#f64e4e'
+    }
+  },
+  stepComplete: {
+    background: 'red'
+  },
+  titleinput: {
+    color     : '#353535',
+    fontSize  : 14,
+    fontWeight: 600,
+    lineHeight: 1.8,
+    textAlign : 'left'
+  },
   toolbarRoot: {
     backgroundColor: '#353535'
   }
@@ -149,34 +267,53 @@ function getSteps() {
   ]
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Step 1: Select campaign settings...'
-    case 1:
-      return 'Step 2: What is an ad group anyways?'
-    case 2:
-      return 'Step 3: This is the bit I really care about!'
-    default:
-      return 'Unknown step'
-  }
-}
-
 export default function Header() {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const {
     logo,
     phone
   } = useSelector(state => state.settings)
 
+  const {
+    status,
+    services,
+    openAppoimentGlobal = false
+  } = useSelector(state => state.page_home)
+
   const [ open, setOpen ] = React.useState(false)
   const anchorRef = React.useRef(null)
 
-  const [ openDialog, setOpenDialog ] = React.useState(true)
+  // const [ openDialog, setOpenDialog ] = React.useState(openAppoimentGlobal)
 
   const [ activeStep, setActiveStep ] = React.useState(0)
   const [ completed, setCompleted ] = React.useState({})
+
+  const [ fornDialog, setFormDialog ] = React.useState({
+    address       : '',
+    city          : '',
+    dateEnd       : new Date(),
+    dateEndTime   : new Date(),
+    dateStart     : new Date(),
+    dateStartTime : new Date(),
+    description   : '',
+    email         : '',
+    firstName     : '',
+    lastName      : '',
+    phone         : '',
+    service       : '',
+    state         : '',
+    vehicleMileage: '',
+    vehicleModel  : '',
+    vehicleYear   : '',
+    zipCode       : ''
+  })
   const steps = getSteps()
+
+  useEffect(() => {
+    if(status === 'NEW')
+      dispatch(getPageConfig())
+  }, [ status ])
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen)
@@ -187,6 +324,13 @@ export default function Header() {
       return
 
     setOpen(false)
+  }
+
+  const _handleChangeForm = (name, value) => {
+    setFormDialog({
+      ...fornDialog,
+      [name]: value
+    })
   }
 
   function handleListKeyDown(event) {
@@ -239,14 +383,15 @@ export default function Header() {
   }
 
   const handleComplete = () => {
-    const newCompleted = completed
-    newCompleted[activeStep] = true
-    setCompleted(newCompleted)
-    handleNext()
+    dispatch(createAppoiment(fornDialog))
+    // const newCompleted = completed
+    // newCompleted[activeStep] = true
+    // setCompleted(newCompleted)
+    // handleNext()
   }
 
   const _handleCloseDialog = () => {
-    setOpenDialog(false)
+    dispatch(openAppoiment())
   }
 
   return (
@@ -283,7 +428,10 @@ export default function Header() {
                   </a>
                 }
 
-                <Button className={classes.callToAction} variant='outlined'>Get an appointment</Button>
+                <Button
+                  className={classes.callToAction}
+                  onClick={() => { dispatch(openAppoiment())}}
+                  variant='outlined'>Get an appointment</Button>
 
                 <Divider className={classes.divider} orientation='vertical' />
 
@@ -329,62 +477,323 @@ export default function Header() {
       {/* <Button color='primary' onClick={handleClickOpen} variant='outlined'>
         Open dialog
       </Button> */}
-      {/* <Dialog aria-labelledby='customized-dialog-title' onClose={_handleCloseDialog} open={openDialog}>
-        <DialogTitle id='customized-dialog-title' onClose={_handleCloseDialog}>
+      <Dialog
+        aria-labelledby='customized-dialog-title'
+        fullScreen
+        onClose={_handleCloseDialog}
+        open={openAppoimentGlobal}>
+        {/* <DialogTitle id='customized-dialog-title' onClose={_handleCloseDialog}>
           Modal title
-        </DialogTitle>
-        <DialogContent>
-          <Stepper
-            activeStep={activeStep}
-            connector={false}
-            nonLinear>
-            {steps.map((label, index) => (
-              <Step
-                key={label}>
-                <StepButton completed={completed[index]} onClick={handleStep(index)}>
-                  {label}
-                </StepButton>
-              </Step>
-            ))}
-          </Stepper>
+        </DialogTitle> */}
+        {/* <span>
+          <img src={`${process.env.PUBLIC_URL}/static/appoiment.png`} />
+        </span> */}
+        <DialogContent className={classes.dialogContent}>
+          <div>
+            <IconButton
+              onClick={_handleCloseDialog}
+              style={{
+                position: 'absolute',
+                right   : 20,
+                top     : 20
 
-          {allStepsCompleted() ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Button onClick={handleReset}>Reset</Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button className={classes.button} disabled={activeStep === 0} onClick={handleBack}>
-                    Back
-                </Button>
-                <Button
-                  className={classes.button}
-                  color='primary'
-                  onClick={handleNext}
-                  variant='contained'>
-                    Next
-                </Button>
-                {activeStep !== steps.length &&
-                    (completed[activeStep] ? (
-                      <Typography className={classes.completed} variant='caption'>
-                        Step {activeStep + 1} already completed
-                      </Typography>
-                    ) : (
-                      <Button color='primary' onClick={handleComplete} variant='contained'>
-                        {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                      </Button>
-                    ))}
+              }}>
+              <CloseIcon />
+            </IconButton>
+
+            <Typography className={classes.dialogTitle}>Answer a few simple questions to get <br />  an appoinment.</Typography>
+            <Typography className={classes.dialogDesc}>Service at your home or office · 7 days a week · Fair and transparent pricing.</Typography>
+            <Stepper
+              activeStep={activeStep}
+              className={classes.rootSteper}
+              connector={false}
+              nonLinear>
+              {steps.map((label, index) => (
+                <Step
+                  classes={
+                    {
+                      completed: classes.stepComplete
+                    }
+                  }
+                  className={
+                    clsx(
+                      {
+                        [classes.stepActive]: activeStep === index
+                      }
+                    )
+                  }
+                  key={label}>
+                  <StepButton
+                    classes={{
+                      root: classes.rootStep
+                    }}
+                    completed={completed[index]} onClick={handleStep(index)}>
+                    {label}
+                  </StepButton>
+                </Step>
+              ))}
+            </Stepper>
+
+            {allStepsCompleted() ? (
+              <div className={classes.contentModal}>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className={classes.formContent}>
+                {/* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */}
+                {
+                  activeStep === 0 ?
+                    <>
+                      <div>
+                        <Typography className={classes.titleinput}>Customer information</Typography>
+                      </div>
+                      <div className={classes.formTwo}>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('firstName', ev.target.value) }}
+                          placeholder='First Name'
+
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('lastName', ev.target.value) }}
+
+                          placeholder='Last Name'
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+                      <div>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('address', ev.target.value) }}
+
+                          placeholder='Address'
+                          style={{ margin: 8, width: '98%' }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+
+                      <div className={classes.formTwo}>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('email', ev.target.value) }}
+                          placeholder='Email'
+
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('phone', ev.target.value) }}
+                          placeholder='Phone'
+
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+                      <div className={classes.formTwo}>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('city', ev.target.value) }}
+                          placeholder='City'
+                          style={{ margin: 8 }}
+
+                          type='text'
+                          variant='outlined' />
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('state', ev.target.value) }}
+                          placeholder='State'
+
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+                      <div>
+                        <TextField
+
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('zipCode', ev.target.value) }}
+                          placeholder='Zip Code'
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+                    </> : null
+                }
+                {
+                  activeStep === 1 ?
+                    <>
+                      <div className={classes.formTwo}>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('vehicleYear', ev.target.value) }}
+                          placeholder='Vehicle Year'
+
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('vehicleModel', ev.target.value) }}
+
+                          placeholder='Vehicle Model'
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+                      <div className={classes.formTwo}>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('vehicleMileage', ev.target.value) }}
+                          placeholder='Vehicle Mileage'
+                          style={{ margin: 8 }}
+                          type='text'
+                          variant='outlined' />
+
+                        <FormControl
+                          className={classes.formControl}
+                          fullWidth style={{ margin: 8 }} variant='filled'>
+                          <Select
+                            fullWidth
+                            id='demo-simple-select-outlined'
+                            label='Age'
+                            labelId='demo-simple-select-outlined-label'
+                            onChange={ev => { _handleChangeForm('service', ev.target.value)}}
+                            value={fornDialog.service}>
+                            <MenuItem value=''>
+                              <em>Service Needed</em>
+                            </MenuItem>
+                            {
+                              services.map((item, index) => (
+                                <MenuItem key={`service-${index}`} value={item.title}>{item.title}</MenuItem>
+                              ))
+                            }
+                          </Select>
+
+                        </FormControl>
+
+                      </div>
+
+                      <div>
+                        <TextField
+                          fullWidth
+                          InputLabelProps={{
+                            shrink: false
+                          }}
+                          margin='normal'
+                          onChange={ev => { _handleChangeForm('description', ev.target.value) }}
+                          placeholder='Brief description of service needed'
+                          style={{ margin: 8, width: '98% ' }}
+                          type='text'
+                          variant='outlined' />
+                      </div>
+                    </> : null
+                }
+                {
+                  activeStep === 2 ?
+                    <>
+                      <div>
+                        <Typography>Select your appointment time</Typography>
+
+                      </div>
+                      <div className={classes.formTwo}>
+                        <DateInput
+                          labelDate='First Choice'
+                          onChangeDate={date => { _handleChangeForm('dateStart', date)}}
+                          onChangeTime={time => { _handleChangeForm('dateStartTime', time) }} />
+                      </div>
+                      <div>
+                        <DateInput
+                          labelDate='Second Choice'
+                          onChangeDate={date => { _handleChangeForm('dateEnd', date) }}
+                          onChangeTime={time => {_handleChangeForm('dateEndTime', time)}} />
+                      </div>
+                    </> : null
+                }
+                <div className={classes.dialogActions}>
+                  {
+                    activeStep > 0 ?
+                      <Button className={classes.button} disabled={activeStep === 0} onClick={handleBack}>
+                        Back
+                      </Button> : null
+                  }
+                  {
+                    activeStep < 2 ?
+                      <Button
+                        className={classes.button}
+                        color='primary'
+                        onClick={handleNext}
+                        variant='contained'>
+                      Next
+                      </Button> : null
+                  }
+
+                  {
+                    activeStep === 2 ?
+                      <Button
+                        color='primary'
+                        onClick={handleComplete}
+                        variant='contained'>
+                         Complete Step
+                      </Button> : null
+                  }
+                </div>
+              </div>
+            )}
+          </div>
         </DialogContent>
 
-      </Dialog> */}
+      </Dialog>
 
     </div>
   )
