@@ -169,7 +169,7 @@ const useStyles = makeStyles(theme => ({
       width: '100%'
     },
     marginRight                 : 20,
-    maxWidth                    : 200,
+    maxWidth                    : 100,
     [theme.breakpoints.up('lg')]: {
       marginRight: 60
     }

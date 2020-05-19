@@ -119,11 +119,20 @@ const one = async (id) => {
     return err
   }
 }
+
+const oneUrl = async (url) => {
+  try {
+    return await Services.findOne({ url: url })
+  } catch (err) {
+    return err
+  }
+}
 export {
   create,
   all,
   remove,
   edit,
   one,
+  oneUrl,
   allHome
 }

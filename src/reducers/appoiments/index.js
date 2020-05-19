@@ -4,8 +4,8 @@ import { takeEvery } from 'redux-saga/effects'
 import base from 'reducers/base'
 
 import {
-// getServices,
-// removeService,
+  getAppoiments,
+  // removeService,
   createAppoiment
 // getService,
 // updateService
@@ -27,9 +27,9 @@ export default base({
   store    : 'appoiments'
 }).extend({
   creators: ({ types }) => ({
-    createAppoiment: payload => ({ payload, type: types.CREATE_APPOIMENT })
+    createAppoiment: payload => ({ payload, type: types.CREATE_APPOIMENT }),
     // getService   : id => ({ id, type: types.FETCH_SERVICE }),
-    // getServices  : () => ({ type: types.FETCH }),
+    getAppoiments  : () => ({ type: types.FETCH })
     // removeService: id => ({ id, type: types.REMOVE_SERVICE }),
     // resetService : () => ({ type: types.RESET_SERVICE }),
     // updateService: payload => ({ payload, type: types.UPDATE_SERVICE })
@@ -60,9 +60,9 @@ export default base({
       }
     }),
   sagas: duck => ({
-    createAppoiment: createAppoiment(duck)
+    createAppoiment: createAppoiment(duck),
     // getService   : getService(duck),
-    // getServices  : getServices(duck),
+    getAppoiments  : getAppoiments(duck)
     // removeService: removeService(duck),
     // updateService: updateService(duck)
   }),
@@ -70,7 +70,7 @@ export default base({
     pagination: state => state[store].pagination
   }),
   takes: ({ types, sagas }) => [
-    // takeEvery(types.FETCH, sagas.getServices),
+    takeEvery(types.FETCH, sagas.getAppoiments),
     // takeEvery(types.REMOVE_SERVICE, sagas.removeService),
     takeEvery(types.CREATE_APPOIMENT, sagas.createAppoiment)
     // takeEvery(types.FETCH_SERVICE, sagas.getService),

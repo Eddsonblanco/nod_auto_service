@@ -98,7 +98,8 @@ export default function Services() {
 
   const {
     location: {
-      state
+      state,
+      pathname
     }
   } = useSelector(state => state.router)
 
@@ -112,7 +113,7 @@ export default function Services() {
   } = useSelector(state => state.page_home)
 
   useEffect(() => {
-    dispatch(getService(state.id))
+    dispatch(getService(pathname.replace('/service/', '')))
   }, [])
 
   useEffect(() => {

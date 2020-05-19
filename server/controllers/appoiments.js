@@ -45,10 +45,6 @@ const all = async query => {
 
 const create = async data => {
   try {
-    console.log('===> XAVI <===: data', data)
-
-    console.log('===> XAVI <===: data.body', data.body)
-
     return await Appoiments.create(data.body)
   } catch (err) {
     return err

@@ -92,7 +92,7 @@ export default function CardService({ data }) {
     <Card className={classes.root} variant='outlined'>
       <Link
         to={{
-          pathname: `/service/${data.title.replace(' ', '-')}`,
+          pathname: `/service/${data.url}`,
           state   : { id: data._id }
         }}>
         <CardContent>

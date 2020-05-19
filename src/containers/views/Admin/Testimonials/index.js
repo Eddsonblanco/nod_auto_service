@@ -73,14 +73,15 @@ const Testimonials = () => {
             type    : 'text'
           },
           {
-            label   : 'Description',
-            name    : 'desc',
-            required: true,
-            type    : 'textarea'
+            label    : 'Description',
+            maxLength: 150,
+            name     : 'desc',
+            required : true,
+            type     : 'textarea'
           }
         ],
         onConfirm: _handleClickCreate,
-        title    : 'New Company'
+        title    : 'New Testimony'
       }}
       modalEdit={{
         confirm: 'Update',

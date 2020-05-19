@@ -1,7 +1,7 @@
-import { GetList, Delete, Post, Get, Put } from 'lib/Request'
+import { GetList, Delete, Post, Get } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
 
-export const getServices = ({ types, selectors }) => function* () {
+export const getAppoiments = ({ types, selectors }) => function* () {
   try {
     yield put({ type: types.FETCH_PENDING })
     const getPagination = yield select(selectors.pagination)
@@ -11,7 +11,7 @@ export const getServices = ({ types, selectors }) => function* () {
       perPage: getPagination.perPage
     }
 
-    const { data: { rows, pagination, columns } } = yield call(GetList, '/services', params)
+    const { data: { rows, pagination, columns } } = yield call(GetList, '/appoiments', params)
 
     yield put({
       payload: {

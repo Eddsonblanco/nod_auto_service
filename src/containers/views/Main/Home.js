@@ -30,8 +30,8 @@ const {
 
 const useStyles = makeStyles(theme => ({
   bannerPrincipal: {
-    '& .jss346 .slick-initialized .slick-slide': {
-      margin: 0
+    '& .slick-initialized .slick-slide': {
+      margin: '0 !important'
     },
     '& .slick-slide > div': {
       padding: '0 !important'
@@ -50,18 +50,21 @@ const useStyles = makeStyles(theme => ({
     },
     boxSizing: 'content-box',
     maxWidth : 120,
-    padding  : '40px'
+    padding  : '0 40px'
   },
   brandList: {
-    background     : 'black',
-    backgroundColor: '#ffffff',
-    border         : 'solid 1px #d5d5d5',
-    borderRadius   : '10px 0 0 10px',
-    boxShadow      : '6px 30px 68px 0 rgba(0, 0, 0, 0.12)',
-    display        : 'flex',
-    maxWidth       : '75%',
-    overflow       : 'hidden',
-    width          : '100%'
+    background                    : 'black',
+    backgroundColor               : '#ffffff',
+    border                        : 'solid 1px #d5d5d5',
+    borderRadius                  : '10px 0 0 10px',
+    boxShadow                     : '6px 30px 68px 0 rgba(0, 0, 0, 0.12)',
+    display                       : 'flex',
+    maxWidth                      : '60%',
+    overflow                      : 'hidden',
+    width                         : '100%',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%'
+    }
   },
   btnAllServices: {
     display       : 'flex',
@@ -193,53 +196,20 @@ export default function Home() {
           What people say about us
             </Typography>
             <Carousel settings={
-              9 <= 3 ? {
+              {
                 autoplay  : true,
-                responsive: [
-                  {
-                    breakpoint: 5000,
-                    settings  : {
-                      infinite      : 5 > 4,
-                      slidesToScroll: 4,
-                      slidesToShow  : 4
-                    }
-                  },
-                  {
-                    breakpoint: 1024,
-                    settings  : {
-                      infinite      : 4 > 3,
-                      slidesToScroll: 3,
-                      slidesToShow  : 3
-                    }
-                  },
-                  {
-                    breakpoint: 920,
-                    settings  : {
-                      infinite      : 3 > 2,
-                      slidesToScroll: 2,
-                      slidesToShow  : 2
-                    }
-                  },
-                  {
-                    breakpoint: 520,
-                    infinite  : 2 > 1,
-                    settings  : {
-                      slidesToScroll: 1,
-                      slidesToShow  : 1
-                    }
-                  }
-                ]
-              } : {
-                // marginInitial: '-250px',
-                autoplay: true,
-
                 centerMode: true,
-
-                // centerPadding: '-250px',
                 infinite  : true,
                 responsive: [
                   {
                     breakpoint: 5000,
+                    settings  : {
+                      slidesToScroll: 1,
+                      slidesToShow  : 4
+                    }
+                  },
+                  {
+                    breakpoint: 1400,
                     settings  : {
                       slidesToScroll: 1,
                       slidesToShow  : 3
@@ -253,21 +223,7 @@ export default function Home() {
                     }
                   },
                   {
-                    breakpoint: 1024,
-                    settings  : {
-                      slidesToScroll: 1,
-                      slidesToShow  : 2
-                    }
-                  },
-                  {
-                    breakpoint: 920,
-                    settings  : {
-                      slidesToScroll: 1,
-                      slidesToShow  : 2
-                    }
-                  },
-                  {
-                    breakpoint: 520,
+                    breakpoint: 840,
                     settings  : {
                       slidesToScroll: 1,
                       slidesToShow  : 1

@@ -17,6 +17,10 @@ const serviceShema = new mongoose.Schema({
   },
   title: {
     type: String
+  },
+  url: {
+    required: true,
+    type    : String
   }
 })
 

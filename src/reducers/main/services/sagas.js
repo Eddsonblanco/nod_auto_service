@@ -37,10 +37,10 @@ export const getServices = ({ types, selectors }) => function* () {
   }
 }
 
-export const getService = ({ types }) => function* ({ id }) {
+export const getService = ({ types }) => function* ({ url }) {
   try {
     yield put({ type: types.FETCH_PENDING })
-    const { data: service, success } = yield call(Get, `/services/${id}`)
+    const { data: service, success } = yield call(Get, `/services/main/${url}`)
     yield put({
       payload: {
         service,

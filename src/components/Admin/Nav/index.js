@@ -360,12 +360,12 @@ const Nav = props => {
         title: 'Services',
         url  : '/admin/services'
       },
-      // {
-      //   _id  : 9,
-      //   icon : <ReceiptIco />,
-      //   title: 'Reservations',
-      //   url  : '/admin/reservations'
-      // },
+      {
+        _id  : 10,
+        icon : <ReceiptIco />,
+        title: 'Reservations',
+        url  : '/admin/reservations'
+      },
       // {
       //   _id  : 10,
       //   icon : <GroupIcon />,

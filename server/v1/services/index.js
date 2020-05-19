@@ -7,6 +7,7 @@ import {
   remove,
   edit,
   one,
+  oneUrl,
   allHome
 } from '../../controllers/services'
 
@@ -35,6 +36,16 @@ router.get('/home', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const data = await all(req.query)
+    res.status(200).send({ data, success: true })
+  } catch (err) {
+    res.status(500).send({ error: err.message, success: false })
+  }
+})
+
+router.get('/main/:url', async (req, res) => {
+  try {
+    const { url } = req.params
+    const data = await oneUrl(url)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })
