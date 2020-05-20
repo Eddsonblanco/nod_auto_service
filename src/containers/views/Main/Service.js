@@ -22,8 +22,7 @@ import {
   Container,
   Breadcrumbs,
   Link,
-  Typography,
-  Button
+  Typography
 } from '@material-ui/core'
 import Testimony from 'components/Testimony'
 
@@ -46,10 +45,27 @@ const {
 } = servicesDucks.creators
 
 const {
-  getPageConfig
+  getPageConfig,
+  openAppoiment
 } = pageHomeDucks.creators
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
+  appoimentBtn: {
+    '&:hover': {
+      backgroundColor: '#f64e4e',
+      color          : '#fff'
+    },
+    alignItems     : 'center',
+    backgroundColor: '#f6f6f6',
+    color          : '#f64e4e',
+    cursor         : 'pointer',
+    display        : 'inline-flex',
+    fontSize       : 14,
+    fontWeight     : 600,
+    justifyContent : 'center',
+    padding        : '7px 22px',
+    textTransform  : 'uppercase'
+  },
   bggray: {
     background: '#f6f6f6'
   },
@@ -60,6 +76,16 @@ const useStyles = makeStyles(() => ({
     color   : 'inherit',
     fontSize: '0.875rem'
   },
+  contentTitle: {
+    alignItems                    : 'center',
+    display                       : 'flex',
+    justifyContent                : 'space-between',
+    [theme.breakpoints.down('xs')]: {
+      alignItems   : 'flex-start',
+      flexDirection: 'column',
+      marginBottom : 20
+    }
+  },
   rootHtmlRender: {
     '& .ory-plugins-content-spacer.ory-plugins-content-spacer-read-only': {
       border: 'none !important'
@@ -67,10 +93,13 @@ const useStyles = makeStyles(() => ({
     '& img': {
       width: '100%'
     },
-    backgroundColor: '#f6f6f6',
-    fontFamily     : 'Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto',
-    marginBottom   : '100px',
-    padding        : '40px 80px'
+    backgroundColor               : '#f6f6f6',
+    fontFamily                    : 'Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto',
+    marginBottom                  : '100px',
+    padding                       : '40px 80px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '40px 20px'
+    }
   },
   separator: {
     backgroundColor: '#f64e4e',
@@ -138,7 +167,11 @@ export default function Services() {
 
         <div className={classes.contentTitle}>
           <Typography className={classes.titleService} variant='h4'>{service.title}</Typography>
-
+          <div className={classes.appoimentBtn} onClick={() => dispatch(openAppoiment())}>
+            <span>
+              i need this service now
+            </span>
+          </div>
         </div>
 
       </Container>

@@ -48,9 +48,12 @@ const useStyles = makeStyles(theme => ({
     '& img': {
       width: '100%'
     },
-    boxSizing: 'content-box',
-    maxWidth : 120,
-    padding  : '0 40px'
+    boxSizing                     : 'content-box',
+    maxWidth                      : 120,
+    padding                       : '0 40px',
+    [theme.breakpoints.down('xs')]: {
+      padding: '0 10px'
+    }
   },
   brandList: {
     background                    : 'black',
@@ -129,6 +132,7 @@ export default function Home() {
         show_banner ?
           <div className={classes.bannerPrincipal}>
             <Carousel settings={{
+              arrows  : false,
               autoplay: true,
               infinite: true,
               rows    : 1
