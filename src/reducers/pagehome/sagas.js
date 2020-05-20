@@ -1,27 +1,30 @@
-import { Get, Put }  from 'lib/Request'
-import { put, call, select } from 'redux-saga/effects'
+import { Get, Put } from 'lib/Request'
+import { select, call, put, take, fork } from 'redux-saga/effects'
 
-export const getPageConfig = ({ types }) => function* () {
+export const getPageConfig = ({ types, selectors }) => function* () {
   try {
-    yield put({ type: types.FETCH_PENDING })
+    const status = yield select(selectors.getStatus)
+    if(status !== 'READY') {
+      yield put({ type: types.FETCH_PENDING })
 
-    const { data: dataHome } = yield call(Get, '/page_home')
-    const { data: dataTestimonials } = yield call(Get, '/testimonials/home')
-    const { data: dataBanners } = yield call(Get, '/banners/home')
-    const { data: dataServices } = yield call(Get, '/services/home')
+      const { data: dataHome } = yield call(Get, '/page_home')
+      const { data: dataTestimonials } = yield call(Get, '/testimonials/home')
+      const { data: dataBanners } = yield call(Get, '/banners/home')
+      const { data: dataServices } = yield call(Get, '/services/home')
 
-    const data = {
-      ...dataHome,
-      banners     : dataBanners,
-      services    : dataServices,
-      testimonials: dataTestimonials
+      const data = {
+        ...dataHome,
+        banners     : dataBanners,
+        services    : dataServices,
+        testimonials: dataTestimonials
 
+      }
+
+      yield put({
+        payload: data,
+        type   : types.FETCH_FULFILLED
+      })
     }
-
-    yield put({
-      payload: data,
-      type   : types.FETCH_FULFILLED
-    })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {
@@ -64,3 +67,10 @@ export const updatePageConfig = ({ types, selectors }) => function* () {
     }
   }
 }
+
+export const watchPageHomeServer = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    yield take(types.FETCH)
+    yield fork(sagas.getPageConfig)
+  }
+})

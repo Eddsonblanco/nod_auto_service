@@ -4,7 +4,8 @@ import base from 'reducers/base'
 
 import {
   getPageConfig,
-  updatePageConfig
+  updatePageConfig,
+  watchPageHomeServer
 } from './sagas'
 
 export default base({
@@ -149,11 +150,13 @@ export default base({
         show_services,
         show_testimonials
       }
-    }
+    },
+    getStatus: state => state[store].status
   }),
-  takes: ({ types, sagas }) => [
-    takeEvery(types.FETCH, sagas.getPageConfig),
-    takeEvery(types.UPDATE_CONFIG, sagas.updatePageConfig)
+  takes: (duck) => [
+    takeEvery(duck.types.FETCH, duck.sagas.getPageConfig),
+    takeEvery(duck.types.UPDATE_CONFIG, duck.sagas.updatePageConfig),
+    watchPageHomeServer(duck)
   ],
   types: [
     'UPDATE_CHECKBOX',
