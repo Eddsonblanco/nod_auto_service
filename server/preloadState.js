@@ -1,4 +1,5 @@
 import themeDucks from 'reducers/theme'
+import pageHomeDucks from 'reducers/pagehome'
 
 export default async function(req, res, next) {
   const { store } = res.locals
@@ -8,6 +9,9 @@ export default async function(req, res, next) {
 
     store.dispatch(themeDucks.creators.updateTheme(style))
   }
+
+  if(req.originalUrl === '/')
+    await store.dispatch(pageHomeDucks.creators.getPageConfig()).catch(() => { })
 
   // Resave new store
   res.locals.store = store
