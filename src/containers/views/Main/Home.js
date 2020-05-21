@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
+import { useComponentWillMount } from 'lib/hooks'
 
 import Carousel from 'components/Common/Carousel'
 
@@ -98,6 +99,10 @@ const useStyles = makeStyles(theme => ({
 export default function Home() {
   const dispatch = useDispatch()
   const classes = useStyles()
+
+  useComponentWillMount(() => {
+    dispatch(getPageConfig())
+  })
 
   const {
     status: statusCompanies,

@@ -7,12 +7,15 @@ export const getProducts = ({ types, selectors }) => function* (addMore) {
   try {
     const status = yield select(selectors.getStatus)
 
-    if(status !== 'READY' || addMore) {
+    if(status !== 'READY') {
+      console.log('********* NOT  Loaded from Server *********')
       yield put({ type: types.FETCH_PENDING })
 
       const payload = yield call(Get, 'products')
 
       yield put({ payload, type: types.FETCH_FULFILLED })
+    } else {
+      console.log('********* is Loaded from Server *********')
     }
     // else is Loaded from Server
   } catch (err) {

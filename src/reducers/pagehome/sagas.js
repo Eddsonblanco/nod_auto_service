@@ -4,7 +4,10 @@ import { select, call, put, take, fork } from 'redux-saga/effects'
 export const getPageConfig = ({ types, selectors }) => function* () {
   try {
     const status = yield select(selectors.getStatus)
+
     if(status !== 'READY') {
+      console.log('********* NOT is Loaded from Server *********')
+
       yield put({ type: types.FETCH_PENDING })
 
       const { data: dataHome } = yield call(Get, '/page_home')
@@ -24,6 +27,8 @@ export const getPageConfig = ({ types, selectors }) => function* () {
         payload: data,
         type   : types.FETCH_FULFILLED
       })
+    } else {
+      console.log('********* is Loaded from Server *********')
     }
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
