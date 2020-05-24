@@ -448,7 +448,7 @@ export default function Header() {
                   <Link className={classes.navItem} to='/'>Home</Link>
                   <Link className={classes.navItem} to='/services'>Services</Link>
                   <Link className={classes.navItem} to='/contact'>Contact</Link>
-                  <Link className={classes.navItem} to='about'>About us</Link>
+                  <Link className={classes.navItem} to='aboutus'>About us</Link>
                   <Link className={classes.navItem} to='/faq'>FAQ</Link>
                 </nav>
               </div>
