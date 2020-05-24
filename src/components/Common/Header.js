@@ -36,7 +36,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import {
   Menu as MenuIcon,
   Phone as PhoneIcon,
-  ExpandMore as ExpandMoreIcon
+  ExpandMore as ExpandMoreIcon,
+  CheckCircle as CheckCircleIcon
 } from '@material-ui/icons'
 
 import DateInput from 'components/DatePicker'
@@ -49,7 +50,8 @@ const {
 } = pageHomeDucks.creators
 
 const {
-  createAppoiment
+  createAppoiment,
+  closeConfirm
 }  = appoimentDucks.creators
 
 const useStyles = makeStyles(theme => ({
@@ -75,6 +77,11 @@ const useStyles = makeStyles(theme => ({
   contentModal: {
     maxWidth: 560,
     width   : '100%'
+  },
+  descConfirm: {
+    fontSize    : 14,
+    fontWeight  : 500,
+    marginBottom: 20
   },
   dialogActions: {
     display       : 'flex',
@@ -148,6 +155,11 @@ const useStyles = makeStyles(theme => ({
     display       : 'flex',
     justifyContent: 'space-between'
   },
+  iconConfirm: {
+    color       : '#48c9b0',
+    fontSize    : '50px',
+    marginBottom: '20px'
+  },
   linkPhone: {
     '& > svg': {
       marginRight: theme.spacing(1)
@@ -179,6 +191,12 @@ const useStyles = makeStyles(theme => ({
       display: 'none'
     },
     marginRight: theme.spacing(2)
+  },
+  modalConfirm: {
+    alignItems   : 'center',
+    display      : 'flex',
+    flexDirection: 'column',
+    padding      : 14
   },
   navItem: {
     '&:hover': {
@@ -247,6 +265,11 @@ const useStyles = makeStyles(theme => ({
   stepComplete: {
     background: 'red'
   },
+  titleConfirm: {
+    color     : '#353535',
+    fontSize  : 20,
+    fontWeight: 600
+  },
   titleinput: {
     color     : '#353535',
     fontSize  : 14,
@@ -281,6 +304,10 @@ export default function Header() {
     openAppoimentGlobal = false
   } = useSelector(state => state.page_home)
 
+  const {
+    status: statusAppoiment
+  } = useSelector(state => state.appoiments)
+
   const [ open, setOpen ] = React.useState(false)
   const anchorRef = React.useRef(null)
 
@@ -308,12 +335,18 @@ export default function Header() {
     vehicleYear   : '',
     zipCode       : ''
   })
+
   const steps = getSteps()
 
   useEffect(() => {
     if(status === 'NEW')
       dispatch(getPageConfig())
   }, [ status ])
+
+  useEffect(() => {
+    if(statusAppoiment === 'APPOIMENT_CREATED')
+      dispatch(openAppoiment())
+  }, [ statusAppoiment ])
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen)
@@ -384,14 +417,14 @@ export default function Header() {
 
   const handleComplete = () => {
     dispatch(createAppoiment(fornDialog))
-    // const newCompleted = completed
-    // newCompleted[activeStep] = true
-    // setCompleted(newCompleted)
-    // handleNext()
   }
 
   const _handleCloseDialog = () => {
     dispatch(openAppoiment())
+  }
+
+  const _handleCloseDialogConfirm = () => {
+    dispatch(closeConfirm())
   }
 
   return (
@@ -474,9 +507,6 @@ export default function Header() {
 
       {/* apoimnet */}
 
-      {/* <Button color='primary' onClick={handleClickOpen} variant='outlined'>
-        Open dialog
-      </Button> */}
       <Dialog
         aria-labelledby='customized-dialog-title'
         fullScreen
@@ -793,6 +823,26 @@ export default function Header() {
           </div>
         </DialogContent>
 
+      </Dialog>
+
+      <Dialog
+        aria-labelledby='responsive-dialog-response-title'
+        onClose={_handleCloseDialogConfirm}
+        open={statusAppoiment === 'APPOIMENT_CREATED'}>
+        <DialogContent>
+          <div className={classes.modalConfirm}>
+            <div>
+              <CheckCircleIcon className={classes.iconConfirm} />
+            </div>
+            <Typography className={classes.titleConfirm}>Thank you for giving an appointment.</Typography>
+            <Typography className={classes.descConfirm}>We contact you later to continue the process </Typography>
+
+            <Button
+              color='primary'
+              onClick={_handleCloseDialogConfirm}
+              variant='contained'>back to home</Button>
+          </div>
+        </DialogContent>
       </Dialog>
 
     </div>

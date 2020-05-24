@@ -1,9 +1,15 @@
 
 import React from 'react'
+import {
+  Link
+} from 'react-router-dom'
+
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { Container, Grid, Typography } from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
+import InstagramIcon from '@material-ui/icons/Instagram'
+import FacebookIcon from '@material-ui/icons/Facebook'
 
 const styles = makeStyles(theme => {
   return (
@@ -41,11 +47,15 @@ const styles = makeStyles(theme => {
         padding       : '0'
       },
       listNavItem: {
+        '&:hover': {
+          color: theme.palette.primary.main
+        },
         color                       : '#353535',
         fontSize                    : '1rem',
         fontWeight                  : 500,
         marginBottom                : 20,
         marginRight                 : 15,
+        textDecoration              : 'none',
         [theme.breakpoints.up('md')]: {
           fontSize    : '0.875rem',
           marginBottom: 0
@@ -100,8 +110,11 @@ const styles = makeStyles(theme => {
 
 const Footer = () => {
   const {
-    logo,
-    copyright
+    copyright,
+    facebook,
+    twitter,
+    instagram,
+    logo_footer
   } = useSelector(state => state.settings)
 
   const classes = styles()
@@ -116,33 +129,42 @@ const Footer = () => {
           justify='space-between'>
           <Grid item md={1} xs={12}>
             <div className={classes.logoContainer}>
-              <img src={logo} />
+              <img src={logo_footer} />
             </div>
           </Grid>
 
           <Grid item md={8} xs={12}>
             <ul className={classes.listNav}>
-              <li className={classes.listNavItem}>HOME</li>
-              <li className={classes.listNavItem}>SERVICES</li>
-              <li className={classes.listNavItem}>CONTACT</li>
-              <li className={classes.listNavItem}>ABOUT US</li>
-              <li className={classes.listNavItem}>FAQ</li>
-              <li className={classes.listNavItem}>TERMS OF SERVICE</li>
-              <li className={classes.listNavItem}>PRIVACY POLICY</li>
+              <Link className={classes.listNavItem} to='/'>HOME</Link>
+              <Link className={classes.listNavItem} to='/services'>SERVICES</Link>
+              <Link className={classes.listNavItem} to='/contact'>CONTACT</Link>
+              <Link className={classes.listNavItem} to='/aboutus'>ABOUT US</Link>
+              <Link className={classes.listNavItem} to=''>FAQ</Link>
+              <Link className={classes.listNavItem} to=''>TERMS OF SERVICE</Link>
+              <Link className={classes.listNavItem} to=''>PRIVACY POLICY</Link>
             </ul>
           </Grid>
 
           <Grid item md={2} xs={12}>
             <div className={classes.socialList}>
-              <div className={classes.socialItem}>
-                <TwitterIcon />
-              </div>
-              <div className={classes.socialItem}>
-                <TwitterIcon />
-              </div>
-              <div className={classes.socialItem}>
-                <TwitterIcon />
-              </div>
+              {
+                twitter &&
+                <a className={classes.socialItem} href={twitter}>
+                  <TwitterIcon />
+                </a>
+              }
+              {
+                facebook &&
+                <a className={classes.socialItem} href={facebook}>
+                  <FacebookIcon />
+                </a>
+              }
+              {
+                instagram &&
+                <a className={classes.socialItem} href={instagram}>
+                  <InstagramIcon />
+                </a>
+              }
             </div>
 
           </Grid>

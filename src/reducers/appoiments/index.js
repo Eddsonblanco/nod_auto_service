@@ -27,6 +27,8 @@ export default base({
   store    : 'appoiments'
 }).extend({
   creators: ({ types }) => ({
+    closeConfirm: () => ({ type: types.CLOSE_CONFIRM }),
+
     createAppoiment: payload => ({ payload, type: types.CREATE_APPOIMENT }),
     // getService   : id => ({ id, type: types.FETCH_SERVICE }),
     getAppoiments  : () => ({ type: types.FETCH })
@@ -55,6 +57,12 @@ export default base({
 
           return
 
+        case types.CLOSE_CONFIRM:
+
+          draft.status = 'CLOSE_APPOIMENT'
+
+          return
+
         default:
           return
       }
@@ -78,6 +86,7 @@ export default base({
   ],
   types: [
     'CREATE_APPOIMENT',
-    'POST_APPOIMENT_FULFILLED'
+    'POST_APPOIMENT_FULFILLED',
+    'CLOSE_CONFIRM'
   ]
 })

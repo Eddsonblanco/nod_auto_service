@@ -14,7 +14,19 @@ const settingShema = new mongoose.Schema({
     required: false,
     type    : String
   },
+  facebook: {
+    required: false,
+    type    : String
+  },
+  instagram: {
+    required: false,
+    type    : String
+  },
   logo: {
+    required: false,
+    type    : String
+  },
+  logo_footer: {
     required: false,
     type    : String
   },
@@ -29,11 +41,19 @@ const settingShema = new mongoose.Schema({
   title: {
     required: true,
     type    : String
+  },
+  twitter: {
+    required: false,
+    type    : String
   }
 })
 
 settingShema.methods.setImgUrl = function setImgUrl(filename) {
   this.logo = `/api/public/${filename}`
+}
+
+settingShema.methods.setImgUrl2 = function setImgUrl(filename) {
+  this.logo_footer = `/api/public/${filename}`
 }
 
 const setting = connectMongoSpa.model('Setting', settingShema)
