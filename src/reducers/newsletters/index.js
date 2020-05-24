@@ -4,7 +4,7 @@ import base from 'reducers/base'
 
 import { takeEvery } from 'redux-saga/effects'
 
-import { createNewsletter, getContacts } from './sagas'
+import { createNewsletter, getNewsletters } from './sagas'
 
 export default base({
   initialState: {
@@ -22,7 +22,7 @@ export default base({
   creators: ({ types }) => ({
     closeConfirm    : () =>  ({ type: types.CLOSE_DIALOG }),
     createNewsletter: data => ({ data, type: types.POST_NEWSLETTER }),
-    getContacts     : () => ({ type: types.FETCH })
+    getNewsletters  : () => ({ type: types.FETCH })
   }),
   reducer: (state, action, { types }) =>
     produce(state, draft => {
@@ -38,14 +38,14 @@ export default base({
     }),
   sagas: duck => ({
     createNewsletter: createNewsletter(duck),
-    getContacts     : getContacts(duck)
+    getNewsletters  : getNewsletters(duck)
   }),
   selectors: ({ store }) => ({
     pagination: state => state[store].pagination
   }),
   takes: ({ types, sagas }) => [
     takeEvery(types.POST_NEWSLETTER, sagas.createNewsletter),
-    takeEvery(types.FETCH, sagas.getContacts)
+    takeEvery(types.FETCH, sagas.getNewsletters)
   ],
   types: [
     'POST_NEWSLETTER',

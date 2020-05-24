@@ -49,6 +49,10 @@ const ServicesAdmin = loadable(() => import('../containers/views/Admin/Services'
   fallback: <Loading />
 })
 
+const NewslettersAdmin = loadable(() => import('../containers/views/Admin/Newsletters'), {
+  fallback: <Loading />
+})
+
 const ServicesNewAdmin = loadable(() => import('../containers/views/Admin/Services/New'), {
   fallback: <Loading />
 })
@@ -120,6 +124,7 @@ export default history => {
               <Route component={Reservations} path='/admin/reservations' />
               <Route component={ServicesAdmin} path='/admin/services' />
               <Route component={ServicesNewAdmin} path='/admin/service' />
+              <Route component={NewslettersAdmin} path='/admin/newsletters' />
               <Route component={ServicesEditAdmin} path='/admin/service-edit' />
               <Route component={Users} path='/admin/users' />
             </Switch>

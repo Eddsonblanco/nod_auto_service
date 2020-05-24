@@ -330,12 +330,12 @@ const Nav = props => {
       //   title: 'page contact',
       //   url  : '/admin/conact'
       // },
-      // {
-      //   _id  : 5,
-      //   icon : <PagesIcon />,
-      //   title: 'Page service',
-      //   url  : '/admin/service'
-      // },
+      {
+        _id  : 5,
+        icon : <PagesIcon />,
+        title: 'NewsLetters',
+        url  : '/admin/newsletters'
+      },
       {
         _id  : 6,
         icon : <BusinessIcon />,

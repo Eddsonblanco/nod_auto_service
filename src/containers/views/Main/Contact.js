@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -11,7 +11,9 @@ import {
 import { useForm, Controller } from 'react-hook-form'
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import { makeStyles } from '@material-ui/styles'
-
+import HomeIcon from '@material-ui/icons/Home'
+import MailIcon from '@material-ui/icons/Mail'
+import PhoneIcon from '@material-ui/icons/Phone'
 import contactDucks from 'reducers/contacts'
 
 const {
@@ -27,6 +29,15 @@ const useStyles = makeStyles(theme => ({
   },
   carContainerText: {
     marginLeft: 14
+  },
+  cardContainerIcon: {
+    alignItems    : 'center',
+    background    : theme.palette.primary.main,
+    borderRadius  : '50%',
+    color         : '#fff',
+    display       : 'flex',
+    justifyContent: 'center',
+    padding       : 10
   },
   mapContainer: {
     height  : '560px',
@@ -65,6 +76,13 @@ const Contact = (props) => {
   const {
     messageSend
   } = useSelector(store => store.contacts)
+
+  const {
+    email,
+    phone,
+    phone_extra,
+    direction
+  } = useSelector(state => state.settings)
 
   const { handleSubmit, control, errors } = useForm()
   const onSubmit = data => dispatch(createContact(data))
@@ -242,7 +260,12 @@ const Contact = (props) => {
 
       <div className={classes.messageContainer}>
         <Typography variant='h6'>Quick,</Typography>
-        <Typography gutterBottom variant='h6'>Support<span>:</span></Typography>
+        <Typography gutterBottom variant='h6'>Support<span style={{
+          color     : '#f64e4e',
+          fontSize  : 30,
+          lineHeight: 0,
+          marginLeft: 6
+        }}>.</span></Typography>
         <Typography variant='body1'>You can get all the contact information</Typography>
       </div>
 
@@ -251,10 +274,12 @@ const Contact = (props) => {
           item md={4} sm={6}
           xs={12}>
           <div className={classes.carContainer}>
-            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7e63f71f-4359-4307-b9c6-b0bc6286b576.svg' />
+            <div className={classes.cardContainerIcon}>
+              <HomeIcon />
+            </div>
             <div className={classes.carContainerText}>
               <Typography>Location</Typography>
-              <Typography>130 Industrial Way, Brisbane, CA 94005</Typography>
+              <Typography>{direction}</Typography>
             </div>
           </div>
         </Grid>
@@ -262,10 +287,12 @@ const Contact = (props) => {
           item md={4} sm={6}
           xs={12}>
           <div className={classes.carContainer}>
-            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7e63f71f-4359-4307-b9c6-b0bc6286b576.svg' />
+            <div className={classes.cardContainerIcon}>
+              <MailIcon />
+            </div>
             <div className={classes.carContainerText}>
-              <Typography>Location</Typography>
-              <Typography>130 Industrial Way, Brisbane, CA 94005</Typography>
+              <Typography>Email</Typography>
+              <Typography>{email}</Typography>
             </div>
           </div>
         </Grid>
@@ -273,10 +300,12 @@ const Contact = (props) => {
           item md={4} sm={6}
           xs={12}>
           <div className={classes.carContainer}>
-            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/7e63f71f-4359-4307-b9c6-b0bc6286b576.svg' />
+            <div className={classes.cardContainerIcon}>
+              <PhoneIcon />
+            </div>
             <div className={classes.carContainerText}>
-              <Typography>Location</Typography>
-              <Typography>130 Industrial Way, Brisbane, CA 94005</Typography>
+              <Typography>Phone</Typography>
+              <Typography>{phone} {phone_extra ? '/' : null} {phone_extra}</Typography>
             </div>
           </div>
         </Grid>

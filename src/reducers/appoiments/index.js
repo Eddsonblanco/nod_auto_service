@@ -6,13 +6,14 @@ import base from 'reducers/base'
 import {
   getAppoiments,
   // removeService,
-  createAppoiment
-// getService,
+  createAppoiment,
+  getAppoiment
 // updateService
 } from './sagas'
 
 export default base({
   initialState: {
+    appoiment : undefined,
     columns   : [],
     pagination: {
       page   : 1,
@@ -20,32 +21,29 @@ export default base({
       total  : 0
     },
     rows         : [],
-    // service      : {},
     serviceDetail: null
   },
   namespace: 'nod-services',
   store    : 'appoiments'
 }).extend({
   creators: ({ types }) => ({
-    closeConfirm: () => ({ type: types.CLOSE_CONFIRM }),
-
+    closeConfirm   : () => ({ type: types.CLOSE_CONFIRM }),
     createAppoiment: payload => ({ payload, type: types.CREATE_APPOIMENT }),
-    // getService   : id => ({ id, type: types.FETCH_SERVICE }),
-    getAppoiments  : () => ({ type: types.FETCH })
+    getAppoiment   : id => ({ id, type: types.FETCH_APPOIMENT }),
+    getAppoiments  : () => ({ type: types.FETCH }),
     // removeService: id => ({ id, type: types.REMOVE_SERVICE }),
-    // resetService : () => ({ type: types.RESET_SERVICE }),
+    resetAppoiment : () => ({ type: types.RESET_APPOIMENT })
     // updateService: payload => ({ payload, type: types.UPDATE_SERVICE })
   }),
   reducer: (state, action, { types }) =>
     produce(state, draft => {
       switch (action.type) {
-        // case types.DELETE_SERVICE_FULFILLED:
-        //   if(action.payload.success)
-        //     draft.rows = state.rows.filter(item => item._id !== action.payload.id)
+        case types.RESET_APPOIMENT:
+          draft.appoiment = undefined
 
-        //   draft.status = 'DELETE_FULFILLED'
+          draft.status = 'RESET_APPOIMENT'
 
-        //   return
+          return
 
         case types.POST_APPOIMENT_FULFILLED:
           draft.rows = [
@@ -69,7 +67,7 @@ export default base({
     }),
   sagas: duck => ({
     createAppoiment: createAppoiment(duck),
-    // getService   : getService(duck),
+    getAppoiment   : getAppoiment(duck),
     getAppoiments  : getAppoiments(duck)
     // removeService: removeService(duck),
     // updateService: updateService(duck)
@@ -80,13 +78,15 @@ export default base({
   takes: ({ types, sagas }) => [
     takeEvery(types.FETCH, sagas.getAppoiments),
     // takeEvery(types.REMOVE_SERVICE, sagas.removeService),
-    takeEvery(types.CREATE_APPOIMENT, sagas.createAppoiment)
-    // takeEvery(types.FETCH_SERVICE, sagas.getService),
+    takeEvery(types.CREATE_APPOIMENT, sagas.createAppoiment),
+    takeEvery(types.FETCH_APPOIMENT, sagas.getAppoiment)
     // takeEvery(types.UPDATE_SERVICE, sagas.updateService)
   ],
   types: [
     'CREATE_APPOIMENT',
     'POST_APPOIMENT_FULFILLED',
-    'CLOSE_CONFIRM'
+    'CLOSE_CONFIRM',
+    'FETCH_APPOIMENT',
+    'RESET_APPOIMENT'
   ]
 })

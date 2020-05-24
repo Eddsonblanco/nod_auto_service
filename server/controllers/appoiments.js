@@ -1,3 +1,5 @@
+import { Types } from 'mongoose'
+
 import { Appoiments, Datatables } from '../models'
 
 const all = async query => {
@@ -63,7 +65,29 @@ const remove = async (id) => {
 
 const one = async (id) => {
   try {
-    return await Appoiments.findOne({ _id: Types.ObjectId(id) })
+    const getFullDate = (date) => {
+      const currentDate = new Date(date)
+
+      return `
+        ${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()}
+      `
+    }
+    const getFullTime = (date) => {
+      const currentDate = new Date(date)
+
+      return `
+        ${currentDate.getHours()}:${currentDate.getMinutes()}
+      `
+    }
+    const response = await Appoiments.findOne({ _id: Types.ObjectId(id) }).lean()
+
+    return await({
+      ...response,
+      dateEnd      : getFullDate(response.dateEnd),
+      dateEndTime  : getFullTime(response.dateEndTime),
+      dateStart    : getFullDate(response.dateStart),
+      dateStartTime: getFullTime(response.dateStartTime)
+    })
   } catch (err) {
     return err
   }

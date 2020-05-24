@@ -1,7 +1,7 @@
 import { Post, GetList } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
 
-export const getContacts = ({ types, selectors }) => function* () {
+export const getNewsletters = ({ types, selectors }) => function* () {
   try {
     yield put({ type: types.FETCH_PENDING })
 
@@ -12,7 +12,7 @@ export const getContacts = ({ types, selectors }) => function* () {
       perPage: getPagination.perPage
     }
 
-    const { data: { columns, rows, pagination } } = yield call(GetList, '/contact', params)
+    const { data: { columns, rows, pagination } } = yield call(GetList, '/newsletters', params)
 
     yield put({
       payload: {

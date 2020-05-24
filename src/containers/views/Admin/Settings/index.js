@@ -256,9 +256,7 @@ const Settings = () => {
         ]}
         tabHeader={[
           'Info',
-          'Social',
-          'Identity',
-          'Seo'
+          'Social'
         ]}
         tabName='Setttings' /> : null
   )

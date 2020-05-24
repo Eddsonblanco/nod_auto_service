@@ -127,7 +127,6 @@ export default function Services() {
 
   const {
     location: {
-      state,
       pathname
     }
   } = useSelector(state => state.router)

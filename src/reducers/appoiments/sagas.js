@@ -92,13 +92,13 @@ export const createAppoiment = ({ types }) => function* ({ payload }) {
   }
 }
 
-export const getService = ({ types }) => function* ({ id }) {
+export const getAppoiment = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.FETCH_PENDING })
-    const { data: serviceDetail, success } = yield call(Get, `/services/${id}`)
+    const { data: appoiment, success } = yield call(Get, `/appoiments/${id}`)
     yield put({
       payload: {
-        serviceDetail,
+        appoiment,
         success
       },
       type: types.FETCH_FULFILLED
