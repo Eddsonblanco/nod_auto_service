@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import {
   TextField,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core'
 
 import InputImage from 'components/Admin/Common/InputImage'
@@ -55,19 +56,12 @@ const Settings = () => {
     })
   }
 
-  const social = (<>
-    <TextField
-      fullWidth
-      helperText='Full width!'
-      id='standard-full-width'
-      InputLabelProps={{
-        shrink: true
-      }}
-      label='Title'
-      margin='normal'
-      placeholder='Placeholder'
-      style={{ margin: 8 }} />
-  </>)
+  const handleChangeImage2 = ev => {
+    setDataForm({
+      ...dataForm,
+      logo_footer: ev.file
+    })
+  }
 
   const identity = (<>
     <TextField
@@ -166,6 +160,8 @@ const Settings = () => {
               style={{ margin: 8 }}
               value={dataForm.phone_extra} />
 
+            <Typography>Logo Header</Typography>
+
             <InputImage
               data={dataForm.logo}
               error={false}
@@ -173,6 +169,16 @@ const Settings = () => {
               maxWidth='450px'
               name='image'
               onImage={handleChangeImage} />
+
+            <Typography>Logo Footer</Typography>
+
+            <InputImage
+              data={dataForm.logo_footer}
+              error={false}
+              key='company-img-2'
+              maxWidth='450px'
+              name='image-footer'
+              onImage={handleChangeImage2} />
 
             <TextField
               fullWidth
@@ -202,15 +208,55 @@ const Settings = () => {
               style={{ margin: 8 }}
               value={dataForm.email} />
           </>,
-          social,
+          <>
+            <TextField
+              fullWidth
+              id='facebook'
+              InputLabelProps={{
+                shrink: true
+              }}
+              label='Facebook'
+              margin='normal'
+              name='facebook'
+              onChange={_handleChangeForm}
+              placeholder='Facebook url'
+              style={{ margin: 8 }}
+              value={dataForm.facebook} />
+
+            <TextField
+              fullWidth
+              id='twitter'
+              InputLabelProps={{
+                shrink: true
+              }}
+              label='Twitter'
+              margin='normal'
+              name='twitter'
+              onChange={_handleChangeForm}
+              placeholder='Twitter url'
+              style={{ margin: 8 }}
+              value={dataForm.twiiter} />
+
+            <TextField
+              fullWidth
+              id='instagram'
+              InputLabelProps={{
+                shrink: true
+              }}
+              label='Instagram'
+              margin='normal'
+              name='instagram'
+              onChange={_handleChangeForm}
+              placeholder='Instagram url'
+              style={{ margin: 8 }}
+              value={dataForm.instagram} />
+          </>,
           identity,
           seo
         ]}
         tabHeader={[
           'Info',
-          'Social',
-          'Identity',
-          'Seo'
+          'Social'
         ]}
         tabName='Setttings' /> : null
   )

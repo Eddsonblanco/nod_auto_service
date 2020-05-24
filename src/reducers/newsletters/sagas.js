@@ -1,9 +1,10 @@
-import { GetList, Get } from 'lib/Request'
+import { Post, GetList } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
 
-export const getServices = ({ types, selectors }) => function* () {
+export const getNewsletters = ({ types, selectors }) => function* () {
   try {
     yield put({ type: types.FETCH_PENDING })
+
     const getPagination = yield select(selectors.pagination)
 
     const params = {
@@ -11,7 +12,7 @@ export const getServices = ({ types, selectors }) => function* () {
       perPage: getPagination.perPage
     }
 
-    const { data: { rows, pagination, columns } } = yield call(GetList, '/services', params)
+    const { data: { columns, rows, pagination } } = yield call(GetList, '/newsletters', params)
 
     yield put({
       payload: {
@@ -37,16 +38,17 @@ export const getServices = ({ types, selectors }) => function* () {
   }
 }
 
-export const getService = ({ types }) => function* ({ url }) {
+export const createNewsletter = ({ types }) => function* ({ data }) {
   try {
-    yield put({ type: types.FETCH_PENDING })
-    const { data: service, success } = yield call(Get, `/services/main/${url}`)
+    yield put({ type: types.POST_PENDING })
+
+    const { success: messageSend } = yield call(Post, '/newsletters', { email: data })
+
     yield put({
       payload: {
-        service,
-        success
+        messageSend
       },
-      type: types.FETCH_FULFILLED
+      type: types.POST_FULFILLED
     })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
@@ -63,4 +65,3 @@ export const getService = ({ types }) => function* ({ url }) {
     }
   }
 }
-

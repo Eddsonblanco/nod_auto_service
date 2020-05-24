@@ -57,6 +57,7 @@ export default base({
 
         case types.RESET_SERVICE:
           draft.service = {}
+          draft.serviceDetail = null
 
           draft.status = 'RESET_SERVICE_FULLFILED'
 

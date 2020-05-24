@@ -95,8 +95,10 @@ const edit = async (req) => {
     const service = Services(others)
 
     if(req.file) {
-      const { icon } = await Services.findOne({ _id: Types.ObjectId(id) }).lean()
-      removeImage(icon)
+      const { icon } = await Services.findOne({ _id: Types.ObjectId(id) })
+      if(icon)
+        removeImage(icon)
+
       service.setImgUrl(req.file.filename)
     }
 
@@ -117,11 +119,20 @@ const one = async (id) => {
     return err
   }
 }
+
+const oneUrl = async (url) => {
+  try {
+    return await Services.findOne({ url: url })
+  } catch (err) {
+    return err
+  }
+}
 export {
   create,
   all,
   remove,
   edit,
   one,
+  oneUrl,
   allHome
 }

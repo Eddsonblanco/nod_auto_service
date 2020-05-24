@@ -93,6 +93,22 @@ const InputImage = (props) => {
 
   const [ currentImage, setCurentImage ] = useState(data)
 
+  useEffect(() => {
+    if(props.data)
+      if(typeof props.data === 'string') {
+        setCurentImage(props.data)
+      } else {
+        const reader = new FileReader()
+        const file = props.data
+
+        reader.onloadend = () => {
+          setCurentImage(reader.result)
+        }
+
+        reader.readAsDataURL(file)
+      }
+  }, [ props ])
+
   const _handleChangeImage = ev => {
     if(ev.target.files.length) {
       ev.preventDefault()

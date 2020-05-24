@@ -1,7 +1,7 @@
-import { GetList, Delete, Post, Get, Put } from 'lib/Request'
+import { GetList, Delete, Post, Get } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
 
-export const getCompanies = ({ types, selectors }) => function* () {
+export const getAppoiments = ({ types, selectors }) => function* () {
   try {
     yield put({ type: types.FETCH_PENDING })
     const getPagination = yield select(selectors.pagination)
@@ -11,7 +11,7 @@ export const getCompanies = ({ types, selectors }) => function* () {
       perPage: getPagination.perPage
     }
 
-    const { data: { rows, pagination, columns } } = yield call(GetList, '/companies', params)
+    const { data: { rows, pagination, columns } } = yield call(GetList, '/appoiments', params)
 
     yield put({
       payload: {
@@ -37,16 +37,16 @@ export const getCompanies = ({ types, selectors }) => function* () {
   }
 }
 
-export const removeCompany = ({ types }) => function* ({ id }) {
+export const removeService = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
-    const { success } = yield call(Delete, `/companies/${id}`)
+    const { success } = yield call(Delete, `/services/${id}`)
     yield put({
       payload: {
         id,
         success
       },
-      type: types.DELETE_COMPANY_FULFILLED
+      type: types.DELETE_SERVICE_FULFILLED
     })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
@@ -64,87 +64,45 @@ export const removeCompany = ({ types }) => function* ({ id }) {
   }
 }
 
-export const createCompany = ({ types }) => function* ({ payload }) {
+export const createAppoiment = ({ types }) => function* ({ payload }) {
   try {
     yield put({ type: types.POST_PENDING })
-    const formData = new FormData()
-    const payloadData = Object.keys(payload)
-    payloadData.map(item => {
-      formData.append(item, payload[item])
-    })
-    const { data, success } = yield call(Post, '/companies', formData, {
-      'content-type': 'multipart/form-data'
-    })
+
+    const { data, success } = yield call(Post, '/appoiments', payload)
     yield put({
       payload: {
         data,
         success
       },
-      type: types.POST_COMPANY_FULFILLED
+      type: types.POST_APPOIMENT_FULFILLED
     })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {
       case 'cancel':
-        yield put({ type: types.FETCH_CANCEL })
+        yield put({ type: types.POST_CANCEL })
         break
       default:
         yield put({
           error: messageResponse || message,
-          type : types.FETCH_FAILURE
+          type : types.POST_FAILURE
         })
         break
     }
   }
 }
 
-export const getCompany = ({ types }) => function* ({ id }) {
+export const getAppoiment = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.FETCH_PENDING })
-    const { data: company, success } = yield call(Get, `/companies/${id}`)
+    const { data: appoiment, success } = yield call(Get, `/appoiments/${id}`)
     yield put({
       payload: {
-        company,
+        appoiment,
         success
       },
       type: types.FETCH_FULFILLED
     })
-  } catch (e) {
-    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
-    switch (type) {
-      case 'cancel':
-        yield put({ type: types.FETCH_CANCEL })
-        break
-      default:
-        yield put({
-          error: messageResponse || message,
-          type : types.FETCH_FAILURE
-        })
-        break
-    }
-  }
-}
-
-export const updateCompany = ({ types }) => function* ({ payload }) {
-  try {
-    yield put({ type: types.PUT_PENDING })
-    const formData = new FormData()
-    const payloadData = Object.keys(payload)
-    payloadData.map(item => {
-      formData.append(item, payload[item])
-    })
-    // const { data, success } = yield call(Post, '/companies', formData, {
-    //   'content-type': 'multipart/form-data'
-    // })
-
-    const data = yield call(Put, '/companies', formData)
-    // yield put({
-    //   payload: {
-    //     company,
-    //     success
-    //   },
-    //   type: types.FETCH_FULFILLED
-    // })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {

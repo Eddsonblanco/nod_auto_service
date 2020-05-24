@@ -52,7 +52,7 @@ const Services = () => {
 
   const _handleClickEdit = id => {
     history.push({
-      pathname: '/admin/service',
+      pathname: '/admin/service-edit',
       state   : { id: id }
     // dispatch(getService(id))
     })

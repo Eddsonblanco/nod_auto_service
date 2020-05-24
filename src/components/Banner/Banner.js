@@ -1,6 +1,14 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography, Button, Container } from '@material-ui/core'
+
+import pageHomeDucks from 'reducers/pagehome'
+
+const {
+  openAppoiment
+} = pageHomeDucks.creators
 
 const useStyles = makeStyles(theme =>({
 
@@ -98,6 +106,7 @@ const useStyles = makeStyles(theme =>({
 }))
 
 export default function banner({ data }) {
+  const dispatch = useDispatch()
   const classes = useStyles()
 
   return (
@@ -109,7 +118,11 @@ export default function banner({ data }) {
         <div className={classes.wrapperTextBanner}>
           <Typography className={classes.titleBanner}>{data.title}</Typography>
           <Typography className={classes.contentBanner}>{data.sub_title}</Typography>
-          <Button className={classes.CallToAction} color='primary' variant='contained'> GET AN APPOIMENT NOW </Button>
+          <Button
+            className={classes.CallToAction}
+            color='primary'
+            onClick={() => dispatch(openAppoiment())}
+            variant='contained'> GET AN APPOIMENT NOW </Button>
         </div>
       </Container>
     </div>

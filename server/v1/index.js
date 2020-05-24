@@ -8,6 +8,8 @@ import contact from './contact'
 import banners from './banners'
 import testimonials from './testimonials'
 import galleries from './galleries'
+import appoiments from './appoiment'
+import newsletters from './newsletter'
 // ppages
 import pageHome from './page_home'
 
@@ -22,6 +24,8 @@ router.use('/contact', contact)
 router.use('/banners', banners)
 router.use('/testimonials', testimonials)
 router.use('/galleries', galleries)
+router.use('/appoiments', appoiments)
+router.use('/newsletters', newsletters)
 // pages
 router.use('/page_home', pageHome)
 

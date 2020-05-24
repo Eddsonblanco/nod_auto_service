@@ -23,7 +23,7 @@ export default base({
   store    : 'main_services'
 }).extend({
   creators: ({ types }) => ({
-    getService : id => ({ id, type: types.FETCH_SERVICE }),
+    getService : url => ({ type: types.FETCH_SERVICE, url }),
     getServices: () => ({ type: types.FETCH })
   }),
   reducer: (state, action, { types }) =>

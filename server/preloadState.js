@@ -1,17 +1,20 @@
-import themeDucks from 'reducers/theme'
+// import serviceDucks from 'reducers/main/services'
 
-export default async function(req, res, next) {
-  const { store } = res.locals
+// export default async function(req, res, next) {
+//   const { store } = res.locals
 
-  if(req.cookies)  {
-    const { style } = req.cookies
+//   if(req.baseUrl.indexOf('/service/') === 0) {
+//     const [ , , id ] = req.baseUrl.split('/')
+//     console.log('===> XAVI <===: id', id)
+//     await store.dispatch(serviceDucks.creators.getService(id))
+//   //   console.log('===> XAVI <===: store', store)
+//   //   console.log('===> XAVI <===: req.originalUrl', req.originalUrl)
+//   }
 
-    store.dispatch(themeDucks.creators.updateTheme(style))
-  }
+//   // Resave new store
+//   console.log('===> XAVI <===: store', store)
+//   res.locals.store = store
 
-  // Resave new store
-  res.locals.store = store
-
-  // Pass middlerware
-  next()
-}
+//   // Pass middlerware
+//   next()
+// }

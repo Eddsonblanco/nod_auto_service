@@ -1,51 +1,31 @@
 import express from 'express'
-import { upload } from '../../middleware/multer'
 
 import {
   create,
   all,
   remove,
   edit,
-  one,
-  oneUrl,
-  allHome
-} from '../../controllers/services'
+  one
+} from '../../controllers/newsletters'
 
 const router = express.Router()
 
-router.post('/',
-  upload.single('icon'), async (req, res) => {
-    try {
-    // req.headers // token
-      const data = await create(req)
-      res.status(200).send({ data, success: true })
-    } catch (err) {
-      res.status(500).send({ error: err.message, success: false })
-    }
-  })
-
-router.get('/home', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const data = await allHome(req.query)
+    // req.headers // token
+    const data = await create(req)
+    if(data === 'Email is Register')
+      throw 'Email is Register'
+
     res.status(200).send({ data, success: true })
   } catch (err) {
-    res.status(500).send({ error: err.message, success: false })
+    res.status(500).send({ error: err, success: false })
   }
 })
 
 router.get('/', async (req, res) => {
   try {
     const data = await all(req.query)
-    res.status(200).send({ data, success: true })
-  } catch (err) {
-    res.status(500).send({ error: err.message, success: false })
-  }
-})
-
-router.get('/main/:url', async (req, res) => {
-  try {
-    const { url } = req.params
-    const data = await oneUrl(url)
     res.status(200).send({ data, success: true })
   } catch (err) {
     res.status(500).send({ error: err.message, success: false })
@@ -74,7 +54,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-router.put('/', upload.single('icon'), async (req, res) => {
+router.put('/', async (req, res) => {
   try {
     // const { id } = req.params
 

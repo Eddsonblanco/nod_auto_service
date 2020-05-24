@@ -3,30 +3,31 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import CrudTable from 'components/Admin/Common/CrudTable'
 
-import contactsDucks from 'reducers/contacts'
+import newslettersDucks from 'reducers/newsletters'
 
 const {
-  getContacts
-} = contactsDucks.creators
+  getNewsletters
+} = newslettersDucks.creators
 
-const Contact = () => {
+const newsletter = () => {
   const dispatch = useDispatch()
   const {
     columns,
     rows,
     status,
     pagination
-  } = useSelector(store => store.contacts)
+  } = useSelector(store => store.newsletters)
 
   useEffect(() => {
     if(status === 'NEW')
-      dispatch(getContacts())
+      dispatch(getNewsletters())
   }, [])
 
   return (
     <CrudTable
       table={
-        { columns,
+        {
+          columns,
           pagination,
           rows
           // onRemove,
@@ -36,8 +37,8 @@ const Contact = () => {
           // withEdit = false
         }
       }
-      title='Contact List' />
+      title='NewSletter List' />
   )
 }
 
-export default Contact
+export default newsletter

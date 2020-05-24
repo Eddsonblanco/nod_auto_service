@@ -34,7 +34,8 @@ import serviceDucks from 'reducers/services'
 const {
   createService,
   getService,
-  updateService
+  updateService,
+  resetService
 } = serviceDucks.creators
 
 const style = makeStyles(() => ({
@@ -267,7 +268,15 @@ const New = () => {
       id: 'd7bb57b1-8e73-4008-9891-46b7aa16e912'
     }
   )
-  const [ dataForm, setDataForm ] = useState(null)
+  const [ dataForm, setDataForm ] = useState(
+    {
+      content  : {},
+      desc     : '',
+      icon     : '',
+      show_home: false,
+      title    : ''
+    }
+  )
 
   useEffect(() => {
     if(status === 'SERVICE_CREATED' || status === 'SAVED')
@@ -297,7 +306,12 @@ const New = () => {
         return serviceDetail
       })
   }, [ status ])
-  console.log('===> XAVI <===: New -> dataForm', dataForm)
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetService())
+    }
+  }, [])
 
   const _handleChangeForm = (ev) => {
     if(ev.target.name === 'show_home')
@@ -371,6 +385,9 @@ const New = () => {
             id='desc-name'
             InputLabelProps={{
               shrink: true
+            }}
+            inputProps={{
+              maxlength: 150
             }}
             label='Description'
             margin='normal'

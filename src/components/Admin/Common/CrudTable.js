@@ -231,6 +231,9 @@ const CrudTable = props => {
                             error={Boolean(errors[input.name])}
                             fullWidth
                             helperText={(errors[input.name] && errors[input.name].type === 'required') ? 'Your input is required' : ''}
+                            inputProps={{
+                              maxLength: input.maxLength ? input.maxLength : 'auto'
+                            }}
                             label={input.label}
                             margin='dense'
                             multiline
@@ -239,7 +242,7 @@ const CrudTable = props => {
                         defaultValue=''
                         key={`${input.name}-${index}`}
                         name={input.name}
-                        rules={{ required: input.required }} />
+                        rules={{  required: input.required }} />
                     )
                   default:
                     return

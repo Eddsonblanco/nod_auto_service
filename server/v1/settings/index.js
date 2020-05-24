@@ -17,7 +17,7 @@ router.get('/', async (req, res) =>  {
   }
 })
 
-router.put('/', upload.single('logo'), async (req, res) => {
+router.put('/', upload.fields([ { maxCount: 1, name: 'logo' }, { maxCount: 1, name: 'logo_footer' } ]), async (req, res) => {
   try {
     const data = await update(req)
     res.status(200).send({ data, success: true })
