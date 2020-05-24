@@ -19,12 +19,12 @@ const update = async (req) => {
 
     const about = Abouts(others)
 
-    if(req.files.image) {
-      const { image } = await Abouts.findOne({ _id: Types.ObjectId(_id) }).select('image')
-      if(image)
-        removeImage(image)
+    if(req.files.image1) {
+      const { image1 } = await Abouts.findOne({ _id: Types.ObjectId(_id) }).select('image1')
+      if(image1)
+        removeImage(image1)
 
-      about.setImgUrl(req.files.image[0].filename)
+      about.setImgUrl(req.files.image1[0].filename)
     }
 
     if(req.files.image2) {
