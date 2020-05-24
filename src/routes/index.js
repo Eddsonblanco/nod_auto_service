@@ -25,6 +25,10 @@ const Settings = loadable(() => import('../containers/views/Admin/Settings'), {
   fallback: <Loading />
 })
 
+const AboutsAdmin = loadable(() => import('../containers/views/Admin/Abouts'), {
+  fallback: <Loading />
+})
+
 const HomeAdmin = loadable(() => import('../containers/views/Admin/Home'), {
   fallback: <Loading />
 })
@@ -115,6 +119,7 @@ export default history => {
               <Route component={Dashboard} exact path='/admin/dashboard' />
               {/* <Route component={ServicesNewAdmin} path='/admin/service/:id' /> */}
               <Route component={Settings} path='/admin/settings' />
+              <Route component={AboutsAdmin} path='/admin/abouts' />
               <Route component={HomeAdmin} path='/admin/home' />
               <Route component={About} path='/admin/about' />
               <Route component={ContactAdmin} path='/admin/contact' />

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/styles'
 import {
@@ -7,6 +8,12 @@ import {
 } from '@material-ui/core'
 
 import MailIcon from '@material-ui/icons/Mail'
+
+import aboutsDucks from 'reducers/abouts'
+
+const {
+  getAbouts
+} = aboutsDucks.creators
 
 const useStyles = makeStyles(theme =>  ({
   aboutEnd: {
@@ -131,20 +138,35 @@ const useStyles = makeStyles(theme =>  ({
 }))
 
 export default function AboutUs() {
+  const dispatch = useDispatch()
   const classes = useStyles()
+
+  const {
+    status,
+    block1,
+    block2,
+    block3,
+    image1,
+    image2,
+    paragraph_end,
+    sub_title_end,
+    title,
+    title_end
+  } = useSelector(state => state.abouts)
+
+  useEffect(() => {
+    if(status === 'NEW')
+      dispatch(getAbouts())
+  }, [])
 
   return (
     <>
       <Container>
-        <Typography className={classes.title}>About us</Typography>
+        <Typography className={classes.title}>{title}</Typography>
         <div className={classes.wrapper}>
           <div>
             <Typography className={classes.paragraph}>
-            Efficiently provide access to one-to-one "outside
-             the box" thinking after corporate e-business.
-             Globally maintain world-class alignments via
-              client-centered action items. Synergistically
-               engineer proactive technology and ethical niches. Enthusiastically evolve.
+              {block1}
             </Typography>
 
             {/* <div>
@@ -152,32 +174,30 @@ export default function AboutUs() {
               <Typography>Our story</Typography>
             </div> */}
 
-            <div className={classes.contentInageMarco}>
-              <span></span>
-              <img src='https://cdn.zeplin.io/5e90fee92fd59f20f20f6614/assets/CBA2194B-73EF-485C-B5E6-A0AA9894B616.png' />
-            </div>
+            {
+              image1 &&
+              <div className={classes.contentInageMarco}>
+                <span></span>
+                <img src={image1} />
+              </div>
+            }
           </div>
           <div>
-            <div className={classes.contentInageMarco}>
-              <span>
-              </span>
-              <img src='https://cdn.zeplin.io/5e90fee92fd59f20f20f6614/assets/87C10837-71A7-4E14-8C37-1CEFF4297BB5.png' />
-            </div>
+            {
+              image2 &&
+              <div className={classes.contentInageMarco}>
+                <span>
+                </span>
+                <img src={image2} />
+              </div>
+            }
 
             <Typography className={classes.paragraph}>
-            Efficiently provide access to one-to-one "outside the box"
-             thinking after corporate e-business. Globally maintain
-              world-class alignments via client-centered action items.
-               Synergistically engineer proactive technology and ethical
-               niches. Enthusiastically evolve.
+              {block2}
             </Typography>
 
             <Typography className={classes.paragraph}>
-            Efficiently provide access to one-to-one "outside the box"
-             thinking after corporate e-business. Globally maintain
-             world-class alignments via client-centered action items.
-             Synergistically engineer proactive technology and ethical niches.
-              Enthusiastically evolve.
+              {block3}
             </Typography>
           </div>
         </div>
@@ -189,16 +209,13 @@ export default function AboutUs() {
 
       <div className={classes.aboutEnd}>
         <Container>
-          <Typography className={classes.titleAboutEnd}>Full Service, Quality</Typography>
-          <Typography className={classes.subTitleAboutEnd}>All your car needs in only one place</Typography>
+          <Typography className={classes.titleAboutEnd}>{title_end}</Typography>
+          <Typography className={classes.subTitleAboutEnd}>{sub_title_end}</Typography>
           <div className={classes.wrapperEnd}>
             <div className={classes.aboutEndParagraphLeft}>
               <span className={classes.bardEnd}></span>
               <Typography>
-                Efficiently provide access to one-to-one "outside the box"
-                thinking after corporate e-business. Globally maintain world-class
-                alignments via client-centered action items. Synergistically engineer
-                proactive technology and ethical niches. Enthusiastically evolve.
+                {paragraph_end}
               </Typography>
             </div>
             <div>
