@@ -28,7 +28,8 @@ import {
   DialogContent,
   Dialog,
   FormControl,
-  Select
+  Select,
+  Drawer
 } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close'
@@ -73,6 +74,13 @@ const useStyles = makeStyles(theme => ({
       display: 'none'
     }
 
+  },
+  callToActionMobile: {
+    color        : theme.palette.common.white,
+    fontWeight   : 300,
+    paddingBottom: 6,
+    paddingTop   : 6,
+    textAlign    : 'center'
   },
   contentModal: {
     maxWidth: 560,
@@ -120,6 +128,22 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
+  },
+  drawerContent: {
+    background: '#353535',
+    height    : '100%',
+    padding   : '30px 20px',
+    width     : '320px'
+  },
+  drawerList: {
+    marginTop: 40
+  },
+  drawerLogo: {
+    '& img': {
+      width: '100%'
+    },
+    margin  : '0 auto',
+    maxWidth: '120px'
   },
   formContent: {
     margin  : '0 auto',
@@ -309,6 +333,7 @@ export default function Header() {
   } = useSelector(state => state.appoiments)
 
   const [ open, setOpen ] = React.useState(false)
+  const [ openDrawer, setOpenDrawer ] = React.useState(false)
   const anchorRef = React.useRef(null)
 
   // const [ openDialog, setOpenDialog ] = React.useState(openAppoimentGlobal)
@@ -435,7 +460,8 @@ export default function Header() {
             aria-label='menu'
             className={classes.menuButton}
             color='inherit'
-            edge='start'>
+            edge='start'
+            onClick={() => { setOpenDrawer(true)}}>
             <MenuIcon />
           </IconButton>
           <Container maxWidth='lg'>
@@ -449,7 +475,7 @@ export default function Header() {
                   <Link className={classes.navItem} to='/services'>Services</Link>
                   <Link className={classes.navItem} to='/contact'>Contact</Link>
                   <Link className={classes.navItem} to='aboutus'>About us</Link>
-                  <Link className={classes.navItem} to='/faq'>FAQ</Link>
+                  {/* <Link className={classes.navItem} to='/faq'>FAQ</Link> */}
                 </nav>
               </div>
               <div className={classes.headerRight}>
@@ -504,6 +530,29 @@ export default function Header() {
           </Container>
         </Toolbar>
       </AppBar>
+
+      {/* drawer */}
+
+      <Drawer onClose={() => {setOpenDrawer(false)}} open={openDrawer}>
+        <div className={classes.drawerContent}>
+          <div className={classes.drawerLogo}>
+            <img src={logo} />
+          </div>
+          <div className={classes.drawerList} onClick={() => { setOpenDrawer(false)}}>
+            <Link className={classes.navItem} to='/'>Home</Link>
+            <Link className={classes.navItem} to='/services'>Services</Link>
+            <Link className={classes.navItem} to='/contact'>Contact</Link>
+            <Link className={classes.navItem} to='aboutus'>About us</Link>
+          </div>
+
+          <div onClick={() => { setOpenDrawer(false) }} style={{ marginTop: 50, textAlign: 'center' }}>
+            <Button
+              className={classes.callToActionMobile}
+              onClick={() => { dispatch(openAppoiment()) }}
+              variant='outlined'>Get an appointment</Button>
+          </div>
+        </div>
+      </Drawer>
 
       {/* apoimnet */}
 
