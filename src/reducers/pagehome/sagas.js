@@ -1,3 +1,4 @@
+import notify from 'lib/Notify'
 import { Get, Put } from 'lib/Request'
 import { select, call, put, take, fork } from 'redux-saga/effects'
 
@@ -51,7 +52,12 @@ export const updatePageConfig = ({ types, selectors }) => function* () {
     yield put({ type: types.PUT_PENDING })
     const getAllCheckbox = yield select(selectors.getAllCheckbox)
 
-    const { data } = yield call(Put, '/page_home', getAllCheckbox)
+    const { data, success } = yield call(Put, '/page_home', getAllCheckbox)
+
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
 
     yield put({
       payload: data,

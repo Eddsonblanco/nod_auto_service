@@ -1,4 +1,5 @@
 import { GetList, Delete, Post, Get, Put } from 'lib/Request'
+import notify from 'lib/Notify'
 import { put, call, select } from 'redux-saga/effects'
 
 export const getBanners = ({ types, selectors }) => function* () {
@@ -41,6 +42,12 @@ export const removeBanner = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
     const { success } = yield call(Delete, `/banners/${id}`)
+
+    if(success)
+      notify.success('!Successfully removed!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
+
     yield put({
       payload: {
         id,
@@ -75,6 +82,12 @@ export const createBanner = ({ types }) => function* ({ payload }) {
     const { data, success } = yield call(Post, '/banners', formData, {
       'content-type': 'multipart/form-data'
     })
+
+    if(success)
+      notify.success('!Created successfully!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
+
     yield put({
       payload: {
         data,
@@ -137,14 +150,19 @@ export const updateBanner = ({ types }) => function* ({ payload }) {
     //   'content-type': 'multipart/form-data'
     // })
 
-    const data = yield call(Put, '/banners', formData)
-    // yield put({
-    //   payload: {
-    //     company,
-    //     success
-    //   },
-    //   type: types.FETCH_FULFILLED
-    // })
+    const { data, success } = yield call(Put, '/banners', formData)
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
+
+    yield put({
+      payload: {
+        data,
+        success
+      },
+      type: types.PUT_FULFILLED
+    })
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {

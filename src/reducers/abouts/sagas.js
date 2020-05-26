@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects'
+import notify from 'lib/Notify'
 import { Get, Put } from 'lib/Request'
 
 export const getAbouts = ({ types }) => function* () {
@@ -37,7 +38,12 @@ export const updateAbouts = ({ types }) => function* ({ payload }) {
       formData.append(item, payload[item])
     })
 
-    const { data } = yield call(Put, '/abouts', formData)
+    const { data, success } = yield call(Put, '/abouts', formData)
+
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
 
     yield put({
       payload: data,

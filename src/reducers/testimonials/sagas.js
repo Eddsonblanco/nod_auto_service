@@ -1,5 +1,6 @@
 import { GetList, Delete, Post, Get, Put } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
+import notify from 'lib/Notify'
 
 export const getTestimonials = ({ types, selectors }) => function* () {
   try {
@@ -41,6 +42,10 @@ export const removeTestimonial = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
     const { success } = yield call(Delete, `/testimonials/${id}`)
+    if(success)
+      notify.success('!Successfully removed!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         id,
@@ -69,7 +74,10 @@ export const createTestimonial = ({ types }) => function* ({ payload }) {
     yield put({ type: types.POST_PENDING })
 
     const { data, success } = yield call(Post, '/testimonials', payload)
-
+    if(success)
+      notify.success('!Created successfully!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         data,
@@ -125,6 +133,10 @@ export const updateTestimonial = ({ types }) => function* ({ payload }) {
     yield put({ type: types.PUT_PENDING })
 
     const { data, success } = yield call(Put, '/testimonials', payload)
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         data,

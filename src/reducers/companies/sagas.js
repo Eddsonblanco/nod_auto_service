@@ -1,5 +1,6 @@
 import { GetList, Delete, Post, Get, Put } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
+import notify from 'lib/Notify'
 
 export const getCompanies = ({ types, selectors }) => function* () {
   try {
@@ -41,6 +42,10 @@ export const removeCompany = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
     const { success } = yield call(Delete, `/companies/${id}`)
+    if(success)
+      notify.success('!Successfully removed!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         id,
@@ -75,6 +80,10 @@ export const createCompany = ({ types }) => function* ({ payload }) {
     const { data, success } = yield call(Post, '/companies', formData, {
       'content-type': 'multipart/form-data'
     })
+    if(success)
+      notify.success('!Created successfully!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         data,
@@ -137,7 +146,12 @@ export const updateCompany = ({ types }) => function* ({ payload }) {
     //   'content-type': 'multipart/form-data'
     // })
 
-    const data = yield call(Put, '/companies', formData)
+    const { data, success } = yield call(Put, '/companies', formData)
+
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     // yield put({
     //   payload: {
     //     company,

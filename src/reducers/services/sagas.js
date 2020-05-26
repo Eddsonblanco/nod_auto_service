@@ -1,5 +1,6 @@
 import { GetList, Delete, Post, Get, Put } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
+import notify from 'lib/Notify'
 
 export const getServices = ({ types, selectors }) => function* () {
   try {
@@ -41,6 +42,10 @@ export const removeService = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
     const { success } = yield call(Delete, `/services/${id}`)
+    if(success)
+      notify.success('!Successfully removed!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         id,
@@ -78,6 +83,10 @@ export const createService = ({ types }) => function* ({ payload }) {
     const { data, success } = yield call(Post, '/services', formData, {
       'content-type': 'multipart/form-data'
     })
+    if(success)
+      notify.success('!Created successfully!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         data,
@@ -143,6 +152,10 @@ export const updateService = ({ types }) => function* ({ payload }) {
     const { success } = yield call(Put, '/services', formData, {
       'content-type': 'multipart/form-data'
     })
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         success
