@@ -119,9 +119,9 @@ export default history => {
         <Route component={Login} path='/login' />
 
         <Route exact path='/admin/:path?'>
-          <MainAdmin>
-            <Switch>
-              <PrivateRoute>
+          <PrivateRoute>
+            <MainAdmin>
+              <Switch>
 
                 <Route component={Dashboard} exact path='/admin/dashboard' />
                 {/* <Route component={ServicesNewAdmin} path='/admin/service/:id' /> */}
@@ -139,9 +139,9 @@ export default history => {
                 <Route component={NewslettersAdmin} path='/admin/newsletters' />
                 <Route component={ServicesEditAdmin} path='/admin/service-edit' />
                 <Route component={Users} path='/admin/users' />
-              </PrivateRoute>
-            </Switch>
-          </MainAdmin>
+              </Switch>
+            </MainAdmin>
+          </PrivateRoute>
         </Route>
 
         <Route>

@@ -1,4 +1,6 @@
 import express from 'express'
+import auth from '../../middleware/auth'
+
 import { upload } from '../../middleware/multer'
 
 import {
@@ -8,7 +10,7 @@ import {
 
 const router = express.Router()
 
-router.get('/', async (req, res) =>  {
+router.get('/', auth.ensureAuthenticated, async (req, res) =>  {
   try {
     const data = await all(req.query)
     res.status(200).send({ data, success: true })

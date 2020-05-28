@@ -11,6 +11,7 @@ import galleries from './galleries'
 import appoiments from './appoiment'
 import newsletters from './newsletter'
 import abouts from './abouts'
+import login from './login'
 // ppages
 import pageHome from './page_home'
 
@@ -28,6 +29,7 @@ router.use('/galleries', galleries)
 router.use('/appoiments', appoiments)
 router.use('/newsletters', newsletters)
 router.use('/abouts', abouts)
+router.use('/login', login)
 // pages
 router.use('/page_home', pageHome)
 
