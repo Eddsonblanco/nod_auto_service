@@ -1,40 +1,32 @@
 import React from 'react'
-import {
-  Route,
-  Redirect
-} from 'react-router-dom'
-import jwt from 'jsonwebtoken'
+import { Route } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import jwt from 'jsonwebtoken'
+
+import { useSelector } from 'react-redux'
 
 function PrivateRoute({ children, ...rest }) {
-  const [ isExpired, setIsEcpired ] = React.useState(false)
+  const {
+    cookies
+  } = useSelector(state => state.users)
 
   React.useEffect(() => {
-    const cookieAuth = Cookies.get('accessToken')
-    const decodedToken = jwt.decode(cookieAuth, { complete: true })
-    const dateNow = new Date()
-    if(cookieAuth === undefined)
-      return
-    if(decodedToken === null)
-      return
-    if(decodedToken.payload.exp < dateNow.getTime())
-      setIsEcpired(true)
+    if(!cookies) {
+      window.location.href = '/login'
+    } else {
+      const jsDecode = jwt.decode(cookies, { complete: true })
+      const dateNow = new Date()
+      if(jsDecode.payload.exp < dateNow.getTime()) {
+        window.location.href = '/login'
+        Cookies.remove('accessToken')
+      }
+    }
   }, [])
 
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        isExpired ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state   : { from: location }
-            }} />
-        )
-      } />
+      render={() => children} />
   )
 }
 

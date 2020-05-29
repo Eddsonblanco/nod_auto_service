@@ -10,13 +10,15 @@ import {
 
 export default base({
   initialState: {
-
+    cookies: null
   },
   namespace: 'nod_services',
   store    : 'users'
 }).extend({
   creators: ({ types }) => ({
-    login: payload => ({ payload, type: types.POST })
+    login     : payload => ({ payload, type: types.POST }),
+    setCookies: cookies => ({ cookies, type: types.REHYDRATE_AUTH })
+
   }),
   reducer: (state, action, { types }) =>
     produce(state, draft => {
@@ -24,6 +26,11 @@ export default base({
         case types.POST_lOGIN_SUCCESS:
 
           draft.status = 'USER_LOGIN'
+
+          return
+
+        case types.REHYDRATE_AUTH:
+          draft.cookies = action.cookies
 
           return
 
@@ -35,12 +42,13 @@ export default base({
     login: login(duck)
   }),
   selectors: ({ store }) => ({
-
+    getCookies: state => state[store].cookies
   }),
   takes: ({ types, sagas }) => [
     takeEvery(types.POST, sagas.login)
   ],
   types: [
-    'POST_lOGIN_SUCCESS'
+    'POST_lOGIN_SUCCESS',
+    'REHYDRATE_AUTH'
   ]
 })
