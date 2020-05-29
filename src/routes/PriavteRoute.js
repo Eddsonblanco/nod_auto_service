@@ -12,13 +12,13 @@ function PrivateRoute({ children, ...rest }) {
 
   React.useEffect(() => {
     const cookieAuth = Cookies.get('accessToken')
-    console.log('===> XAVI <===: PrivateRoute -> cookieAuth', cookieAuth)
     const decodedToken = jwt.decode(cookieAuth, { complete: true })
-    console.log('===> XAVI <===: PrivateRoute -> decodedToken', decodedToken)
     const dateNow = new Date()
-    console.log('===> XAVI <===: PrivateRoute -> dateNow', dateNow)
-
-    if(decodedToken && decodedToken.payload && decodedToken.payload.exp < dateNow.getTime())
+    if(cookieAuth === undefined)
+      return
+    if(decodedToken === null)
+      return
+    if(decodedToken.payload.exp < dateNow.getTime())
       setIsEcpired(true)
   }, [])
 
