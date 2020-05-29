@@ -23,11 +23,9 @@ router.post('/', async (req, res) => {
         sub     : user._id,
         username: user.username
       }
-      console.log('===> XAVI <===: payload', payload)
 
       /* solo inficamos el payload ya que el header ya lo crea la lib jsonwebtoken internamente
       para el calculo de la firma y así obtener el token*/
-      console.log('===> XAVI <===: jwt', jwt)
       const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET, { algorithm: process.env.JWT_ALGORITHM })
       res.json({ data: { token: token } })
     }

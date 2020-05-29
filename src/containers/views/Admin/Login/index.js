@@ -1,17 +1,24 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+// import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
-import Grid from '@material-ui/core/Grid'
+// import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+
+import userDucks from 'reducers/users'
+
+const {
+  login
+} = userDucks.creators
 
 function Copyright() {
   return (
@@ -48,7 +55,34 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SignIn() {
+  const dispatch = useDispatch()
   const classes = useStyles()
+
+  const {
+    status
+  } = useSelector(state => state.users)
+
+  const [ values, setValues ] = React.useState({
+    password: '',
+    username: ''
+  })
+
+  React.useEffect(() => {
+    if(status === 'USER_LOGIN')
+      if(typeof window !== 'undefined') window.location.href = '/admin'
+  }, [ status ])
+
+  const _handleChageForm = (ev) => {
+    setValues({
+      ...values,
+      [ev.target.name]: ev.target.value
+    })
+  }
+
+  const _handleClickLogin = () => {
+    if(values.username.length > 3 && values.password.length > 4)
+      dispatch(login(values))
+  }
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -62,24 +96,29 @@ export default function SignIn() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
-            autoComplete='email' autoFocus fullWidth
-            id='email' label='Email Address' margin='normal'
-            name='email'
-            required variant='outlined' />
+            autoComplete='username' autoFocus fullWidth
+            id='username' label='Username' margin='normal'
+            name='username'
+            onChange={_handleChageForm}
+            required
+            value={values.username} variant='outlined' />
           <TextField
             autoComplete='current-password' fullWidth id='password'
             label='Password' margin='normal' name='password'
+            onChange={_handleChageForm}
             required
-            type='password' variant='outlined' />
-          <FormControlLabel
+            type='password'
+            value={values.password} variant='outlined' />
+          {/* <FormControlLabel
             control={<Checkbox color='primary' value='remember' />}
-            label='Remember me' />
+            label='Remember me' /> */}
           <Button
-            className={classes.submit} color='primary' fullWidth
-            type='submit' variant='contained'>
+            className={classes.submit}
+            color='primary'
+            fullWidth onClick={_handleClickLogin} variant='contained'>
         Sign In
           </Button>
-          <Grid container>
+          {/* <Grid container>
             <Grid item xs>
               <Link href='#' variant='body2'>
           Forgot password?
@@ -90,7 +129,7 @@ export default function SignIn() {
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
       <Box mt={8}>
