@@ -10,6 +10,8 @@ function PrivateRoute({ children, ...rest }) {
     cookies
   } = useSelector(state => state.users)
 
+  const [ loginIn, setLoginIn ] = React.useState(false)
+
   React.useEffect(() => {
     if(!cookies) {
       window.location.href = '/login'
@@ -19,6 +21,8 @@ function PrivateRoute({ children, ...rest }) {
       if(jsDecode.payload.exp < dateNow.getTime()) {
         window.location.href = '/login'
         Cookies.remove('accessToken')
+      } else {
+        setLoginIn(true)
       }
     }
   }, [])
@@ -26,7 +30,7 @@ function PrivateRoute({ children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={() => children} />
+      render={() => loginIn ? children : null} />
   )
 }
 
