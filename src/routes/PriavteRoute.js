@@ -8,7 +8,6 @@ import Cookies from 'js-cookie'
 
 function PrivateRoute({ children, ...rest }) {
   const [ isExpired, setIsEcpired ] = React.useState(false)
-  console.log('===> XAVI <===: PrivateRoute -> isExpired', isExpired)
 
   React.useEffect(() => {
     const cookieAuth = Cookies.get('accessToken')
@@ -26,7 +25,7 @@ function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        !isExpired ? (
+        isExpired ? (
           children
         ) : (
           <Redirect
