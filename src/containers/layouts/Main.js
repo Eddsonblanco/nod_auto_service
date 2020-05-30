@@ -80,8 +80,7 @@ export default (props) => {
       location: {
         pathname
       }
-    },
-    host
+    }
   } = props
 
   const dispatch = useDispatch()
@@ -93,7 +92,7 @@ export default (props) => {
     logo_footer
   } = useSelector(state => state.settings)
 
-  const headDomainPage = host.replace('http://', 'https://')
+  const headDomainPage = window.location.host ? window.location.host : ''
 
   useEffect(() => {
     if(!_id)
@@ -103,7 +102,7 @@ export default (props) => {
   return (
     <>
       <Helmet>
-        <title>{headTitle}</title>
+        <title>{title}</title>
         <meta content={title ? title : REACT_APP_SEO_TITLE} property='og:title' />
         <meta content={description ? description : REACT_APP_SEO_DESCRIPTION} name='description' />
         <meta content={description ? description : REACT_APP_SEO_DESCRIPTION} name='og:description' />

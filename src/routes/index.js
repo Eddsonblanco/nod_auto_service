@@ -106,7 +106,7 @@ const AboutUs = loadable(() => import('../containers/views/Main/AboutUs'), {
 const Login = loadable(() => import('../containers/views/Admin/Login'), {
   fallback: <Loading />
 })
-export default history => {
+export default (history, host) => {
   // const pathUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/'
 
   return (
@@ -145,7 +145,7 @@ export default history => {
         </Route>
 
         <Route>
-          <Main>
+          <Main history={history} host={host}>
             <Switch>
               <Route component={Home} exact path='/' />
               <Route component={Contact} exact path='/contact' />
