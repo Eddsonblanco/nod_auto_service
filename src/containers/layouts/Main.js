@@ -92,7 +92,7 @@ export default (props) => {
     logo_footer
   } = useSelector(state => state.settings)
 
-  const headDomainPage = window.location.host ? window.location.host : ''
+  const headDomainPage = 'https://nod.xaviergz.com/'
 
   useEffect(() => {
     if(!_id)
