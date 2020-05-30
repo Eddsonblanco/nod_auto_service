@@ -11,6 +11,7 @@ export default base({
   initialState: {
     _id        : null,
     copyright  : '',
+    descrition : '',
     direction  : '',
     email      : '',
     logo       : '',

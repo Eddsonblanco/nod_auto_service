@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Helmet } from 'react-helmet-async'
 
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
@@ -70,12 +71,27 @@ const styles = makeStyles({
   }
 })
 
-export default ({ children }) => {
+export default (props) => {
+  const {
+    children,
+    history: {
+      location: {
+        pathname
+      }
+    },
+    host
+  } = props
+
   const dispatch = useDispatch()
   const classes = styles()
   const {
-    _id
+    _id,
+    title,
+    description,
+    logo_footer
   } = useSelector(state => state.settings)
+
+  const headDomainPage = host.replace('http://', 'https://')
 
   useEffect(() => {
     if(!_id)
@@ -83,15 +99,26 @@ export default ({ children }) => {
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.body}>
-        <Header />
+    <>
+      <Helmet>
+        <title>{headTitle}</title>
+        <meta content={title ? title : REACT_APP_SEO_TITLE} property='og:title' />
+        <meta content={description ? description : REACT_APP_SEO_DESCRIPTION} name='description' />
+        <meta content={description ? description : REACT_APP_SEO_DESCRIPTION} name='og:description' />
+        <meta content={logo_footer} property='og:image' />
+        <meta content={`${headDomainPage}${pathname}`} property='og:url' />
 
-        {children}
-        <Newsletter />
-        <Footer />
+      </Helmet>
+      <ThemeProvider theme={theme}>
+        <div className={classes.body}>
+          <Header />
 
-      </div>
-    </ThemeProvider>
+          {children}
+          <Newsletter />
+          <Footer />
+
+        </div>
+      </ThemeProvider>
+    </>
   )
 }
