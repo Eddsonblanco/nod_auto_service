@@ -139,9 +139,6 @@ const Footer = () => {
               <Link className={classes.listNavItem} to='/services'>SERVICES</Link>
               <Link className={classes.listNavItem} to='/contact'>CONTACT</Link>
               <Link className={classes.listNavItem} to='/aboutus'>ABOUT US</Link>
-              <Link className={classes.listNavItem} to=''>FAQ</Link>
-              <Link className={classes.listNavItem} to=''>TERMS OF SERVICE</Link>
-              <Link className={classes.listNavItem} to=''>PRIVACY POLICY</Link>
             </ul>
           </Grid>
 

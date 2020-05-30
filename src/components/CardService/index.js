@@ -54,18 +54,21 @@ const useStyles = makeStyles({
     },
     '&:hover': {
       '& $description': {
-        color: '#fff'
+        // color: '#fff'
       },
       '& $title': {
-        color: '#fff'
+        // color: '#fff'
       },
       '& img': {
-        filter: 'brightness(0) invert(1)'
+        // filter: 'brightness(0) invert(1)'
       },
-      background : 'rgba(246, 78, 78, 0.57)',
+      // background : 'rgba(246, 78, 78, 0.57)',
       borderColor: 'rgba(246, 78, 78, 0.57)',
-      boxShadow  : '0 3px 20px 0 rgba(0, 0, 0, 0.16)',
-      cursor     : 'pointer'
+      borderWidth: '2px',
+      boxShadow  : '0 3px 20px 0 rgba(246, 78, 78, 0.57)',
+      cursor     : 'pointer',
+      transform  : 'scale(1.03)',
+      transition : 'all .2s cubic-bezier(0.55, 0.09, 0.68, 0.53)'
       // transform   : 'scale(1.1)'
     },
     borderColor : '#d5d5d5',
