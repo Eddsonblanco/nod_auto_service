@@ -10,6 +10,8 @@ import Footer from 'components/Common/Footer'
 import Header from 'components/Common/Header'
 import Newsletter from 'components/Newsletter'
 
+import { useComponentWillMount } from 'lib/hooks'
+
 import settingsDucks from 'reducers/settings'
 
 const { REACT_APP_SEO_TITLE, REACT_APP_SEO_DESCRIPTION } = process.env
@@ -84,6 +86,9 @@ export default (props) => {
   } = props
 
   const dispatch = useDispatch()
+  useComponentWillMount(() => {
+    dispatch(getSettings())
+  })
   const classes = styles()
   const {
     _id,

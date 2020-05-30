@@ -1,10 +1,11 @@
-// import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
+import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
 import base from 'reducers/base'
 import { takeEvery } from 'redux-saga/effects'
 
 import {
   getSettings,
-  updateSettings
+  updateSettings,
+  watchServer
 } from './sagas'
 
 export default base({
@@ -23,7 +24,7 @@ export default base({
   store    : 'settings'
 }).extend({
   creators: ({ types }) => ({
-    getSettings   : () => ({ type: types.FETCH }),
+    getSettings   : () => ({ [WAIT_FOR_ACTION]: types.FETCH_FULFILLED, type: types.FETCH }),
     updateSettings: payload => ({ payload, type: types.UPDATE_SETTINGS })
   }),
   sagas: duck => ({
@@ -31,11 +32,12 @@ export default base({
     updateSettings: updateSettings(duck)
   }),
   selectors: ({ store }) => ({
-
+    getStatus: state => state[store].status
   }),
-  takes: ({ types, sagas }) => [
-    takeEvery(types.FETCH, sagas.getSettings),
-    takeEvery(types.UPDATE_SETTINGS, sagas.updateSettings)
+  takes: (duck) => [
+    watchServer(duck),
+    // takeEvery(types.FETCH, sagas.getSettings),
+    takeEvery(duck.types.UPDATE_SETTINGS, duck.sagas.updateSettings)
   ],
   types: [
     'UPDATE_SETTINGS'

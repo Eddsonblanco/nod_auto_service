@@ -1,17 +1,22 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select, take, fork } from 'redux-saga/effects'
 import { Get, Put } from 'lib/Request'
 import notify from 'lib/Notify'
 
-export const getSettings = ({ types }) => function* () {
+export const getSettings = ({ types, selectors }) => function* () {
   try {
-    yield put({ type: types.FETCH_PENDING })
+    const status = yield select(selectors.getStatus)
+    if(status !== 'READY') {
+      yield put({ type: types.FETCH_PENDING })
 
-    const { data } = yield call(Get, '/settings')
+      const { data } = yield call(Get, '/settings')
 
-    yield put({
-      payload: data,
-      type   : types.FETCH_FULFILLED
-    })
+      yield put({
+        payload: data,
+        type   : types.FETCH_FULFILLED
+      })
+    } else {
+      console.log('loaded from server settings')
+    }
   } catch (e) {
     const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
     switch (type) {
@@ -64,3 +69,10 @@ export const updateSettings = ({ types }) => function* ({ payload }) {
     }
   }
 }
+
+export const watchServer = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    yield take(types.FETCH)
+    yield fork(sagas.getSettings)
+  }
+})
