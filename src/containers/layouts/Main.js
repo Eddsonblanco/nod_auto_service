@@ -12,6 +12,8 @@ import Newsletter from 'components/Newsletter'
 
 import settingsDucks from 'reducers/settings'
 
+const { REACT_APP_SEO_TITLE, REACT_APP_SEO_DESCRIPTION } = process.env
+
 const {
   getSettings
 } = settingsDucks.creators
