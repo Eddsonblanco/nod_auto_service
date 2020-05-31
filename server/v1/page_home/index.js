@@ -1,4 +1,5 @@
 import express from 'express'
+import auth from '../../middleware/auth'
 
 import {
   edit,
@@ -7,7 +8,7 @@ import {
 
 const router = express.Router()
 
-router.put('/', async (req, res) => {
+router.put('/', auth.ensureAuthenticated, async (req, res) => {
   try {
     const data = await edit(req)
     res.status(200).json({ data, success: true })

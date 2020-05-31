@@ -339,7 +339,7 @@ export default function Header() {
   // const [ openDialog, setOpenDialog ] = React.useState(openAppoimentGlobal)
 
   const [ activeStep, setActiveStep ] = React.useState(0)
-  const [ completed, setCompleted ] = React.useState({})
+  const [ completed ] = React.useState({})
 
   const [ fornDialog, setFormDialog ] = React.useState({
     address       : '',

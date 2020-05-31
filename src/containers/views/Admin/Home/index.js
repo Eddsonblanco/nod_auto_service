@@ -4,23 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   FormControlLabel,
   Checkbox,
-  TextField,
-  Switch,
   Button
 } from '@material-ui/core'
-
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-import AddBoxIcon from '@material-ui/icons/AddBox'
-import DeleteIcon from '@material-ui/icons/Delete'
-
-import { makeStyles } from '@material-ui/core/styles'
 
 import TabsAdmin from 'components/Admin/Common/TabsAdmin'
 
 import pageHomeDucks from 'reducers/pagehome'
-
-import InputImage from 'components/Admin/Common/InputImage'
 
 const {
   getPageConfig,
@@ -28,35 +17,8 @@ const {
   updatePageConfig
 } = pageHomeDucks.creators
 
-const useStyles = makeStyles(theme => ({
-  actionsBanner: {
-    '& svg': {
-      '&:hover': {
-        color    : theme.palette.primary.main,
-        transform: 'scale(1.1)'
-      },
-      cursor      : 'pointer',
-      marginBottom: 10
-    },
-    display      : 'flex',
-    flexDirection: 'column',
-    marginLeft   : 20
-  },
-  containerBanner: {
-    alignItems: 'center',
-    display   : 'flex'
-  },
-  formBanner: {
-    border      : `solid 1px ${theme.palette.primary.light}`,
-    flex        : 1,
-    marginBottom: 20,
-    padding     : 15
-  }
-}))
-
 const PageHome = () => {
   const dispatch = useDispatch()
-  const classes = useStyles()
 
   const {
     status,
@@ -68,7 +30,7 @@ const PageHome = () => {
     banners
   } = useSelector(state => state.page_home)
 
-  const [ stateBanner, setStateBanner ] = useState(banners)
+  const [ stateBanner ] = useState(banners)
 
   useEffect(() => {
     if(status === 'NEW')
@@ -78,57 +40,6 @@ const PageHome = () => {
   // actions
   const _handleChangeCheckbox = ev => {
     dispatch(updateCheckbox(ev.target.name, ev.target.checked))
-  }
-
-  const _handleChangeBanners = (ev, index) => {
-    if(ev.name === 'image')
-      setStateBanner(stateBanner.map((item, itemIndex) => {
-        if(itemIndex === index)
-          return {
-            ...item,
-            [ev.name]: ev.file
-          }
-        else
-          return item
-      }))
-    else if(ev.target.name === 'openAppoiment')
-      setStateBanner(stateBanner.map((item, itemIndex) => {
-        if(itemIndex === index)
-          return {
-            ...item,
-            [ev.target.name]: ev.target.checked
-          }
-        else
-          return item
-      }))
-    else
-      setStateBanner(stateBanner.map((item, itemIndex) => {
-        if(itemIndex === index)
-          return {
-            ...item,
-            [ev.target.name]: ev.target.value
-          }
-        else
-          return item
-      }))
-  }
-
-  const _handleAddItemBammer = () => {
-    setStateBanner([
-      ...stateBanner,
-      {
-        desc         : '',
-        image        : '',
-        openAppoiment: true,
-        position     : stateBanner.length,
-        title        : '',
-        url          : ''
-      }
-    ])
-  }
-
-  const _handleClickRemoveBanner = (index) => {
-    setStateBanner(stateBanner.filter((item, itemIndex) => itemIndex !== index))
   }
 
   const _handleClickSave = () => {

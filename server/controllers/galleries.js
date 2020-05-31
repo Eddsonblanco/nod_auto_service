@@ -1,5 +1,5 @@
 
-import { Galleries, Datatables } from '../models'
+import { Galleries } from '../models'
 import { Types } from 'mongoose'
 import { removeImage } from '../utils'
 

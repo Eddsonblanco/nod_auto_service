@@ -40,12 +40,15 @@ function log({ text, type }) {
   switch (type) {
     default:
     case 'info':
+      // eslint-disable-next-line no-restricted-syntax
       console.log(text)
       break
     case 'warning':
+      // eslint-disable-next-line no-restricted-syntax
       console.warn(text)
       break
     case 'error':
+      // eslint-disable-next-line no-restricted-syntax
       console.error(text)
       break
   }

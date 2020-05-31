@@ -9,6 +9,7 @@ try {
     useUnifiedTopology: true
   })
 } catch ({ err }) {
+  // eslint-disable-next-line no-restricted-syntax
   console.log('Xavi: err', err)
 }
 

@@ -13,8 +13,7 @@ const middlewares = {
   */
   ensureAuthenticated: (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
-      console.log('===> XAVI <===: info', info)
-      console.log('===> XAVI <===: user', user)
+      // eslint-disable-next-line no-restricted-syntax
       console.log('ejecutando *callback auth* de authenticate para estrategia jwt --')
       // si hubo un error relacionado con la validez del token (error en su firma, caducado, etc)
       if(info)  return next(new error_types.Error401(info.message))
@@ -36,6 +35,7 @@ const middlewares = {
   middleware de manejo de errores.
   */
   errorHandler: (error, req, res, next) => {
+    // eslint-disable-next-line no-restricted-syntax
     console.log('ejecutando middleware de control de errores')
     if(error instanceof error_types.InfoError)
       res.status(200).json({ error: error.message })
@@ -57,7 +57,8 @@ const middlewares = {
   Este middleware va al final de todos los middleware y rutas.
   middleware para manejar notFound
   */
-  notFoundHandler: (req, res, next) => {
+  notFoundHandler: (req, res) => {
+    // eslint-disable-next-line no-restricted-syntax
     console.log('ejecutando middleware para manejo de endpoints no encontrados')
     res.status(404).json({ error: 'endpoint not found' })
   }

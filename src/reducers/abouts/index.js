@@ -31,7 +31,7 @@ export default base({
     getAbouts   : getAbouts(duck),
     updateAbouts: updateAbouts(duck)
   }),
-  selectors: ({ store }) => ({
+  selectors: ({  }) => ({
 
   }),
   takes: ({ types, sagas }) => [

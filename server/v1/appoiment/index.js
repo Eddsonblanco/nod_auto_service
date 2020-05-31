@@ -1,4 +1,5 @@
 import express from 'express'
+import auth from '../../middleware/auth'
 
 import {
   create,
@@ -38,7 +39,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth.ensureAuthenticated, async (req, res) => {
   try {
     const { id } = req.params
 

@@ -146,7 +146,7 @@ export const updateCompany = ({ types }) => function* ({ payload }) {
     //   'content-type': 'multipart/form-data'
     // })
 
-    const { data, success } = yield call(Put, '/companies', formData)
+    const { /* data,*/ success } = yield call(Put, '/companies', formData)
 
     if(success)
       notify.success('!Was updated correctly!', { time: 5000 })

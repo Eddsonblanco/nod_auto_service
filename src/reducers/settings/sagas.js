@@ -15,6 +15,7 @@ export const getSettings = ({ types, selectors }) => function* () {
         type   : types.FETCH_FULFILLED
       })
     } else {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('loaded from server settings')
     }
   } catch (e) {

@@ -16,6 +16,7 @@ class init {
   }
   connectDataBase() {
     try {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('connect Data Base')
       this.connectMongo = mongoose.createConnection(process.env.MONGODB_URL, {
         useFindAndModify  : false,
@@ -23,6 +24,7 @@ class init {
         useUnifiedTopology: true
       })
     } catch ({ err }) {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('Xavi: err', err)
     }
   }
@@ -52,6 +54,7 @@ class init {
           throw 'user already exists'
         }
         else { // si no existe el usuario se crea/registra
+          // eslint-disable-next-line no-restricted-syntax
           console.log('creando usuario')
           var hash = bcrypt.hashSync(this.password, parseInt(process.env.BCRYPT_ROUNDS))
           let document = new User({
@@ -66,11 +69,13 @@ class init {
           return document.save()
         }
       })
-      .then(data => { // usuario registrado con exito, pasamos al siguiente manejador
+      .then(() => { // usuario registrado con exito, pasamos al siguiente manejador
+        // eslint-disable-next-line no-restricted-syntax
         console.log('User created')
         process.exit(1)
       })
-      .catch(err => { // error en registro, lo pasamos al manejador de errores
+      .catch(() => { // error en registro, lo pasamos al manejador de errores
+        // eslint-disable-next-line no-restricted-syntax
         console.log('User exist')
         process.exit(1)
       })

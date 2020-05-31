@@ -1,5 +1,5 @@
 // import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
-import produce from 'immer'
+// import produce from 'immer'
 import { takeEvery } from 'redux-saga/effects'
 import base from 'reducers/base'
 
@@ -26,13 +26,13 @@ export default base({
     getService : url => ({ type: types.FETCH_SERVICE, url }),
     getServices: () => ({ type: types.FETCH })
   }),
-  reducer: (state, action, { types }) =>
-    produce(state, draft => {
-      switch (action.type) {
-        default:
-          return
-      }
-    }),
+  // reducer: (state, action, { types }) =>
+  //   produce(state, draft => {
+  //     switch (action.type) {
+  //       default:
+  //         return
+  //     }
+  //   }),
   sagas: duck => ({
     getService : getService(duck),
     getServices: getServices(duck)

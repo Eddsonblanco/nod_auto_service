@@ -14,6 +14,7 @@ passport.use(new LocalStrategy({
   session      : false,
   usernameField: 'username'
 }, (username, password, done) => {
+  // eslint-disable-next-line no-restricted-syntax
   console.log('ejecutando *callback verify* de estategia local')
   User.findOne({ username: username })
     .then(data => {
@@ -32,6 +33,7 @@ opts.secretOrKey = process.env.JWT_SECRET
 opts.algorithms = [ process.env.JWT_ALGORITHM ]
 
 passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+  // eslint-disable-next-line no-restricted-syntax
   console.log('ejecutando *callback verify* de estategia jwt')
   User.findOne({ _id: jwt_payload.sub })
     .then(data => {

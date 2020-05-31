@@ -14,7 +14,6 @@ const {
   getServices,
   removeService,
   createService,
-  getService,
   resetService,
   updateService
 } = servicesDucks.creators

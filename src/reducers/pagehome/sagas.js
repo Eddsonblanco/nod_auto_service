@@ -7,6 +7,7 @@ export const getPageConfig = ({ types, selectors }) => function* () {
     const status = yield select(selectors.getStatus)
 
     if(status !== 'READY') {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('********* NOT is Loaded from Server *********')
 
       yield put({ type: types.FETCH_PENDING })
@@ -29,6 +30,7 @@ export const getPageConfig = ({ types, selectors }) => function* () {
         type   : types.FETCH_FULFILLED
       })
     } else {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('********* is Loaded from Server *********')
     }
   } catch (e) {

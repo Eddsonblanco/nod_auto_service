@@ -18,7 +18,7 @@ const {
   resetAppoiment
 } = appoimnentDucks.creators
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   dataView: {
     fontSize: 16,
     padding : '5px 0 5px 20px'

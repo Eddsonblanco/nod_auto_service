@@ -1,4 +1,5 @@
 import express from 'express'
+import auth from '../../middleware/auth'
 
 import {
   create,
@@ -11,7 +12,7 @@ import {
 
 const router = express.Router()
 
-router.post('/', async (req, res) => {
+router.post('/', auth.ensureAuthenticated, async (req, res) => {
   try {
     // req.headers // token
     const data = await create(req)
@@ -49,7 +50,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth.ensureAuthenticated, async (req, res) => {
   try {
     const { id } = req.params
 
@@ -61,7 +62,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-router.put('/', async (req, res) => {
+router.put('/', auth.ensureAuthenticated, async (req, res) => {
   try {
     // const { id } = req.params
 

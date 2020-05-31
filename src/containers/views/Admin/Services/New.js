@@ -300,7 +300,7 @@ const New = () => {
 
   useEffect(() => {
     if(status === 'READY' && !dataForm && serviceDetail)
-      setDataForm(prevState => {
+      setDataForm(() => {
         setEditorValue(JSON.parse(serviceDetail.content))
 
         return serviceDetail
