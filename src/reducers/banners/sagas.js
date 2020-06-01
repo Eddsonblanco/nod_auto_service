@@ -1,6 +1,7 @@
 import { GetList, Delete, Post, Get, Put } from 'lib/Request'
 import notify from 'lib/Notify'
 import { put, call, select } from 'redux-saga/effects'
+import usersDucks from 'reducers/users'
 
 export const getBanners = ({ types, selectors }) => function* () {
   try {
@@ -41,7 +42,11 @@ export const getBanners = ({ types, selectors }) => function* () {
 export const removeBanner = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
-    const { success } = yield call(Delete, `/banners/${id}`)
+    const cookies = yield select(usersDucks.selectors.getCookies)
+
+    const { success } = yield call(Delete, `/banners/${id}`,{}, {
+      Authorization: `Bearer ${cookies}`
+    })
 
     if(success)
       notify.success('!Successfully removed!', { time: 5000 })
@@ -74,12 +79,14 @@ export const removeBanner = ({ types }) => function* ({ id }) {
 export const createBanner = ({ types }) => function* ({ payload }) {
   try {
     yield put({ type: types.POST_PENDING })
+    const cookies = yield select(usersDucks.selectors.getCookies)
     const formData = new FormData()
     const payloadData = Object.keys(payload)
     payloadData.map(item => {
       formData.append(item, payload[item])
     })
     const { data, success } = yield call(Post, '/banners', formData, {
+      Authorization : `Bearer ${cookies}`,
       'content-type': 'multipart/form-data'
     })
 
@@ -141,6 +148,8 @@ export const getBanner = ({ types }) => function* ({ id }) {
 export const updateBanner = ({ types }) => function* ({ payload }) {
   try {
     yield put({ type: types.PUT_PENDING })
+    const cookies = yield select(usersDucks.selectors.getCookies)
+
     const formData = new FormData()
     const payloadData = Object.keys(payload)
     payloadData.map(item => {
@@ -150,7 +159,9 @@ export const updateBanner = ({ types }) => function* ({ payload }) {
     //   'content-type': 'multipart/form-data'
     // })
 
-    const { data, success } = yield call(Put, '/banners', formData)
+    const { data, success } = yield call(Put, '/banners', formData, {
+      Authorization: `Bearer ${cookies}`
+    })
     if(success)
       notify.success('!Was updated correctly!', { time: 5000 })
     else

@@ -1,13 +1,21 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import Cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
+import Cookies from 'js-cookie'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import userDucks from 'reducers/users'
+
+const {
+  setCookies
+} = userDucks.creators
 
 function PrivateRoute({ children, ...rest }) {
+  const dispatch = useDispatch()
+  const cookies = Cookies.get('accessToken')
   const {
-    cookies
+    cookies: cokieReduce
   } = useSelector(state => state.users)
 
   const [ loginIn, setLoginIn ] = React.useState(false)
@@ -22,6 +30,9 @@ function PrivateRoute({ children, ...rest }) {
         window.location.href = '/login'
         Cookies.remove('accessToken')
       } else {
+        if(!cokieReduce)
+          dispatch(setCookies(cookies))
+
         setLoginIn(true)
       }
     }

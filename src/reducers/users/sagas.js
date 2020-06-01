@@ -12,7 +12,9 @@ export const login = ({ types }) => function* ({ payload }) {
       Cookies.set('accessToken', data.token)
 
     yield put({
-      // payload: data,
+      payload: {
+        cookies: data.token
+      },
       type: types.POST_lOGIN_SUCCESS
     })
   } catch (e) {

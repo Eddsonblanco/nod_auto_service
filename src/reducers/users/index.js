@@ -25,6 +25,8 @@ export default base({
       switch (action.type) {
         case types.POST_lOGIN_SUCCESS:
 
+          draft.cookies = action.payload.cookies
+
           draft.status = 'USER_LOGIN'
 
           return

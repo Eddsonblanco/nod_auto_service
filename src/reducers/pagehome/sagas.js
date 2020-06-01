@@ -2,6 +2,8 @@ import notify from 'lib/Notify'
 import { Get, Put } from 'lib/Request'
 import { select, call, put, take, fork } from 'redux-saga/effects'
 
+import usersDucks from 'reducers/users'
+
 export const getPageConfig = ({ types, selectors }) => function* () {
   try {
     const status = yield select(selectors.getStatus)
@@ -53,8 +55,11 @@ export const updatePageConfig = ({ types, selectors }) => function* () {
   try {
     yield put({ type: types.PUT_PENDING })
     const getAllCheckbox = yield select(selectors.getAllCheckbox)
+    const cookies = yield select(usersDucks.selectors.getCookies)
 
-    const { data, success } = yield call(Put, '/page_home', getAllCheckbox)
+    const { data, success } = yield call(Put, '/page_home', getAllCheckbox, {
+      Authorization: `Bearer ${cookies}`
+    })
 
     if(success)
       notify.success('!Was updated correctly!', { time: 5000 })

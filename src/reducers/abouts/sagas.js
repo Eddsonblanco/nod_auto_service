@@ -1,6 +1,7 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import notify from 'lib/Notify'
 import { Get, Put } from 'lib/Request'
+import usersDucks from 'reducers/users'
 
 export const getAbouts = ({ types }) => function* () {
   try {
@@ -31,6 +32,7 @@ export const getAbouts = ({ types }) => function* () {
 export const updateAbouts = ({ types }) => function* ({ payload }) {
   try {
     yield put({ type: types.PUT_PENDING })
+    const cookies = yield select(usersDucks.selectors.getCookies)
 
     const formData = new FormData()
     const payloadData = Object.keys(payload)
@@ -38,7 +40,9 @@ export const updateAbouts = ({ types }) => function* ({ payload }) {
       formData.append(item, payload[item])
     })
 
-    const { data, success } = yield call(Put, '/abouts', formData)
+    const { data, success } = yield call(Put, '/abouts', formData, {
+      Authorization: `Bearer ${cookies}`
+    })
 
     if(success)
       notify.success('!Was updated correctly!', { time: 5000 })
