@@ -51,13 +51,24 @@ export const getPageConfig = ({ types, selectors }) => function* () {
   }
 }
 
-export const updatePageConfig = ({ types, selectors }) => function* () {
+export const updatePageConfig = ({ types, selectors }) => function* ({ payload }) {
   try {
     yield put({ type: types.PUT_PENDING })
     const getAllCheckbox = yield select(selectors.getAllCheckbox)
     const cookies = yield select(usersDucks.selectors.getCookies)
 
-    const { data, success } = yield call(Put, '/page_home', getAllCheckbox, {
+    const newData = {
+      ...payload,
+      ...getAllCheckbox
+    }
+
+    const formData = new FormData()
+    const payloadData = Object.keys(newData)
+    payloadData.map(item => {
+      formData.append(item, newData[item])
+    })
+
+    const { data, success } = yield call(Put, '/page_home', formData, {
       Authorization: `Bearer ${cookies}`
     })
 

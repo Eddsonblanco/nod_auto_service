@@ -132,7 +132,7 @@ export default function Home() {
 
   const {
     status: statusCompanies,
-    rows: companies
+    rows: companies = []
   } = useSelector(state => state.companies)
 
   const {
