@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/styles'
 import {
@@ -112,7 +113,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const SliderServices = () => {
+const SliderServices = ({
+  data
+}) => {
   const classes = useStyles()
 
   return (
@@ -120,24 +123,22 @@ const SliderServices = () => {
       <div className={classes.sliderServiceContainer}>
         <div className={classes.sliderServiceLeft}>
           <span />
-          <Typography className={classes.titleLeft}>Life’s too
-            short
-            to spend it at the repair shop</Typography>
+          <Typography className={classes.titleLeft}>{data.message_left}</Typography>
         </div>
         <div className={classes.sliderServiceCenter}>
           <div className={classes.sliderServiceImg}>
-            <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/4d57eb34-10bd-4d25-8947-83c40d90a6d7.png' />
+            <img src={data.message_image} />
           </div>
         </div>
         <div className={classes.sliderServiceRight}>
-          <img src='https://cdn.zeplin.io/5e90fee92fd59f20f20f6614/assets/F1F60BC7-0E88-4DBC-93FE-CA91DD09D65B.svg' />
-          <Typography className={classes.sliderServiceTitle}>Oil change at home</Typography>
+          <img src={data.message_icon} />
+          <Typography className={classes.sliderServiceTitle}>{data.message_title}</Typography>
           <Typography className={classes.sliderServiceDesc}>
-            Enjoy convenient car repair and maintenance at your home or office.
-            <br />
-            It's as easy as 1-2-3.
+            {data.message_desc}
           </Typography>
-          <Button color='primary' variant='contained'>Show more</Button>
+          <Button
+            color='primary' component={RouterLink}
+            to={data.message_link} variant='contained'>Show more</Button>
         </div>
       </div>
     </Container>

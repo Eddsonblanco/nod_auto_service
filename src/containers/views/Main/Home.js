@@ -140,6 +140,12 @@ export default function Home() {
     show_banner,
     show_brands,
     banners,
+    message_title,
+    message_desc,
+    message_icon,
+    message_link,
+    message_image,
+    message_left,
     // show_newsletter,
     show_services,
     show_testimonials,
@@ -195,7 +201,14 @@ export default function Home() {
       }
 
       {/* slider service detail */}
-      <SliderServices />
+      <SliderServices data={{
+        message_desc,
+        message_icon,
+        message_image,
+        message_left,
+        message_link,
+        message_title
+      }} />
 
       {/* <Services /> */}
       {
