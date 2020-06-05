@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -9,7 +9,7 @@ import {
   Button
 } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
+// import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import { makeStyles } from '@material-ui/styles'
 import HomeIcon from '@material-ui/icons/Home'
 import MailIcon from '@material-ui/icons/Mail'
@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Contact = (props) => {
+const Contact = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
@@ -87,10 +87,10 @@ const Contact = (props) => {
   const { handleSubmit, control, errors } = useForm()
   const onSubmit = data => dispatch(createContact(data))
 
-  const [ activeMarker, setActiveMarker ] = useState({})
+  // const [ activeMarker, setActiveMarker ] = useState({})
   // eslint-disable-next-line no-unused-vars
-  const [ selectedPlace, setSelectedPlace ] = useState({})
-  const [ showingInfoWindow, setShowingInfoWindow ] = useState(false)
+  // const [ selectedPlace, setSelectedPlace ] = useState({})
+  // const [ showingInfoWindow, setShowingInfoWindow ] = useState(false)
 
   const validFormMessage = (errors, data) => {
     const {
@@ -120,17 +120,17 @@ const Contact = (props) => {
     }
   }
 
-  const _handleClickMarker = (props, marker) => {
-    setActiveMarker(marker)
-    setSelectedPlace(props)
-    setShowingInfoWindow(true)
-  }
+  // const _handleClickMarker = (props, marker) => {
+  //   setActiveMarker(marker)
+  //   setSelectedPlace(props)
+  //   setShowingInfoWindow(true)
+  // }
 
-  const _handleClickClose = (props, marker) => {
-    setActiveMarker(marker)
-    setSelectedPlace(props)
-    setShowingInfoWindow(false)
-  }
+  // const _handleClickClose = (props, marker) => {
+  //   setActiveMarker(marker)
+  //   setSelectedPlace(props)
+  //   setShowingInfoWindow(false)
+  // }
 
   return (
     <Container className={classes.parent} maxWidth='lg'>
@@ -236,7 +236,17 @@ const Contact = (props) => {
         </Grid>
         <Grid item md={7} xs={12}>
           <div className={classes.mapContainer}>
-            <Map
+            <div style={{ width: '100%' }}>
+              <iframe
+                frameborder='0'
+                height='600'
+                marginheight='0'
+                marginwidth='0'
+                scrolling='no'
+                src='https://maps.google.com/maps?width=100%&height=600&hl=es&q=270%20Capistrano%20Rd%2C%20Half%20Moon%20Bay%2C%20CA%2094019+(Lamas%20restaurant)&ie=UTF8&t=&z=16&iwloc=B&output=embed'
+                width='100%'><a href='https://www.mapsdirections.info/marcar-radio-circulo-mapa/'>Marcar radio en el mapa</a></iframe>
+            </div>
+            {/* <Map
               google={props.google}
               initialCenter={{ lat: 47.444, lng: -122.176 }}
               // style={mapStyles}
@@ -253,7 +263,7 @@ const Contact = (props) => {
                   <h1>{'this.state.selectedPlace.name'}</h1>
                 </div>
               </InfoWindow>
-            </Map>
+            </Map> */}
           </div>
         </Grid>
       </Grid>
@@ -314,6 +324,4 @@ const Contact = (props) => {
   )
 }
 
-export default GoogleApiWrapper({
-  apiKey: 'API-KEY'
-})(Contact)
+export default Contact
