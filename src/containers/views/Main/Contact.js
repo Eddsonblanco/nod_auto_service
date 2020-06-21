@@ -243,7 +243,7 @@ const Contact = () => {
                 marginheight='0'
                 marginwidth='0'
                 scrolling='no'
-                src='https://maps.google.com/maps?width=100%&height=600&hl=es&q=270%20Capistrano%20Rd%2C%20Half%20Moon%20Bay%2C%20CA%2094019+(Lamas%20restaurant)&ie=UTF8&t=&z=16&iwloc=B&output=embed'
+                src='https://maps.google.com/maps?width=100%&height=600&hl=es&q=130%20Industrial%20Way%2C%20Brisbane%2C%20CA%2094005+(N.O.D.%20Auto%20Service)&ie=UTF8&t=&z=16&iwloc=B&output=embed'
                 width='100%'><a href='https://www.mapsdirections.info/marcar-radio-circulo-mapa/'>Marcar radio en el mapa</a></iframe>
             </div>
             {/* <Map

@@ -8,7 +8,7 @@ import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
-  Divider,
+  // Divider,
   Toolbar,
   Button,
   IconButton,
@@ -16,12 +16,12 @@ import {
   TextField,
   // Link,
   Container,
-  Paper,
-  Popper,
-  MenuList,
-  Grow,
+  // Paper,
+  // Popper,
+  // MenuList,
+  // Grow,
   MenuItem,
-  ClickAwayListener,
+  // ClickAwayListener,
   Stepper,
   Step,
   StepButton,
@@ -37,7 +37,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import {
   Menu as MenuIcon,
   Phone as PhoneIcon,
-  ExpandMore as ExpandMoreIcon,
+  // ExpandMore as ExpandMoreIcon,
   CheckCircle as CheckCircleIcon
 } from '@material-ui/icons'
 
@@ -332,7 +332,7 @@ export default function Header() {
     status: statusAppoiment
   } = useSelector(state => state.appoiments)
 
-  const [ open, setOpen ] = React.useState(false)
+  const [ open ] = React.useState(false)
   const [ openDrawer, setOpenDrawer ] = React.useState(false)
   const anchorRef = React.useRef(null)
 
@@ -373,16 +373,16 @@ export default function Header() {
       dispatch(openAppoiment())
   }, [ statusAppoiment ])
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen)
-  }
+  // const handleToggle = () => {
+  //   setOpen(prevOpen => !prevOpen)
+  // }
 
-  const handleClose = event => {
-    if(anchorRef.current && anchorRef.current.contains(event.target))
-      return
+  // const handleClose = event => {
+  //   if(anchorRef.current && anchorRef.current.contains(event.target))
+  //     return
 
-    setOpen(false)
-  }
+  //   setOpen(false)
+  // }
 
   const _handleChangeForm = (name, value) => {
     setFormDialog({
@@ -391,12 +391,12 @@ export default function Header() {
     })
   }
 
-  function handleListKeyDown(event) {
-    if(event.key === 'Tab') {
-      event.preventDefault()
-      setOpen(false)
-    }
-  }
+  // function handleListKeyDown(event) {
+  //   if(event.key === 'Tab') {
+  //     event.preventDefault()
+  //     setOpen(false)
+  //   }
+  // }
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open)
@@ -492,9 +492,9 @@ export default function Header() {
                   onClick={() => { dispatch(openAppoiment())}}
                   variant='outlined'>Get an appointment</Button>
 
-                <Divider className={classes.divider} orientation='vertical' />
+                {/* <Divider className={classes.divider} orientation='vertical' /> */}
 
-                <div>
+                {/* <div>
                   <Button
                     aria-controls={open ? 'menu-list-grow' : undefined}
                     aria-haspopup='true'
@@ -523,7 +523,7 @@ export default function Header() {
                       </Grow>
                     )}
                   </Popper>
-                </div>
+                </div> */}
 
               </div>
             </div>
