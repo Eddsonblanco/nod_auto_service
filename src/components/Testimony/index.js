@@ -7,35 +7,55 @@ import {
   Typography
 } from '@material-ui/core'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  CardContent: {
+    display : 'flex',
+    flexFlow: 'Column'
+  },
   date: {
     fontWeight: 400,
     marginTop : 30
 
   },
   description: {
-    color      : '#353535',
-    fontSize   : '1.125rem',
-    fontWeight : 400,
-    opacity    : 0.89,
-    paddingLeft: 20
+    color                         : '#353535',
+    fontSize                      : '1.125rem',
+    fontWeight                    : 400,
+    opacity                       : 0.89,
+    paddingLeft                   : 20,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem',
+      padding : 1
+    }
   },
   imageContent: {
     '& > img': {
-      width: '100%'
+      width                         : '100%',
+      [theme.breakpoints.down('sm')]: {
+        width: '60%'
+      }
     },
     marginBottom: 15,
     maxWidth    : 50,
     width       : '100%'
+
   },
   root: {
-    borderColor : '#d5d5d5',
-    borderRadius: 12,
-    maxWidth    : 750,
-    minWidth    : 275,
-    padding     : 30
+    borderColor                   : '#d5d5d5',
+    borderRadius                  : 12,
+    display                       : 'flex',
+    flexDirection                 : 'column',
+    height                        : 600,
+    justifyContent                : 'space-between',
+    maxWidth                      : 750,
+    minWidth                      : 275,
+    padding                       : 30,
+    [theme.breakpoints.down('sm')]: {
+      height   : '100%',
+      minHeight: 500
+    }
   }
-})
+}))
 
 const Testimony = ({ data }) => {
   const classes = useStyles()
@@ -49,14 +69,14 @@ const Testimony = ({ data }) => {
         <Typography className={classes.description} component='p'>
           {data.desc}
         </Typography>
-        <Typography
-          align='right'
-          className={classes.date}
-          color='primary'
-          component='p'>
-          {data.author}, {data.date}
-        </Typography>
       </CardContent>
+      <Typography
+        align='right'
+        className={classes.date}
+        color='primary'
+        component='p'>
+        {data.author}, {data.date}
+      </Typography>
     </Card>
   )
 }

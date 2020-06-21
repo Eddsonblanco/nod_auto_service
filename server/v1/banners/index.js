@@ -1,5 +1,6 @@
 import express from 'express'
 import { upload } from '../../middleware/multer'
+import auth from '../../middleware/auth'
 
 import {
   create,
@@ -12,7 +13,7 @@ import {
 
 const router = express.Router()
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', auth.ensureAuthenticated, upload.single('image'), async (req, res) => {
   try {
     // req.headers // token
     const data = await create(req)
@@ -50,7 +51,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth.ensureAuthenticated, async (req, res) => {
   try {
     const { id } = req.params
 
@@ -62,7 +63,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-router.put('/', upload.single('image'), async (req, res) => {
+router.put('/', auth.ensureAuthenticated, upload.single('image'), async (req, res) => {
   try {
     // const { id } = req.params
 

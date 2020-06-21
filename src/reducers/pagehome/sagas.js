@@ -1,11 +1,15 @@
+import notify from 'lib/Notify'
 import { Get, Put } from 'lib/Request'
 import { select, call, put, take, fork } from 'redux-saga/effects'
+
+import usersDucks from 'reducers/users'
 
 export const getPageConfig = ({ types, selectors }) => function* () {
   try {
     const status = yield select(selectors.getStatus)
 
     if(status !== 'READY') {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('********* NOT is Loaded from Server *********')
 
       yield put({ type: types.FETCH_PENDING })
@@ -28,6 +32,7 @@ export const getPageConfig = ({ types, selectors }) => function* () {
         type   : types.FETCH_FULFILLED
       })
     } else {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('********* is Loaded from Server *********')
     }
   } catch (e) {
@@ -46,12 +51,31 @@ export const getPageConfig = ({ types, selectors }) => function* () {
   }
 }
 
-export const updatePageConfig = ({ types, selectors }) => function* () {
+export const updatePageConfig = ({ types, selectors }) => function* ({ payload }) {
   try {
     yield put({ type: types.PUT_PENDING })
     const getAllCheckbox = yield select(selectors.getAllCheckbox)
+    const cookies = yield select(usersDucks.selectors.getCookies)
 
-    const { data } = yield call(Put, '/page_home', getAllCheckbox)
+    const newData = {
+      ...payload,
+      ...getAllCheckbox
+    }
+
+    const formData = new FormData()
+    const payloadData = Object.keys(newData)
+    payloadData.map(item => {
+      formData.append(item, newData[item])
+    })
+
+    const { data, success } = yield call(Put, '/page_home', formData, {
+      Authorization: `Bearer ${cookies}`
+    })
+
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
 
     yield put({
       payload: data,

@@ -3,11 +3,12 @@ import { select, call, put, take, fork } from 'redux-saga/effects'
 
 import { Get } from 'lib/Request'
 
-export const getProducts = ({ types, selectors }) => function* (addMore) {
+export const getProducts = ({ types, selectors }) => function* () {
   try {
     const status = yield select(selectors.getStatus)
 
     if(status !== 'READY') {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('********* NOT  Loaded from Server *********')
       yield put({ type: types.FETCH_PENDING })
 
@@ -15,6 +16,7 @@ export const getProducts = ({ types, selectors }) => function* (addMore) {
 
       yield put({ payload, type: types.FETCH_FULFILLED })
     } else {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('********* is Loaded from Server *********')
     }
     // else is Loaded from Server

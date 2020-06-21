@@ -380,6 +380,12 @@ const Nav = props => {
       },
       {
         _id  : 12,
+        icon : <GroupIcon />,
+        title: 'Abouts',
+        url  : '/admin/abouts'
+      },
+      {
+        _id  : 12,
         icon : <SettingsIcon />,
         title: 'Settings',
         url  : '/admin/settings'

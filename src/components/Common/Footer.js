@@ -6,7 +6,15 @@ import {
 
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, Grid, Typography } from '@material-ui/core'
+import { Container,
+  Grid,
+  Typography,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  // DialogTitle,
+  Slide
+} from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import FacebookIcon from '@material-ui/icons/Facebook'
@@ -35,6 +43,14 @@ const styles = makeStyles(theme => {
       },
       footerContainerTop: {
         paddingTop: 20
+      },
+      linkEditor: {
+        color         : theme.palette.primary.main,
+        display       : 'block',
+        fontSize      : 16,
+        fontWeight    : 'bold',
+        marginBottom  : 5,
+        textDecoration: 'none'
       },
       listNav: {
         display       : 'flex',
@@ -108,6 +124,10 @@ const styles = makeStyles(theme => {
   )
 })
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
 const Footer = () => {
   const {
     copyright,
@@ -118,6 +138,16 @@ const Footer = () => {
   } = useSelector(state => state.settings)
 
   const classes = styles()
+
+  const [ open, setOpen ] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   return (
     <footer className={classes.footer}>
@@ -139,9 +169,6 @@ const Footer = () => {
               <Link className={classes.listNavItem} to='/services'>SERVICES</Link>
               <Link className={classes.listNavItem} to='/contact'>CONTACT</Link>
               <Link className={classes.listNavItem} to='/aboutus'>ABOUT US</Link>
-              <Link className={classes.listNavItem} to=''>FAQ</Link>
-              <Link className={classes.listNavItem} to=''>TERMS OF SERVICE</Link>
-              <Link className={classes.listNavItem} to=''>PRIVACY POLICY</Link>
             </ul>
           </Grid>
 
@@ -178,10 +205,27 @@ const Footer = () => {
           direction='row'
           justify='space-between'>
           <Typography variant='body2'>{copyright}</Typography>
-          <Typography variant='body2'>Designed by ª <strong>Fernando Goicochea</strong></Typography>
+          <Typography onClick={handleClickOpen} variant='body2'>Designed and developer</Typography>
         </Grid>
 
       </Container>
+
+      <Dialog
+        aria-describedby='alert-dialog-slide-description'
+        aria-labelledby='alert-dialog-slide-title'
+        keepMounted
+        onClose={handleClose}
+        open={open}
+        TransitionComponent={Transition}>
+        {/* <DialogTitle id='alert-dialog-slide-title'>{"Use Google's location service?"}</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            <a className={classes.linkEditor} href='https://github.com/xavivzla'>Xavier Gonzalez ~ Developer</a>
+            <a className={classes.linkEditor} href='https://github.com/Eddsonblanco'>Eddson Blanco ~ Developer</a>
+            <a className={classes.linkEditor} href='#'>Fernando Goicochea ~ Designer</a>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
     </footer>
   )
 }

@@ -12,6 +12,12 @@ export default base({
   initialState: {
     _id                : null,
     banners            : [],
+    message_desc       : '',
+    message_icon       : '',
+    message_image      : '',
+    message_left       : '',
+    message_link       : '',
+    message_title      : '',
     openAppoimentGlobal: false,
     services           : [],
     show_banner        : false,
@@ -31,7 +37,7 @@ export default base({
     removeBannerItem        : index => ({ index, type: types.REMOVE_ITEM_BANNER }),
     updateBannersData       : (data, index) => ({ data, index, type: types.UPDATE_DATA_BANNERS }),
     updateCheckbox          : (name, data) => ({ data, name, type: types.UPDATE_CHECKBOX }),
-    updatePageConfig        : banners => ({ banners, type: types.UPDATE_CONFIG }),
+    updatePageConfig        : payload => ({ payload, type: types.UPDATE_CONFIG }),
     updatePositionBannerItem: (orientation, position) => ({ orientation, position, type: types.UPDATE_POSITION_BANNER })
   }),
   reducer: (state, action, { types }) =>

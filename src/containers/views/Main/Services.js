@@ -8,14 +8,14 @@ import {
   Breadcrumbs,
   Typography,
   Link,
-  Container,
-  FormControl,
-  OutlinedInput,
-  InputAdornment,
-  IconButton
+  Container
+  // FormControl,
+  // OutlinedInput,
+  // InputAdornment,
+  // IconButton
 } from '@material-ui/core'
 
-import SearchIcon from '@material-ui/icons/Search'
+// import SearchIcon from '@material-ui/icons/Search'
 
 import CardService from 'components/CardService'
 
@@ -83,6 +83,8 @@ export default function Services() {
 
       <Typography className={classes.title}>All Our Services</Typography>
 
+      {/* input search service */}
+      {/*
       <FormControl className={classes.search} variant='outlined'>
         <OutlinedInput
           id='outlined-adornment-password'
@@ -99,7 +101,7 @@ export default function Services() {
             </InputAdornment>
           }
           type='text' />
-      </FormControl>
+      </FormControl> */}
 
       <div className={classes.containerServices}>
         {

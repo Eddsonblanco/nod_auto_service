@@ -300,7 +300,7 @@ const New = () => {
 
   useEffect(() => {
     if(status === 'READY' && !dataForm && serviceDetail)
-      setDataForm(prevState => {
+      setDataForm(() => {
         setEditorValue(JSON.parse(serviceDetail.content))
 
         return serviceDetail
@@ -318,6 +318,11 @@ const New = () => {
       setDataForm({
         ...dataForm,
         [ev.target.name]: ev.target.checked
+      })
+    else if(ev.target.name === 'url')
+      setDataForm({
+        ...dataForm,
+        [ev.target.name]: ev.target.value.replace(' ', '-')
       })
     else
       setDataForm({
@@ -366,6 +371,21 @@ const New = () => {
         </div>
 
         <div>
+
+          <TextField
+            fullWidth
+            id='service-url'
+            InputLabelProps={{
+              shrink: true
+            }}
+            label='Url'
+            margin='normal'
+            name='url'
+            onChange={_handleChangeForm}
+            placeholder='Service url seo'
+            style={{ margin: 8 }}
+            value={dataForm.url} />
+
           <TextField
             fullWidth
             id='service-name'

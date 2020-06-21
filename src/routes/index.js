@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import loadable from '@loadable/component'
 
 import Loading from 'components/Common/Loading'
+import PrivateRoute from './PriavteRoute'
 
 // layouts
 
@@ -22,6 +23,10 @@ const Dashboard = loadable(() => import('../containers/views/Admin/Dashboard'), 
 })
 
 const Settings = loadable(() => import('../containers/views/Admin/Settings'), {
+  fallback: <Loading />
+})
+
+const AboutsAdmin = loadable(() => import('../containers/views/Admin/Abouts'), {
   fallback: <Loading />
 })
 
@@ -97,7 +102,11 @@ const Faq = loadable(() => import('../containers/views/Main/Faq'), {
 const AboutUs = loadable(() => import('../containers/views/Main/AboutUs'), {
   fallback: <Loading />
 })
-export default history => {
+
+const Login = loadable(() => import('../containers/views/Admin/Login'), {
+  fallback: <Loading />
+})
+export default (history, host) => {
   // const pathUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/'
 
   return (
@@ -107,32 +116,36 @@ export default history => {
       </Dashboard> */}
 
       <Switch>
-        {/* <Route component={Login} path='/login' /> */}
+        <Route component={Login} path='/login' />
 
         <Route exact path='/admin/:path?'>
-          <MainAdmin>
-            <Switch>
-              <Route component={Dashboard} exact path='/admin/dashboard' />
-              {/* <Route component={ServicesNewAdmin} path='/admin/service/:id' /> */}
-              <Route component={Settings} path='/admin/settings' />
-              <Route component={HomeAdmin} path='/admin/home' />
-              <Route component={About} path='/admin/about' />
-              <Route component={ContactAdmin} path='/admin/contact' />
-              <Route component={Companies} path='/admin/companies' />
-              <Route component={Testimonials} path='/admin/testimonials' />
-              <Route component={Banners} path='/admin/banners' />
-              <Route component={Reservations} path='/admin/reservations' />
-              <Route component={ServicesAdmin} path='/admin/services' />
-              <Route component={ServicesNewAdmin} path='/admin/service' />
-              <Route component={NewslettersAdmin} path='/admin/newsletters' />
-              <Route component={ServicesEditAdmin} path='/admin/service-edit' />
-              <Route component={Users} path='/admin/users' />
-            </Switch>
-          </MainAdmin>
+          <PrivateRoute>
+            <MainAdmin>
+              <Switch>
+
+                <Route component={Dashboard} exact path='/admin/dashboard' />
+                {/* <Route component={ServicesNewAdmin} path='/admin/service/:id' /> */}
+                <Route component={Settings} path='/admin/settings' />
+                <Route component={AboutsAdmin} path='/admin/abouts' />
+                <Route component={HomeAdmin} path='/admin/home' />
+                <Route component={About} path='/admin/about' />
+                <Route component={ContactAdmin} path='/admin/contact' />
+                <Route component={Companies} path='/admin/companies' />
+                <Route component={Testimonials} path='/admin/testimonials' />
+                <Route component={Banners} path='/admin/banners' />
+                <Route component={Reservations} path='/admin/reservations' />
+                <Route component={ServicesAdmin} path='/admin/services' />
+                <Route component={ServicesNewAdmin} path='/admin/service' />
+                <Route component={NewslettersAdmin} path='/admin/newsletters' />
+                <Route component={ServicesEditAdmin} path='/admin/service-edit' />
+                <Route component={Users} path='/admin/users' />
+              </Switch>
+            </MainAdmin>
+          </PrivateRoute>
         </Route>
 
         <Route>
-          <Main>
+          <Main history={history} host={host}>
             <Switch>
               <Route component={Home} exact path='/' />
               <Route component={Contact} exact path='/contact' />

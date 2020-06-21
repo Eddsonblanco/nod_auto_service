@@ -1,5 +1,7 @@
 import { GetList, Delete, Post, Get, Put } from 'lib/Request'
 import { put, call, select } from 'redux-saga/effects'
+import notify from 'lib/Notify'
+import usersDucks from 'reducers/users'
 
 export const getCompanies = ({ types, selectors }) => function* () {
   try {
@@ -40,7 +42,15 @@ export const getCompanies = ({ types, selectors }) => function* () {
 export const removeCompany = ({ types }) => function* ({ id }) {
   try {
     yield put({ type: types.DELETE_PENDING })
-    const { success } = yield call(Delete, `/companies/${id}`)
+    const cookies = yield select(usersDucks.selectors.getCookies)
+
+    const { success } = yield call(Delete, `/companies/${id}`, {}, {
+      Authorization: `Bearer ${cookies}`
+    })
+    if(success)
+      notify.success('!Successfully removed!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         id,
@@ -67,14 +77,21 @@ export const removeCompany = ({ types }) => function* ({ id }) {
 export const createCompany = ({ types }) => function* ({ payload }) {
   try {
     yield put({ type: types.POST_PENDING })
+    const cookies = yield select(usersDucks.selectors.getCookies)
+
     const formData = new FormData()
     const payloadData = Object.keys(payload)
     payloadData.map(item => {
       formData.append(item, payload[item])
     })
     const { data, success } = yield call(Post, '/companies', formData, {
+      Authorization : `Bearer ${cookies}`,
       'content-type': 'multipart/form-data'
     })
+    if(success)
+      notify.success('!Created successfully!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     yield put({
       payload: {
         data,
@@ -128,7 +145,9 @@ export const getCompany = ({ types }) => function* ({ id }) {
 export const updateCompany = ({ types }) => function* ({ payload }) {
   try {
     yield put({ type: types.PUT_PENDING })
+    const cookies = yield select(usersDucks.selectors.getCookies)
     const formData = new FormData()
+
     const payloadData = Object.keys(payload)
     payloadData.map(item => {
       formData.append(item, payload[item])
@@ -137,7 +156,14 @@ export const updateCompany = ({ types }) => function* ({ payload }) {
     //   'content-type': 'multipart/form-data'
     // })
 
-    const data = yield call(Put, '/companies', formData)
+    const { /* data,*/ success } = yield call(Put, '/companies', formData, {
+      Authorization: `Bearer ${cookies}`
+    })
+
+    if(success)
+      notify.success('!Was updated correctly!', { time: 5000 })
+    else
+      notify.error('!An error occurred!', { time: 5000 })
     // yield put({
     //   payload: {
     //     company,

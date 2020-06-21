@@ -155,14 +155,7 @@ const Newsletter = () => {
               placeholder='domain@domain.com'
               value={email} />
             <div className={classes.actions}>
-              <Button
-                color='secondary'
-                variant='contained'>
-                READ FAQ
-              </Button>
-              <Button variant='outlined'>
-                GET An appoinment
-              </Button>
+
             </div>
           </FormControl>
 

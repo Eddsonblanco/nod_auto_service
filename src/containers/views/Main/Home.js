@@ -45,29 +45,44 @@ const useStyles = makeStyles(theme => ({
     position      : 'relative',
     zIndex        : 4
   },
+  brandFlex: {
+    alignItems                    : 'center',
+    display                       : 'flex',
+    flex                          : 1,
+    justifyContent                : 'center',
+    width                         : '100%',
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap'
+    }
+  },
   brandItem: {
     '& img': {
       width: '100%'
     },
     boxSizing                     : 'content-box',
     maxWidth                      : 120,
-    padding                       : '0 40px',
+    padding                       : '0 20px',
     [theme.breakpoints.down('xs')]: {
-      padding: '0 10px'
+      maxWidth: 80,
+      padding : '0 10px'
     }
   },
   brandList: {
+    alignItems                    : 'center',
     background                    : 'black',
     backgroundColor               : '#ffffff',
     border                        : 'solid 1px #d5d5d5',
     borderRadius                  : '10px 0 0 10px',
     boxShadow                     : '6px 30px 68px 0 rgba(0, 0, 0, 0.12)',
     display                       : 'flex',
-    maxWidth                      : '60%',
+    maxWidth                      : '964px',
     overflow                      : 'hidden',
+    padding                       : '0 40px',
     width                         : '100%',
     [theme.breakpoints.down('sm')]: {
-      maxWidth: '100%'
+      display : 'grid',
+      maxWidth: '100%',
+      padding : '0 20px'
     }
   },
   btnAllServices: {
@@ -93,6 +108,17 @@ const useStyles = makeStyles(theme => ({
     color       : '#353535',
     fontWeight  : 600,
     marginBottom: 60
+  },
+  titleBrands: {
+    color                         : '#787878',
+    fontSize                      : '18px',
+    fontWeight                    : 600,
+    textTransform                 : 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      fontSize  : 16,
+      paddingTop: 20,
+      textAlign : 'center'
+    }
   }
 }))
 
@@ -106,7 +132,7 @@ export default function Home() {
 
   const {
     status: statusCompanies,
-    rows: companies
+    rows: companies = []
   } = useSelector(state => state.companies)
 
   const {
@@ -114,6 +140,12 @@ export default function Home() {
     show_banner,
     show_brands,
     banners,
+    message_title,
+    message_desc,
+    message_icon,
+    message_link,
+    message_image,
+    message_left,
     // show_newsletter,
     show_services,
     show_testimonials,
@@ -154,19 +186,29 @@ export default function Home() {
           companies.length ?
             <div className={classes.brandContainer}>
               <div className={classes.brandList}>
-                {
-                  companies.map((item, index) => (
-                    <div className={classes.brandItem} key={index}>
-                      <img alt={item.alt_text} src={item.image} />
-                    </div>
-                  ))
-                }
+                <Typography className={classes.titleBrands}>Companies that trust in us</Typography>
+                <div className={classes.brandFlex}>
+                  {
+                    companies.map((item, index) => (
+                      <div className={classes.brandItem} key={index}>
+                        <img alt={item.alt_text} src={item.image} />
+                      </div>
+                    ))
+                  }
+                </div>
               </div>
             </div> : null : null
       }
 
       {/* slider service detail */}
-      <SliderServices />
+      <SliderServices data={{
+        message_desc,
+        message_icon,
+        message_image,
+        message_left,
+        message_link,
+        message_title
+      }} />
 
       {/* <Services /> */}
       {
@@ -206,7 +248,7 @@ export default function Home() {
             </Typography>
             <Carousel settings={
               {
-                autoplay  : true,
+                autoplay  : false,
                 centerMode: true,
                 infinite  : true,
                 responsive: [

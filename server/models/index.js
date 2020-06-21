@@ -12,6 +12,8 @@ import Testimonials from './testimonials'
 import Galleries from './gallery'
 import Appoiments from './appoiment'
 import Newsletters from './newsletter'
+import Abouts from './about'
+import Users from './user'
 
 export {
   user,
@@ -27,5 +29,7 @@ export {
   Testimonials,
   Galleries,
   Appoiments,
-  Newsletters
+  Newsletters,
+  Abouts,
+  Users
 }

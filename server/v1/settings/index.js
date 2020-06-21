@@ -1,4 +1,6 @@
 import express from 'express'
+import auth from '../../middleware/auth'
+
 import { upload } from '../../middleware/multer'
 
 import {
@@ -17,7 +19,7 @@ router.get('/', async (req, res) =>  {
   }
 })
 
-router.put('/', upload.fields([ { maxCount: 1, name: 'logo' }, { maxCount: 1, name: 'logo_footer' } ]), async (req, res) => {
+router.put('/', auth.ensureAuthenticated, upload.fields([ { maxCount: 1, name: 'logo' }, { maxCount: 1, name: 'logo_footer' } ]), async (req, res) => {
   try {
     const data = await update(req)
     res.status(200).send({ data, success: true })

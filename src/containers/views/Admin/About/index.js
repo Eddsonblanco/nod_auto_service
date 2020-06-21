@@ -9,7 +9,7 @@ import {
 import ContainerAdmin from 'components/Admin/Common/ContainerAdmin'
 import TabsAdmin from 'components/Admin/Common/TabsAdmin'
 
-const Settings = () => {
+const Abouts = () => {
   const info = (<>
     <TextField
       fullWidth
@@ -111,4 +111,4 @@ const Settings = () => {
   )
 }
 
-export default Settings
+export default Abouts

@@ -12,6 +12,8 @@ import testimonials from './testimonials'
 import services from './services'
 import appoiments from './appoiments'
 import newsletters from './newsletters'
+import abouts from './abouts'
+import users from './users'
 
 // admin
 import pageHome from './pagehome'
@@ -32,6 +34,8 @@ export default history => combineReducers({
   [services.store]    : services.reducer,
   [appoiments.store]  : appoiments.reducer,
   [newsletters.store] : newsletters.reducer,
+  [abouts.store]      : abouts.reducer,
+  [users.store]       : users.reducer,
   // main
   [mainServices.store]: mainServices.reducer
 })
@@ -48,6 +52,8 @@ export function* rootSaga() {
     ...services.takes,
     ...appoiments.takes,
     ...newsletters.takes,
+    ...abouts.takes,
+    ...users.takes,
     // main
     ...mainServices.takes
   ])

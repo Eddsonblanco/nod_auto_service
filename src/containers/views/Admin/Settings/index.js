@@ -120,6 +120,20 @@ const Settings = () => {
 
             <TextField
               fullWidth
+              id='company-name'
+              InputLabelProps={{
+                shrink: true
+              }}
+              label='Description'
+              margin='normal'
+              name='description'
+              onChange={_handleChangeForm}
+              placeholder='company description'
+              style={{ margin: 8 }}
+              value={dataForm.description} />
+
+            <TextField
+              fullWidth
               id='company-direction'
               InputLabelProps={{
                 shrink: true

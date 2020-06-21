@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/styles'
 import {
   Typography,
-  Button
+  Button,
+  Container
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -19,10 +21,13 @@ const useStyles = makeStyles(theme => ({
     width       : '100%'
   },
   sliderServiceContainer: {
-    alignItems    : 'center',
-    display       : 'flex',
-    justifyContent: 'center',
-    margin        : '100px 0 200px 0'
+    alignItems                    : 'center',
+    display                       : 'flex',
+    justifyContent                : 'center',
+    margin                        : '100px 0 200px 0',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
   },
   sliderServiceDesc: {
     color        : '#353535',
@@ -64,17 +69,26 @@ const useStyles = makeStyles(theme => ({
       display    : 'block',
       marginRight: 35,
 
-      position: 'relative',
+      position                      : 'relative',
       // height    : '50%',
-      width   : 3
+      width                         : 3,
+      [theme.breakpoints.down('sm')]: {
+        display: 'none'
+      }
     },
-    display : 'flex',
-    maxWidth: 290,
-    width   : '100%'
+    display                       : 'flex',
+    maxWidth                      : 290,
+    width                         : '100%',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%'
+    }
   },
   sliderServiceRight: {
-    maxWidth: 410,
-    width   : '100%'
+    maxWidth                      : 410,
+    width                         : '100%',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 150
+    }
   },
   sliderServiceTitle: {
     color       : '#353535',
@@ -85,42 +99,49 @@ const useStyles = makeStyles(theme => ({
     marginTop   : 4
   },
   titleLeft: {
-    color       : '#353535',
-    fontSize    : '1.25rem',
-    fontWeight  : 600,
-    lineHeight  : 1.5,
-    paddingRight: 40,
-    textAlign   : 'left'
+    color                         : '#353535',
+    fontSize                      : '1.25rem',
+    fontWeight                    : 600,
+    lineHeight                    : 1.5,
+    paddingRight                  : 40,
+    textAlign                     : 'left',
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: 40,
+      paddingRight : 0,
+      textAlign    : 'center'
+    }
   }
 }))
 
-const SliderServices = () => {
+const SliderServices = ({
+  data
+}) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.sliderServiceContainer}>
-      <div className={classes.sliderServiceLeft}>
-        <span />
-        <Typography className={classes.titleLeft}>Life’s too
-          short
-          to spend it at the repair shop</Typography>
-      </div>
-      <div className={classes.sliderServiceCenter}>
-        <div className={classes.sliderServiceImg}>
-          <img src='https://cdn.zeplin.io/5dc2fe76c82d4954cfd1d481/assets/4d57eb34-10bd-4d25-8947-83c40d90a6d7.png' />
+    <Container>
+      <div className={classes.sliderServiceContainer}>
+        <div className={classes.sliderServiceLeft}>
+          <span />
+          <Typography className={classes.titleLeft}>{data.message_left}</Typography>
+        </div>
+        <div className={classes.sliderServiceCenter}>
+          <div className={classes.sliderServiceImg}>
+            <img src={data.message_image} />
+          </div>
+        </div>
+        <div className={classes.sliderServiceRight}>
+          <img src={data.message_icon} />
+          <Typography className={classes.sliderServiceTitle}>{data.message_title}</Typography>
+          <Typography className={classes.sliderServiceDesc}>
+            {data.message_desc}
+          </Typography>
+          <Button
+            color='primary' component={RouterLink}
+            to={data.message_link} variant='contained'>Show more</Button>
         </div>
       </div>
-      <div className={classes.sliderServiceRight}>
-        <img src='https://cdn.zeplin.io/5e90fee92fd59f20f20f6614/assets/F1F60BC7-0E88-4DBC-93FE-CA91DD09D65B.svg' />
-        <Typography className={classes.sliderServiceTitle}>Oil change at home</Typography>
-        <Typography className={classes.sliderServiceDesc}>
-          Enjoy convenient car repair and maintenance at your home or office.
-          <br />
-          It's as easy as 1-2-3.
-        </Typography>
-        <Button color='primary' variant='contained'>Show more</Button>
-      </div>
-    </div>
+    </Container>
   )
 }
 

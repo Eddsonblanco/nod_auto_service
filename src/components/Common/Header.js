@@ -8,7 +8,7 @@ import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
-  Divider,
+  // Divider,
   Toolbar,
   Button,
   IconButton,
@@ -16,19 +16,20 @@ import {
   TextField,
   // Link,
   Container,
-  Paper,
-  Popper,
-  MenuList,
-  Grow,
+  // Paper,
+  // Popper,
+  // MenuList,
+  // Grow,
   MenuItem,
-  ClickAwayListener,
+  // ClickAwayListener,
   Stepper,
   Step,
   StepButton,
   DialogContent,
   Dialog,
   FormControl,
-  Select
+  Select,
+  Drawer
 } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close'
@@ -36,7 +37,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import {
   Menu as MenuIcon,
   Phone as PhoneIcon,
-  ExpandMore as ExpandMoreIcon,
+  // ExpandMore as ExpandMoreIcon,
   CheckCircle as CheckCircleIcon
 } from '@material-ui/icons'
 
@@ -73,6 +74,13 @@ const useStyles = makeStyles(theme => ({
       display: 'none'
     }
 
+  },
+  callToActionMobile: {
+    color        : theme.palette.common.white,
+    fontWeight   : 300,
+    paddingBottom: 6,
+    paddingTop   : 6,
+    textAlign    : 'center'
   },
   contentModal: {
     maxWidth: 560,
@@ -120,6 +128,22 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
+  },
+  drawerContent: {
+    background: '#353535',
+    height    : '100%',
+    padding   : '30px 20px',
+    width     : '320px'
+  },
+  drawerList: {
+    marginTop: 40
+  },
+  drawerLogo: {
+    '& img': {
+      width: '100%'
+    },
+    margin  : '0 auto',
+    maxWidth: '120px'
   },
   formContent: {
     margin  : '0 auto',
@@ -308,13 +332,14 @@ export default function Header() {
     status: statusAppoiment
   } = useSelector(state => state.appoiments)
 
-  const [ open, setOpen ] = React.useState(false)
+  const [ open ] = React.useState(false)
+  const [ openDrawer, setOpenDrawer ] = React.useState(false)
   const anchorRef = React.useRef(null)
 
   // const [ openDialog, setOpenDialog ] = React.useState(openAppoimentGlobal)
 
   const [ activeStep, setActiveStep ] = React.useState(0)
-  const [ completed, setCompleted ] = React.useState({})
+  const [ completed ] = React.useState({})
 
   const [ fornDialog, setFormDialog ] = React.useState({
     address       : '',
@@ -348,16 +373,16 @@ export default function Header() {
       dispatch(openAppoiment())
   }, [ statusAppoiment ])
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen)
-  }
+  // const handleToggle = () => {
+  //   setOpen(prevOpen => !prevOpen)
+  // }
 
-  const handleClose = event => {
-    if(anchorRef.current && anchorRef.current.contains(event.target))
-      return
+  // const handleClose = event => {
+  //   if(anchorRef.current && anchorRef.current.contains(event.target))
+  //     return
 
-    setOpen(false)
-  }
+  //   setOpen(false)
+  // }
 
   const _handleChangeForm = (name, value) => {
     setFormDialog({
@@ -366,12 +391,12 @@ export default function Header() {
     })
   }
 
-  function handleListKeyDown(event) {
-    if(event.key === 'Tab') {
-      event.preventDefault()
-      setOpen(false)
-    }
-  }
+  // function handleListKeyDown(event) {
+  //   if(event.key === 'Tab') {
+  //     event.preventDefault()
+  //     setOpen(false)
+  //   }
+  // }
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open)
@@ -435,7 +460,8 @@ export default function Header() {
             aria-label='menu'
             className={classes.menuButton}
             color='inherit'
-            edge='start'>
+            edge='start'
+            onClick={() => { setOpenDrawer(true)}}>
             <MenuIcon />
           </IconButton>
           <Container maxWidth='lg'>
@@ -449,7 +475,7 @@ export default function Header() {
                   <Link className={classes.navItem} to='/services'>Services</Link>
                   <Link className={classes.navItem} to='/contact'>Contact</Link>
                   <Link className={classes.navItem} to='aboutus'>About us</Link>
-                  <Link className={classes.navItem} to='/faq'>FAQ</Link>
+                  {/* <Link className={classes.navItem} to='/faq'>FAQ</Link> */}
                 </nav>
               </div>
               <div className={classes.headerRight}>
@@ -466,9 +492,9 @@ export default function Header() {
                   onClick={() => { dispatch(openAppoiment())}}
                   variant='outlined'>Get an appointment</Button>
 
-                <Divider className={classes.divider} orientation='vertical' />
+                {/* <Divider className={classes.divider} orientation='vertical' /> */}
 
-                <div>
+                {/* <div>
                   <Button
                     aria-controls={open ? 'menu-list-grow' : undefined}
                     aria-haspopup='true'
@@ -497,13 +523,36 @@ export default function Header() {
                       </Grow>
                     )}
                   </Popper>
-                </div>
+                </div> */}
 
               </div>
             </div>
           </Container>
         </Toolbar>
       </AppBar>
+
+      {/* drawer */}
+
+      <Drawer onClose={() => {setOpenDrawer(false)}} open={openDrawer}>
+        <div className={classes.drawerContent}>
+          <div className={classes.drawerLogo}>
+            <img src={logo} />
+          </div>
+          <div className={classes.drawerList} onClick={() => { setOpenDrawer(false)}}>
+            <Link className={classes.navItem} to='/'>Home</Link>
+            <Link className={classes.navItem} to='/services'>Services</Link>
+            <Link className={classes.navItem} to='/contact'>Contact</Link>
+            <Link className={classes.navItem} to='aboutus'>About us</Link>
+          </div>
+
+          <div onClick={() => { setOpenDrawer(false) }} style={{ marginTop: 50, textAlign: 'center' }}>
+            <Button
+              className={classes.callToActionMobile}
+              onClick={() => { dispatch(openAppoiment()) }}
+              variant='outlined'>Get an appointment</Button>
+          </div>
+        </div>
+      </Drawer>
 
       {/* apoimnet */}
 
