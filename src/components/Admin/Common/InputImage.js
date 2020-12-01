@@ -96,7 +96,7 @@ const InputImage = (props) => {
   useEffect(() => {
     if(props.data)
       if(typeof props.data === 'string') {
-        setCurentImage(props.data)
+        // setCurentImage(props.data)
       } else {
         const reader = new FileReader()
         const file = props.data
@@ -112,15 +112,18 @@ const InputImage = (props) => {
   const _handleChangeImage = ev => {
     if(ev.target.files.length) {
       ev.preventDefault()
-      const reader = new FileReader()
       const file = ev.target.files[0]
+      if(file.size > 10000000) {
+        alert('File is too big! max 10 mb')
+      } else {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setCurentImage(reader.result)
+          onImage({ file, name })
+        }
 
-      reader.onloadend = () => {
-        setCurentImage(reader.result)
-        onImage({ file, name })
+        reader.readAsDataURL(file)
       }
-
-      reader.readAsDataURL(file)
     }
   }
 
