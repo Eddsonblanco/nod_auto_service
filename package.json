@@ -55,7 +55,7 @@
     "@react-page/react-page": "0.21.1",
     "@react-page/renderer": "0.21.1",
     "add": "2.0.6",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "axios-debug-log": "0.7.0",
     "bcrypt": "4.0.1",
     "connected-react-router": "6.8.0",
