@@ -65,7 +65,7 @@
     "hero-slider": "2.0.3",
     "http-proxy-middleware": "1.0.4",
     "js-cookie": "2.2.1",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "mongoose": "5.9.16",
     "multer": "1.4.2",
     "node-sass": "4.14.1",
